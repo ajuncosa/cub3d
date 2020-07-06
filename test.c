@@ -58,21 +58,13 @@ int	handle_keys(int keycode, t_vars *vars)
 		exit(0);
 	}
 	if (keycode == 126 && (map[pos_y - 1][pos_x] == 0 || map[pos_y -1][pos_x] == 5))
-	{	
 		pos_y--;
-	}
 	if (keycode == 125 && (map[pos_y + 1][pos_x] == 0 || map[pos_y + 1][pos_x] == 5))
-	{
 		pos_y++;
-	}
 	if (keycode == 123 && (map[pos_y][pos_x - 1] == 0 || map[pos_y][pos_x - 1] == 5))
-	{
 		pos_x--;
-	}
 	if (keycode == 124 && (map[pos_y][pos_x + 1] == 0 || map[pos_y][pos_x + 1] == 5))
-	{
 		pos_x++;
-	}
 	printf("tecla: %d\n", keycode);
 	return(0);
 }

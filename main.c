@@ -1,34 +1,56 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/06/30 12:42:59 by ajuncosa          #+#    #+#             */
+/*   Updated: 2020/07/06 09:37:57 by ajuncosa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minilibx/mlx.h"
 #include "libft/libft.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
-#define	MAP_WIDTH	10
-#define	MAP_HEIGHT	10
-#define SCREEN_WIDTH	600
-#define SCREEN_HEIGHT	400
+#include <math.h>
+#define	MAP_WIDTH		10
+#define	MAP_HEIGHT		10
+#define SCREEN_WIDTH	640
+#define SCREEN_HEIGHT	480
 
-
-
-typedef struct	s_data 
+typedef struct	s_data
 {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
 }				t_data;
 
 typedef struct	s_vars
 {
-	void	*mlx;
-	void	*mlx_win;
+	void		*mlx;
+	void		*mlx_win;
 }				t_vars;
 
-int pos_x = 0;
-int pos_y = 0;
-int zoom = 30;
-int	map[MAP_HEIGHT][MAP_WIDTH] =
+typedef struct	s_player
+{
+	int			x;
+	int			y;
+	float		angle;
+	float		fov;
+	float		halffov;
+}				t_player;
+/*
+typedef struct	s_ray
+{
+	int			ray_angle;
+}
+*/
+int		map[MAP_HEIGHT][MAP_WIDTH] =
 	{
 		{1,1,1,1,1,1,1,1,1,1},
 		{1,0,0,1,0,0,0,0,1,1},
@@ -50,141 +72,129 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
-int	handle_keys(int keycode, t_vars *vars)
+int		handle_keys(int keycode, t_vars *vars)
 {
 	if (keycode == 53)
 	{
 		mlx_destroy_window(vars->mlx, vars->mlx_win);
 		exit(0);
 	}
-	if (keycode == 126 && (map[pos_y - 1][pos_x] == 0 || map[pos_y -1][pos_x] == 5))
-	{	
-		pos_y--;
-	}
-	if (keycode == 125 && (map[pos_y + 1][pos_x] == 0 || map[pos_y + 1][pos_x] == 5))
-	{
-		pos_y++;
-	}
-	if (keycode == 123 && (map[pos_y][pos_x - 1] == 0 || map[pos_y][pos_x - 1] == 5))
-	{
-		pos_x--;
-	}
-	if (keycode == 124 && (map[pos_y][pos_x + 1] == 0 || map[pos_y][pos_x + 1] == 5))
-	{
-		pos_x++;
-	}
-	printf("tecla: %d\n", keycode);
 	return(0);
 }
 
-int	xbutton_close(t_vars *vars)
+int		xbutton_close(t_vars *vars)
 {
 	mlx_destroy_window(vars->mlx, vars->mlx_win);
 	exit(0);
 }
 
-void	print_map(t_data *img)
+void	player_initialise(t_player *player)
 {
-	int i = 0;
-	int j = 0;
-	int x = 0;
-	int y = 0;
-	int k = 0;
-	int l = 0;
-	int	px = pos_x * zoom;
-	int py = pos_y * zoom;
+	int i;
+	int j;
 
-	while (j < SCREEN_HEIGHT && y < MAP_HEIGHT)
-	{
-		x = 0;
-		i = 0;
-		while (i < SCREEN_WIDTH)
-		{
-			k = 0;
-			if (x < MAP_WIDTH && map[y][x] == 1)
-			{
-				while (k < zoom)
-				{
-					my_mlx_pixel_put(img, i, j, 0x00FFFFFF);
-					k++;
-					i++;
-				}
-				x++;
-			}
-			else if (x < MAP_WIDTH && map[y][x] == 5)
-			{
-				px = pos_x * zoom;
-				while (k < zoom)
-				{
-					my_mlx_pixel_put(img, px, py, 0x00FF0000);
-					k++;
-					i++;
-					px++;
-				}
-				x++;
-			}
-			else if (x < MAP_WIDTH && map[y][x] == 0)
-			{
-				i += zoom;
-				x++;
-			}
-			else
-			i++;
-		}
-		l++;
-		j++;
-		if (px != pos_x * zoom)
-		{
-			py++;
-		}
-		if (x == MAP_WIDTH && l == zoom)
-		{
-			y++;
-			l = 0;
-		}
-	}
-}
-
-void	find_position()
-{
-	int i = 0;
-	int j = 0;
+	j = 0;
 	while (j < MAP_HEIGHT)
 	{
+		i = 0;
 		while (i < MAP_WIDTH)
 		{
 			if (map[j][i] == 5)
 			{
-				pos_x = i;
-				pos_y = j;
+				player->x = i;
+				player->y = j;
 				break;
 			}
 			i++;
 		}
 		j++;
-		i = 0;
 	}
+	player->angle = 270;
+	player->fov = 60;
+	player->halffov = player->fov / 2;
 }
 
-int prueba(t_vars *vars)
+void	raycasting(t_player *player, t_vars *vars)
 {
-	t_data	img;
+	float	ray_angle;
+	float	ray_increment_angle;
+	int		ray_count;
+	float	ray_x;
+	float	ray_y;
+	float	ray_precision;
+	float	ray_sin;
+	float	ray_cos;
+	int		wall;
+	float	distance;
+	float	screen_halfheight;
+	float	wall_height;
 
+	t_data	img;
 	img.img = mlx_new_image(vars->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	print_map(&img);
+
+	screen_halfheight = SCREEN_HEIGHT / 2;
+	ray_angle = player->angle - player->halffov;
+	ray_increment_angle = player->fov / SCREEN_WIDTH;
+	ray_count = 0;
+	ray_precision = 64;
+
+	int i = 0;
+	while (ray_count < SCREEN_WIDTH)
+	{
+		//ray data
+		ray_x = player->x;
+		ray_y = player->y;
+		//ray path incrementers
+		ray_sin = sin(ray_angle * M_PI / 180) / ray_precision;
+		ray_cos = cos(ray_angle * M_PI / 180) / ray_precision;
+		//wall finder
+		wall = 0;
+		while (wall == 0)
+		{
+			ray_x += ray_cos;
+			ray_y += ray_sin;
+			wall = map[(int)ray_y][(int)ray_x];
+		}
+		//Pythagoras theorem
+		distance = sqrt(pow(player->x - ray_x, 2) + pow(player->y - ray_y, 2));
+		//wall height
+		wall_height = (int)(screen_halfheight / distance);
+		if (wall_height > SCREEN_HEIGHT / 2)
+			wall_height = SCREEN_HEIGHT / 2;
+		//draw
+		int j = 0;
+		while (j < (screen_halfheight - wall_height))
+		{
+			my_mlx_pixel_put(&img, i, j, 0x00FFFFFF);
+			j++;
+		}
+		while (j >= (screen_halfheight - wall_height) && j < (screen_halfheight + wall_height))
+		{
+			my_mlx_pixel_put(&img, i, j, 0x00FF0000);
+			j++;
+		}
+		while (j < SCREEN_HEIGHT)
+		{
+			my_mlx_pixel_put(&img, i, j, 0x0000FF00);
+			j++;
+		}
+		i++;
+
+		ray_angle += ray_increment_angle;
+		ray_count++;
+	}
 	mlx_put_image_to_window(vars->mlx, vars->mlx_win, img.img, 0, 0);
-	return(0);
 }
 
-int	main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
-	t_vars	vars;
+	t_vars		vars;
+	t_player	player;
 
 //	int	fd;
 //	size_t	bytes;
 //	char	*map;
-
 
 /*	if (!(map = malloc((WIDTH * HEIGHT) + 1)))
 		return(-1);
@@ -198,13 +208,11 @@ int	main(int argc, char **argv)
 	}
 	printf("%s\n", map);
 */
-
+	player_initialise(&player);
 	vars.mlx = mlx_init();
 	vars.mlx_win = mlx_new_window(vars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "Hello world!");
-	find_position();
-	mlx_loop_hook(vars.mlx, prueba, &vars);
+	raycasting(&player, &vars);
 	mlx_hook(vars.mlx_win, 2, 0L, handle_keys, &vars);
 	mlx_hook(vars.mlx_win, 17, 0L, xbutton_close, &vars);
 	mlx_loop(vars.mlx);
-
 }
