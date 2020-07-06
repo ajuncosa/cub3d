@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 12:42:59 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/07/06 12:18:35 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/07/06 13:34:10 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,14 @@ typedef struct	s_mlxvars
 
 typedef struct	s_player
 {
-	int			x;
-	int			y;
+	float		x;
+	float		y;
 	float		angle;
 	float		fov;
 	float		halffov;
+	float		sin;
+	float		cos;
+	float		speed;
 }				t_player;
 
 typedef struct	s_ray
@@ -71,9 +74,9 @@ int		map[MAP_HEIGHT][MAP_WIDTH] =
 		{1,0,0,0,0,0,0,0,1,1},
 		{1,0,1,0,0,0,0,0,0,1},
 		{1,0,0,0,0,1,0,0,0,1},
+		{1,0,0,0,5,1,0,0,0,1},
 		{1,0,0,0,0,1,0,0,0,1},
-		{1,0,0,0,0,1,0,0,0,1},
-		{1,0,5,0,1,1,1,0,0,1},
+		{1,0,0,0,1,1,1,0,0,1},
 		{1,0,0,0,0,1,0,0,0,1},
 		{1,0,0,0,0,1,0,0,0,1},
 		{1,1,1,1,1,1,1,1,1,1}
@@ -89,19 +92,46 @@ void	my_mlx_pixel_put(t_imgdata *data, int x, int y, int color)
 
 int		handle_keys(int keycode, t_vars *vars)
 {
+	float	new_x;
+	float	new_y;
+
 	if (keycode == 53)
 	{
 		mlx_destroy_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win);
 		exit(0);
 	}
-	if (keycode == 123)
-	{
+	else if (keycode == 123)
 		vars->player.angle -= 5;
-	}
-	if (keycode == 124)
-	{
+	else if (keycode == 124)
 		vars->player.angle += 5;
+//	else if (keycode == 0)
+//	else if (keycode == 2)
+	else if (keycode == 13)
+	{
+		vars->player.sin = sin(vars->player.angle * M_PI / 180) * vars->player.speed;
+		vars->player.cos = cos(vars->player.angle * M_PI / 180) * vars->player.speed;
+		new_x = vars->player.x + vars->player.cos;
+		new_y = vars->player.y + vars->player.sin;
+		if (map[(int)new_y][(int)new_x] == 0)
+		{
+ 			vars->player.x = new_x;
+			vars->player.y = new_y;
+		}
 	}
+	else if (keycode == 1)
+	{
+		vars->player.sin = sin(vars->player.angle * M_PI / 180) * vars->player.speed;
+		vars->player.cos = cos(vars->player.angle * M_PI / 180) * vars->player.speed;
+		new_x = vars->player.x - vars->player.cos;
+		new_y = vars->player.y - vars->player.sin;
+		if (map[(int)new_y][(int)new_x] == 0)
+		{
+ 			vars->player.x = new_x;
+			vars->player.y = new_y;
+		}
+
+	}
+	printf("keycode: %d\n", keycode);
 	return(0);
 }
 
@@ -135,6 +165,7 @@ void	player_initialise(t_vars *vars)
 	vars->player.angle = 270;
 	vars->player.fov = 60;
 	vars->player.halffov = vars->player.fov / 2;
+	vars->player.speed = 0.2;
 }
 
 int		raycasting(t_vars *vars)
