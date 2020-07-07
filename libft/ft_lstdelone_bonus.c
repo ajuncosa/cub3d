@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/08 14:06:41 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/01/28 13:19:44 by ajuncosa         ###   ########.fr       */
+/*   Created: 2020/01/22 11:14:50 by ajuncosa          #+#    #+#             */
+/*   Updated: 2020/02/05 11:30:20 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strchr(const char *s, int c)
-{
-	int		i;
-	char	*copy;
+#include "libft.h"
 
-	i = 0;
-	copy = (char *)s;
-	while (s[i] != '\0')
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
+{
+	if (lst && del)
 	{
-		if (s[i] == c)
-			return (&copy[i]);
-		i++;
+		del(lst->content);
+		free(lst);
 	}
-	if (s[i] == c)
-		return (&copy[i]);
-	else
-		return (0);
 }

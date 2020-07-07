@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/08 14:06:41 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/01/28 13:19:44 by ajuncosa         ###   ########.fr       */
+/*   Created: 2020/01/20 12:47:52 by ajuncosa          #+#    #+#             */
+/*   Updated: 2020/02/05 11:32:26 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strchr(const char *s, int c)
-{
-	int		i;
-	char	*copy;
+#include "libft.h"
 
-	i = 0;
-	copy = (char *)s;
-	while (s[i] != '\0')
-	{
-		if (s[i] == c)
-			return (&copy[i]);
-		i++;
-	}
-	if (s[i] == c)
-		return (&copy[i]);
-	else
-		return (0);
+t_list	*ft_lstlast(t_list *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
 }

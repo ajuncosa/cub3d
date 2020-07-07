@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/08 14:06:41 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/01/28 13:19:44 by ajuncosa         ###   ########.fr       */
+/*   Created: 2020/01/20 12:22:21 by ajuncosa          #+#    #+#             */
+/*   Updated: 2020/02/05 11:07:59 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strchr(const char *s, int c)
+#include "libft.h"
+
+int	ft_lstsize(t_list *lst)
 {
-	int		i;
-	char	*copy;
+	int i;
 
 	i = 0;
-	copy = (char *)s;
-	while (s[i] != '\0')
+	while (lst)
 	{
-		if (s[i] == c)
-			return (&copy[i]);
+		lst = lst->next;
 		i++;
 	}
-	if (s[i] == c)
-		return (&copy[i]);
-	else
-		return (0);
+	return (i);
 }

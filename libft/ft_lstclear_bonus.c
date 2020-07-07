@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/08 14:06:41 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/01/28 13:19:44 by ajuncosa         ###   ########.fr       */
+/*   Created: 2020/01/22 11:14:39 by ajuncosa          #+#    #+#             */
+/*   Updated: 2020/02/05 11:44:50 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strchr(const char *s, int c)
-{
-	int		i;
-	char	*copy;
+#include "libft.h"
 
-	i = 0;
-	copy = (char *)s;
-	while (s[i] != '\0')
+void	ft_lstclear(t_list **lst, void (*del)(void *))
+{
+	t_list	*tmp;
+
+	if (lst && del)
 	{
-		if (s[i] == c)
-			return (&copy[i]);
-		i++;
+		while (*lst)
+		{
+			tmp = (*lst)->next;
+			ft_lstdelone(*lst, del);
+			*lst = tmp;
+		}
 	}
-	if (s[i] == c)
-		return (&copy[i]);
-	else
-		return (0);
 }

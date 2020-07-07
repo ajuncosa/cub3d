@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/08 14:06:41 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/01/28 13:19:44 by ajuncosa         ###   ########.fr       */
+/*   Created: 2020/01/22 11:15:02 by ajuncosa          #+#    #+#             */
+/*   Updated: 2020/01/22 11:15:04 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strchr(const char *s, int c)
-{
-	int		i;
-	char	*copy;
+#include "libft.h"
 
-	i = 0;
-	copy = (char *)s;
-	while (s[i] != '\0')
+void	ft_lstiter(t_list *lst, void (*f)(void *))
+{
+	while (lst)
 	{
-		if (s[i] == c)
-			return (&copy[i]);
-		i++;
+		f(lst->content);
+		lst = lst->next;
 	}
-	if (s[i] == c)
-		return (&copy[i]);
-	else
-		return (0);
 }

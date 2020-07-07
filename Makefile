@@ -1,8 +1,8 @@
-SRCS	= main.c 
+SRCS	= main.c cub_keys.c cub_raycasting.c 
 OBJS	= ${SRCS:.c=.o}
 NAME	= cub3d
-CC	= gcc
-RM	= rm -f
+CC		= gcc
+RM		= rm -f
 CFLAGS	= -Wall -Werror -Wextra
 %.o: %.c
 	${CC} ${FLAGS} -c $< -o $@
@@ -22,7 +22,6 @@ clean:
 fclean:		clean
 	${RM} ${NAME}
 	make fclean -C libft/
-	
 
 re:		fclean all
 

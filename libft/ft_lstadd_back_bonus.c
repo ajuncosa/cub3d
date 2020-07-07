@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/08 14:06:41 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/01/28 13:19:44 by ajuncosa         ###   ########.fr       */
+/*   Created: 2020/01/22 11:12:09 by ajuncosa          #+#    #+#             */
+/*   Updated: 2020/02/05 11:22:16 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strchr(const char *s, int c)
-{
-	int		i;
-	char	*copy;
+#include "libft.h"
 
-	i = 0;
-	copy = (char *)s;
-	while (s[i] != '\0')
+void	ft_lstadd_back(t_list **lst, t_list *new)
+{
+	t_list	*last;
+
+	if (new)
 	{
-		if (s[i] == c)
-			return (&copy[i]);
-		i++;
+		if (!*lst)
+		{
+			*lst = new;
+			new->next = NULL;
+		}
+		else
+		{
+			last = ft_lstlast(*lst);
+			last->next = new;
+		}
 	}
-	if (s[i] == c)
-		return (&copy[i]);
-	else
-		return (0);
 }
