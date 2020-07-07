@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 12:42:59 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/07/06 13:34:10 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/07/07 08:44:12 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct	s_player
 	float		sin;
 	float		cos;
 	float		speed;
+	float		sin_ninety;
+	float		cos_ninety;
 }				t_player;
 
 typedef struct	s_ray
@@ -104,8 +106,30 @@ int		handle_keys(int keycode, t_vars *vars)
 		vars->player.angle -= 5;
 	else if (keycode == 124)
 		vars->player.angle += 5;
-//	else if (keycode == 0)
-//	else if (keycode == 2)
+	else if (keycode == 0)
+	{
+		vars->player.sin_ninety = sin((vars->player.angle - 90) * M_PI / 180) * vars->player.speed;
+		vars->player.cos_ninety = cos((vars->player.angle - 90) * M_PI / 180) * vars->player.speed;
+		new_x = vars->player.x + vars->player.cos_ninety;
+		new_y = vars->player.y + vars->player.sin_ninety;
+		if (map[(int)new_y][(int)new_x] == 0)
+		{
+			vars->player.x = new_x;
+			vars->player.y = new_y;
+		}
+	}
+	else if (keycode == 2)
+	{
+		vars->player.sin_ninety = sin((vars->player.angle + 90) * M_PI / 180) * vars->player.speed;
+		vars->player.cos_ninety = cos((vars->player.angle + 90) * M_PI / 180) * vars->player.speed;
+		new_x = vars->player.x + vars->player.cos_ninety;
+		new_y = vars->player.y + vars->player.sin_ninety;
+		if (map[(int)new_y][(int)new_x] == 0)
+		{
+			vars->player.x = new_x;
+			vars->player.y = new_y;
+		}
+	}
 	else if (keycode == 13)
 	{
 		vars->player.sin = sin(vars->player.angle * M_PI / 180) * vars->player.speed;
@@ -129,8 +153,8 @@ int		handle_keys(int keycode, t_vars *vars)
  			vars->player.x = new_x;
 			vars->player.y = new_y;
 		}
-
 	}
+	printf("x: %f, y: %f\n", vars->player.x, vars->player.y);
 	printf("keycode: %d\n", keycode);
 	return(0);
 }
