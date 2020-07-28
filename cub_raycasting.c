@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 11:16:15 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/07/28 10:19:54 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/07/28 13:23:17 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 
 void	calculate_ray_pos_and_path_incrementer(t_vars *vars)
 {
+	if (vars->keys.fw_traslation == 1)
+		forward_traslation(vars);
+	if (vars->keys.bw_traslation == 1)
+		backward_traslation(vars);
+	if (vars->keys.left_traslation == 1)
+		left_traslation(vars);
+	if (vars->keys.right_traslation == 1)
+		right_traslation(vars);
 	vars->ray.x = vars->player.x;
 	vars->ray.y = vars->player.y;
 	vars->ray.sin = sin(vars->ray.angle * M_PI / 180) / vars->ray.precision;
@@ -100,6 +108,10 @@ int		raycasting(t_vars *vars)
 	img.img = mlx_new_image(vars->mlxvars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
 			&img.line_length, &img.endian);
+	if (vars->keys.left_rotation == 1)
+		vars->player.angle -= vars->player.rotation;
+	if (vars->keys.right_rotation == 1)
+		vars->player.angle += vars->player.rotation;
 	vars->ray.angle = vars->player.angle - vars->player.halffov;
 	vars->ray.increment_angle = vars->player.fov / SCREEN_WIDTH;
 	vars->ray.count = 0;

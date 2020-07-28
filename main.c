@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 12:42:59 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/07/07 11:49:51 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/07/28 13:25:12 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ void	player_initialise(t_vars *vars)
 	vars->player.angle = 270;
 	vars->player.fov = 60;
 	vars->player.halffov = vars->player.fov / 2;
-	vars->player.speed = 0.2;
-	vars->player.rotation = 5;
+	vars->player.speed = 0.0001;
+	vars->player.rotation = 3;
 }
 
 int		main(int argc, char **argv)
@@ -96,7 +96,8 @@ int		main(int argc, char **argv)
 	vars.mlxvars.mlx = mlx_init();
 	vars.mlxvars.mlx_win = mlx_new_window(vars.mlxvars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "Hello world!");
 	mlx_loop_hook(vars.mlxvars.mlx, raycasting, &vars);
-	mlx_hook(vars.mlxvars.mlx_win, 2, 0L, handle_keys, &vars);
+	mlx_hook(vars.mlxvars.mlx_win, 2, 0L, handle_keypress, &vars);
+	mlx_hook(vars.mlxvars.mlx_win, 3, 0L, handle_keyrelease, &vars);
 	mlx_hook(vars.mlxvars.mlx_win, 17, 0L, xbutton_close, &vars);
 	mlx_loop(vars.mlxvars.mlx);
 }

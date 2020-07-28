@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 10:01:06 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/07/07 12:04:05 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/07/28 13:23:46 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	backward_traslation(t_vars *vars)
 	}
 }
 
-int		handle_keys(int keycode, t_vars *vars)
+int		handle_keypress(int keycode, t_vars *vars)
 {
 	if (keycode == 53)
 	{
@@ -92,16 +92,36 @@ int		handle_keys(int keycode, t_vars *vars)
 		exit(0);
 	}
 	else if (keycode == 123)
-		vars->player.angle -= vars->player.rotation;
+		vars->keys.left_rotation = 1;
+	//	vars->player.angle -= vars->player.rotation;
 	else if (keycode == 124)
-		vars->player.angle += vars->player.rotation;
+		vars->keys.right_rotation = 1;
+	//	vars->player.angle += vars->player.rotation;
 	else if (keycode == 0)
-		left_traslation(vars);
+		vars->keys.left_traslation = 1;
 	else if (keycode == 2)
-		right_traslation(vars);
+		vars->keys.right_traslation = 1;
 	else if (keycode == 13)
-		forward_traslation(vars);
+		vars->keys.fw_traslation = 1;
 	else if (keycode == 1)
-		backward_traslation(vars);
+		vars->keys.bw_traslation = 1;
 	return (0);
+}
+
+int		handle_keyrelease(int keycode, t_vars *vars)
+{
+	if (keycode == 123)
+		vars->keys.left_rotation = 0;
+	else if (keycode == 124)
+		vars->keys.right_rotation = 0;
+	else if (keycode == 0)
+		vars->keys.left_traslation = 0;
+	else if (keycode == 2)
+		vars->keys.right_traslation = 0;
+	else if (keycode == 13)
+		vars->keys.fw_traslation = 0;
+	else if (keycode == 1)
+		vars->keys.bw_traslation = 0;
+	return (0);
+
 }
