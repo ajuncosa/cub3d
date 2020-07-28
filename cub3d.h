@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/07/07 12:05:51 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/07/28 10:08:22 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,14 @@ typedef struct	s_ray
 	float		sin;
 	float		cos;
 }				t_ray;
+
+typedef struct	s_wall
+{
+	float		distance;
+	float		height;
+	int			east_west_hit;
+}				t_wall;
+
 /*
 typedef struct	s_map
 {
@@ -74,6 +82,7 @@ typedef struct	s_vars
 	t_mlxvars	mlxvars;
 	t_player	player;
 	t_ray		ray;
+	t_wall		wall;
 //	t_map		map;
 }				t_vars;
 

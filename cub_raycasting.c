@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 11:16:15 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/07/07 13:20:28 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/07/28 10:19:54 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,46 +20,69 @@ void	calculate_ray_pos_and_path_incrementer(t_vars *vars)
 	vars->ray.cos = cos(vars->ray.angle * M_PI / 180) / vars->ray.precision;
 }
 
-float	calculate_wall_height(t_vars *vars)
+void	find_wall(t_vars *vars)
 {
 	int		wall;
-	float	distance;
-	float	wall_height;
-	float	x_square;
-	float	y_square;
 
 	wall = 0;
+	vars->wall.east_west_hit = 0;
 	while (wall == 0)
 	{
 		vars->ray.x += vars->ray.cos;
+		wall = map[(int)vars->ray.y][(int)vars->ray.x];
 		vars->ray.y += vars->ray.sin;
+		if (wall != 0)
+		{
+			vars->wall.east_west_hit = 1;
+			break ;
+		}
 		wall = map[(int)vars->ray.y][(int)vars->ray.x];
 	}
-	x_square = pow(vars->player.x - vars->ray.x, 2);
-	y_square = pow(vars->player.y - vars->ray.y, 2);
-	distance = sqrt(x_square + y_square);
-	distance = distance * cos((vars->ray.angle - vars->player.angle)
-			* M_PI / 180);
-	wall_height = (int)((SCREEN_HEIGHT / 2) / distance);
-	if (wall_height > SCREEN_HEIGHT / 2)
-		wall_height = SCREEN_HEIGHT / 2;
-	return (wall_height);
 }
 
-void	paint(int i, float wall_height, t_imgdata *img)
+void	calculate_wall_height(t_vars *vars)
+{
+	float	x_square;
+	float	y_square;
+
+	find_wall(vars);
+	x_square = pow(vars->player.x - vars->ray.x, 2);
+	y_square = pow(vars->player.y - vars->ray.y, 2);
+	vars->wall.distance = sqrt(x_square + y_square);
+	vars->wall.distance = vars->wall.distance * cos((vars->ray.angle -
+				vars->player.angle) * M_PI / 180);
+	vars->wall.height = (int)((SCREEN_HEIGHT / 2) / vars->wall.distance);
+	if (vars->wall.height > SCREEN_HEIGHT / 2)
+		vars->wall.height = SCREEN_HEIGHT / 2;
+}
+
+void	paint(int i, t_imgdata *img, t_vars *vars)
 {
 	int j;
 
 	j = 0;
-	while (j < (SCREEN_HEIGHT / 2 - wall_height))
+	while (j < (SCREEN_HEIGHT / 2 - vars->wall.height))
 	{
 		my_mlx_pixel_put(img, i, j, 0x00FFFFFF);
 		j++;
 	}
-	while (j >= (SCREEN_HEIGHT / 2 - wall_height) &&
-			j < (SCREEN_HEIGHT / 2 + wall_height))
+	while (j >= (SCREEN_HEIGHT / 2 - vars->wall.height) &&
+			j < (SCREEN_HEIGHT / 2 + vars->wall.height))
 	{
-		my_mlx_pixel_put(img, i, j, 0x00FF0000);
+		if (vars->wall.east_west_hit == 0)
+		{
+			if (vars->ray.sin > 0)
+				my_mlx_pixel_put(img, i, j, 0x00FF0000);
+			else if (vars->ray.sin < 0)
+				my_mlx_pixel_put(img, i, j, 0x00FF00FF);
+		}
+		else
+		{
+			if (vars->ray.cos > 0)
+				my_mlx_pixel_put(img, i, j, 0x0000000F);
+			else if (vars->ray.cos < 0)
+				my_mlx_pixel_put(img, i, j, 0x000000FF);
+		}
 		j++;
 	}
 	while (j < SCREEN_HEIGHT)
@@ -73,7 +96,6 @@ int		raycasting(t_vars *vars)
 {
 	t_imgdata	img;
 	int			i;
-	float		wall_height;
 
 	img.img = mlx_new_image(vars->mlxvars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
@@ -86,8 +108,8 @@ int		raycasting(t_vars *vars)
 	while (vars->ray.count < SCREEN_WIDTH)
 	{
 		calculate_ray_pos_and_path_incrementer(vars);
-		wall_height = calculate_wall_height(vars);
-		paint(i, wall_height, &img);
+		calculate_wall_height(vars);
+		paint(i, &img, vars);
 		i++;
 		vars->ray.angle += vars->ray.increment_angle;
 		vars->ray.count++;
