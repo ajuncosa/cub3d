@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 10:01:06 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/07/28 13:31:35 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/07/28 13:34:41 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,4 @@ int		handle_keyrelease(int keycode, t_vars *vars)
 	else if (keycode == 1)
 		vars->keys.bw_traslation = 0;
 	return (0);
-
 }

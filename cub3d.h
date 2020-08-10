@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/07/28 13:23:32 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/07/31 11:20:10 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,12 @@ typedef struct	s_keys
 	int			right_rotation;
 }				t_keys;
 
+typedef struct	s_texture
+{
+	int			width;
+	int			height;
+}				t_texture;
+
 /*
 typedef struct	s_map
 {
@@ -94,6 +100,7 @@ typedef struct	s_vars
 	t_ray		ray;
 	t_wall		wall;
 	t_keys		keys;
+	t_texture	texture;
 //	t_map		map;
 }				t_vars;
 
@@ -110,5 +117,6 @@ void			backward_traslation(t_vars *vars);
 
 //int				xbutton_close(t_vars *vars);
 int				raycasting(t_vars *vars);
+int				paint_texture();
 
 #endif
