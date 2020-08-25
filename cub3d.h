@@ -85,6 +85,7 @@ typedef struct	s_texture
 {
 	int			width;
 	int			height;
+	int			position_x;
 }				t_texture;
 
 /*
@@ -117,6 +118,7 @@ void			backward_traslation(t_vars *vars);
 
 //int				xbutton_close(t_vars *vars);
 int				raycasting(t_vars *vars);
-int				paint_texture();
+//void			dda_line_algorithm(t_imgdata *img, int x0, int y0, int x1, int y1, int colour);
+void			paint_texture();
 
 #endif

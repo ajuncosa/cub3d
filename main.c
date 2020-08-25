@@ -93,6 +93,10 @@ int		main(int argc, char **argv)
 */
 //	map_initialise(&vars);
 	player_initialise(&vars);
+
+	vars.texture.width = 8;
+	vars.texture.height = 8;
+
 	vars.mlxvars.mlx = mlx_init();
 	vars.mlxvars.mlx_win = mlx_new_window(vars.mlxvars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "Hello world!");
 	mlx_loop_hook(vars.mlxvars.mlx, raycasting, &vars);

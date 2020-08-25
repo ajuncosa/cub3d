@@ -12,11 +12,11 @@
 
 #include "cub3d.h"
 
-void	paint_texture(int i, t_imgdata *img, t_vars *vars)
+void	paint_texture(int x, t_imgdata *img, t_vars *vars)
 {
-	int	width = 8;
-	int	height = 8;
-	int	bitmap[8][8] = {
+/*	vars->texture.width = 8;
+	vars->texture.height = 8;*/
+	int bitmap[8][8] = {
 		{1,1,1,1,1,1,1,1},
 		{0,0,0,1,0,0,0,1},
 		{1,1,1,1,1,1,1,1},
@@ -26,5 +26,27 @@ void	paint_texture(int i, t_imgdata *img, t_vars *vars)
 		{1,1,1,1,1,1,1,1},
 		{0,1,0,0,0,1,0,0}
 	};
-	char colours[2][18] = {"rgb(255, 241, 232)", "rgb(194, 195, 199)"};
+	int	colours[2] = {0xFFF1E8, 0xC2C3C7};
+
+	float	y_incrementer;
+	float	y;
+	int		i;
+	int		j;
+	int		colour;
+
+	y_incrementer = (vars->wall.height * 2) / vars->texture.height;
+	y = SCREEN_HEIGHT / 2 - vars->wall.height;
+	i = 0;
+	while (i < vars->texture.height)
+	{
+		j = y;
+		colour = colours[bitmap[i][vars->texture.position_x]];
+		while (j < (y + y_incrementer))
+		{
+			my_mlx_pixel_put(img, x, j, colour);
+			j++;
+		}
+		y += y_incrementer;
+		i++;
+	}
 }

@@ -67,7 +67,7 @@ void	calculate_wall_height(t_vars *vars)
 void	paint(int i, t_imgdata *img, t_vars *vars)
 {
 	int j;
-	void	*tex_img;
+//	void	*tex_img;
 
 	j = 0;
 	while (j < (SCREEN_HEIGHT / 2 - vars->wall.height))
@@ -75,9 +75,10 @@ void	paint(int i, t_imgdata *img, t_vars *vars)
 		my_mlx_pixel_put(img, i, j, 0x00FFFFFF);
 		j++;
 	}
-/*	while (j >= (SCREEN_HEIGHT / 2 - vars->wall.height) &&
+	while (j >= (SCREEN_HEIGHT / 2 - vars->wall.height) &&
 			j < (SCREEN_HEIGHT / 2 + vars->wall.height))
-	{
+			j++;
+	/*{
 		if (vars->wall.east_west_hit == 0)
 		{
 			if (vars->ray.sin > 0)
@@ -86,6 +87,7 @@ void	paint(int i, t_imgdata *img, t_vars *vars)
 				my_mlx_pixel_put(img, i, j, 0x00FF00FF);
 		}
 		else
+		if (vars->wall.east_west_hit != 0)
 		{
 			if (vars->ray.cos > 0)
 				my_mlx_pixel_put(img, i, j, 0x0000000F);
@@ -125,12 +127,14 @@ int		raycasting(t_vars *vars)
 	{
 		calculate_ray_pos_and_path_incrementer(vars);
 		calculate_wall_height(vars);
+		vars->texture.position_x = (vars->texture.width * (int)(floor(vars->ray.x + vars->ray.y))) % vars->texture.width;
+	//	printf("%d\n", vars->texture.position_x);
 		paint(i, &img, vars);
 		i++;
 		vars->ray.angle += vars->ray.increment_angle;
 		vars->ray.count++;
 	}
-//	mlx_put_image_to_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win,
-//			img.img, 0, 0);
+	mlx_put_image_to_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win,
+			img.img, 0, 0);
 	return (0);
 }
