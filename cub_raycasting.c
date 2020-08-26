@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/26 11:19:56 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/08/26 13:41:04 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void	calculate_wall_height(t_vars *vars)
 		vars->wall.height = SCREEN_HEIGHT / 2;
 }
 
-void	paint(int i, t_imgdata *img, t_vars *vars)
+void	paint(int x, t_imgdata *img, t_vars *vars)
 {
-//	void	*tex_img;
+	t_imgdata	texture_img;
 
 	/*{
 		if (vars->wall.east_west_hit == 0)
@@ -86,12 +86,12 @@ void	paint(int i, t_imgdata *img, t_vars *vars)
 		}
 		j++;
 	}*/
-	dda_line_algorithm(img, i, 0, i, SCREEN_HEIGHT / 2 - vars->wall.height, 0xC4E7F7);
-	paint_texture(i, img, vars);
-	dda_line_algorithm(img, i, SCREEN_HEIGHT / 2 + vars->wall.height, i, SCREEN_HEIGHT, 0x00FF00);
+	texture_img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx, "texturefile.xpm", &vars->texture.width, &vars->texture.height);
+	texture_img.addr = mlx_get_data_addr(texture_img.img, &texture_img.bits_per_pixel, &texture_img.line_length, &texture_img.endian);
 
-/*	tex_img = mlx_xpm_file_to_image(vars->mlxvars.mlx, "texturefile.xpm", &vars->texture.width, &vars->texture.height);
-	mlx_put_image_to_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win, tex_img, 0, 0);*/
+	dda_line_algorithm(img, x, 0, x, SCREEN_HEIGHT / 2 - vars->wall.height, 0xC4E7F7);
+	paint_texture(img, &texture_img, vars, x);
+	dda_line_algorithm(img, x, SCREEN_HEIGHT / 2 + vars->wall.height, x, SCREEN_HEIGHT, 0x00FF00);
 }
 
 int		raycasting(t_vars *vars)

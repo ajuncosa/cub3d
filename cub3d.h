@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/26 11:17:34 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/08/26 12:47:42 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,6 @@ void			backward_traslation(t_vars *vars);
 //int				xbutton_close(t_vars *vars);
 int				raycasting(t_vars *vars);
 void			dda_line_algorithm(t_imgdata *img, int x0, int y0, int x1, int y1, int colour);
-void			paint_texture(int x, t_imgdata *img, t_vars *vars);
+void			paint_texture(t_imgdata *img, t_imgdata *texture_img, t_vars *vars, int x);
 
 #endif
