@@ -7,28 +7,24 @@ int	abs(int n)
 
 void	dda_line_algorithm(t_imgdata *img, int x0, int y0, int x1, int y1, int colour)
 {
-	int	dx;
-	int	dy;
-	int	steps;
-	float	xinc;
-	float	yinc;
-	float	x;
-	float	y;
-	int	i;
+	int		i;
+	t_dda	line;
 
-	dx = x1 - x0;
-	dy = y1 - y0;
-	steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
-	xinc = dx / (float) steps;
-	yinc = dy / (float) steps;
-	x = x0;
-	y = y0;
+	line.dx = x1 - x0;
+	line.dy = y1 - y0;
+	line.steps = abs(line.dx) > abs(line.dy) ? abs(line.dx) : abs(line.dy);
+	line.xinc = line.dx / (float) line.steps;
+	line.yinc = line.dy / (float) line.steps;
+	line.x = x0;
+	line.y = y0;
 	i = 0;
-	while (i <= steps)
+	while (i <= line.steps)
 	{
-		my_mlx_pixel_put(img, x, y, colour);
-		x += xinc;
-		y += yinc;
+		if (line.x < 0 || line.x >= SCREEN_WIDTH || line.y < 0 || line.y >= SCREEN_HEIGHT)
+        	return;
+		my_mlx_pixel_put(img, line.x, line.y, colour);
+		line.x += line.xinc;
+		line.y += line.yinc;
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/07/31 13:46:00 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/08/26 11:19:56 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,8 @@ void	calculate_wall_height(t_vars *vars)
 
 void	paint(int i, t_imgdata *img, t_vars *vars)
 {
-	int j;
 //	void	*tex_img;
 
-	j = 0;
-	while (j < (SCREEN_HEIGHT / 2 - vars->wall.height))
-	{
-		my_mlx_pixel_put(img, i, j, 0x00FFFFFF);
-		j++;
-	}
-	while (j >= (SCREEN_HEIGHT / 2 - vars->wall.height) &&
-			j < (SCREEN_HEIGHT / 2 + vars->wall.height))
-			j++;
 	/*{
 		if (vars->wall.east_west_hit == 0)
 		{
@@ -96,12 +86,10 @@ void	paint(int i, t_imgdata *img, t_vars *vars)
 		}
 		j++;
 	}*/
+	dda_line_algorithm(img, i, 0, i, SCREEN_HEIGHT / 2 - vars->wall.height, 0xC4E7F7);
 	paint_texture(i, img, vars);
-	while (j < SCREEN_HEIGHT)
-	{
-		my_mlx_pixel_put(img, i, j, 0x0000FF00);
-		j++;
-	}
+	dda_line_algorithm(img, i, SCREEN_HEIGHT / 2 + vars->wall.height, i, SCREEN_HEIGHT, 0x00FF00);
+
 /*	tex_img = mlx_xpm_file_to_image(vars->mlxvars.mlx, "texturefile.xpm", &vars->texture.width, &vars->texture.height);
 	mlx_put_image_to_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win, tex_img, 0, 0);*/
 }
@@ -109,7 +97,6 @@ void	paint(int i, t_imgdata *img, t_vars *vars)
 int		raycasting(t_vars *vars)
 {
 	t_imgdata	img;
-	int			i;
 
 	img.img = mlx_new_image(vars->mlxvars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
@@ -122,15 +109,12 @@ int		raycasting(t_vars *vars)
 	vars->ray.increment_angle = vars->player.fov / SCREEN_WIDTH;
 	vars->ray.count = 0;
 	vars->ray.precision = 64;
-	i = 0;
 	while (vars->ray.count < SCREEN_WIDTH)
 	{
 		calculate_ray_pos_and_path_incrementer(vars);
 		calculate_wall_height(vars);
-		vars->texture.position_x = (vars->texture.width * (int)(floor(vars->ray.x + vars->ray.y))) % vars->texture.width;
-	//	printf("%d\n", vars->texture.position_x);
-		paint(i, &img, vars);
-		i++;
+		vars->texture.position_x = (int)fmod(vars->texture.width * (vars->ray.x + vars->ray.y), vars->texture.width);
+		paint(vars->ray.count, &img, vars);
 		vars->ray.angle += vars->ray.increment_angle;
 		vars->ray.count++;
 	}

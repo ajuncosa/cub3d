@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 11:14:41 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/07/31 12:39:00 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/08/26 11:09:15 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	paint_texture(int x, t_imgdata *img, t_vars *vars)
 		{1,1,1,1,1,1,1,1},
 		{0,1,0,0,0,1,0,0}
 	};
-	int	colours[2] = {0xFFF1E8, 0xC2C3C7};
+	int	colours[2] = {0xFE875F, 0xFAEBD7};
 
 	float	y_incrementer;
 	float	y;
