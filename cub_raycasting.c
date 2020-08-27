@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/26 13:41:04 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/08/27 11:13:36 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ void	calculate_wall_height(t_vars *vars)
 
 void	paint(int x, t_imgdata *img, t_vars *vars)
 {
-	t_imgdata	texture_img;
-
 	/*{
 		if (vars->wall.east_west_hit == 0)
 		{
@@ -86,11 +84,8 @@ void	paint(int x, t_imgdata *img, t_vars *vars)
 		}
 		j++;
 	}*/
-	texture_img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx, "texturefile.xpm", &vars->texture.width, &vars->texture.height);
-	texture_img.addr = mlx_get_data_addr(texture_img.img, &texture_img.bits_per_pixel, &texture_img.line_length, &texture_img.endian);
-
 	dda_line_algorithm(img, x, 0, x, SCREEN_HEIGHT / 2 - vars->wall.height, 0xC4E7F7);
-	paint_texture(img, &texture_img, vars, x);
+	paint_texture(img, vars, x);
 	dda_line_algorithm(img, x, SCREEN_HEIGHT / 2 + vars->wall.height, x, SCREEN_HEIGHT, 0x00FF00);
 }
 
@@ -113,7 +108,8 @@ int		raycasting(t_vars *vars)
 	{
 		calculate_ray_pos_and_path_incrementer(vars);
 		calculate_wall_height(vars);
-		vars->texture.position_x = (int)fmod(vars->texture.width * (vars->ray.x + vars->ray.y), vars->texture.width);
+		vars->textures.north.position_x = (int)fmod(vars->textures.north.width * (vars->ray.x + vars->ray.y), vars->textures.north.width);
+		vars->textures.south.position_x = (int)fmod(vars->textures.south.width * (vars->ray.x + vars->ray.y), vars->textures.south.width);
 		paint(vars->ray.count, &img, vars);
 		vars->ray.angle += vars->ray.increment_angle;
 		vars->ray.count++;

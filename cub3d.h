@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/26 12:47:42 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/08/27 10:39:16 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,21 @@ typedef struct	s_keys
 	int			right_rotation;
 }				t_keys;
 
-typedef struct	s_texture
+typedef struct	s_texvars
 {
 	int			width;
 	int			height;
 	int			position_x;
-}				t_texture;
+	t_imgdata	img;
+}				t_texvars;
+
+typedef struct	s_textures
+{
+	t_texvars	north;
+	t_texvars	south;
+	t_texvars	east;
+	t_texvars	west;
+}				t_textures;
 
 typedef struct	s_dda
 {
@@ -112,7 +121,7 @@ typedef struct	s_vars
 	t_ray		ray;
 	t_wall		wall;
 	t_keys		keys;
-	t_texture	texture;
+	t_textures	textures;
 //	t_map		map;
 }				t_vars;
 
@@ -129,7 +138,9 @@ void			backward_traslation(t_vars *vars);
 
 //int				xbutton_close(t_vars *vars);
 int				raycasting(t_vars *vars);
-void			dda_line_algorithm(t_imgdata *img, int x0, int y0, int x1, int y1, int colour);
-void			paint_texture(t_imgdata *img, t_imgdata *texture_img, t_vars *vars, int x);
+void			dda_line_algorithm(t_imgdata *img, int x0, int y0,
+		int x1, int y1, int colour);
+void			textures_init(t_vars *vars);
+void			paint_texture(t_imgdata *img, t_vars *vars, int x);
 
 #endif
