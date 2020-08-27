@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/27 10:39:16 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/08/27 12:35:59 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,14 @@ typedef struct	s_textures
 	t_texvars	west;
 }				t_textures;
 
+typedef struct	s_linecoords
+{
+	int			x0;
+	int			y0;
+	int			x1;
+	int			y1;
+}				t_linecoords;
+
 typedef struct	s_dda
 {
 	int			dx;
@@ -138,9 +146,11 @@ void			backward_traslation(t_vars *vars);
 
 //int				xbutton_close(t_vars *vars);
 int				raycasting(t_vars *vars);
-void			dda_line_algorithm(t_imgdata *img, int x0, int y0,
-		int x1, int y1, int colour);
-void			textures_init(t_vars *vars);
+void			dda_line_algorithm(t_imgdata *img,
+		t_linecoords coords, int colour);
+void			east_west_textures_init(t_vars *vars);
+void			north_south_textures_init(t_vars *vars);
+void			texture_position_x_init(t_vars *vars);
 void			paint_texture(t_imgdata *img, t_vars *vars, int x);
 
 #endif
