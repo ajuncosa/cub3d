@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/27 11:13:36 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/08/27 11:30:08 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,24 +66,6 @@ void	calculate_wall_height(t_vars *vars)
 
 void	paint(int x, t_imgdata *img, t_vars *vars)
 {
-	/*{
-		if (vars->wall.east_west_hit == 0)
-		{
-			if (vars->ray.sin > 0)
-				my_mlx_pixel_put(img, i, j, 0x00FF0000);
-			else if (vars->ray.sin < 0)
-				my_mlx_pixel_put(img, i, j, 0x00FF00FF);
-		}
-		else
-		if (vars->wall.east_west_hit != 0)
-		{
-			if (vars->ray.cos > 0)
-				my_mlx_pixel_put(img, i, j, 0x0000000F);
-			else if (vars->ray.cos < 0)
-				my_mlx_pixel_put(img, i, j, 0x000000FF);
-		}
-		j++;
-	}*/
 	dda_line_algorithm(img, x, 0, x, SCREEN_HEIGHT / 2 - vars->wall.height, 0xC4E7F7);
 	paint_texture(img, vars, x);
 	dda_line_algorithm(img, x, SCREEN_HEIGHT / 2 + vars->wall.height, x, SCREEN_HEIGHT, 0x00FF00);
@@ -110,6 +92,8 @@ int		raycasting(t_vars *vars)
 		calculate_wall_height(vars);
 		vars->textures.north.position_x = (int)fmod(vars->textures.north.width * (vars->ray.x + vars->ray.y), vars->textures.north.width);
 		vars->textures.south.position_x = (int)fmod(vars->textures.south.width * (vars->ray.x + vars->ray.y), vars->textures.south.width);
+		vars->textures.east.position_x = (int)fmod(vars->textures.east.width * (vars->ray.x + vars->ray.y), vars->textures.east.width);
+		vars->textures.west.position_x = (int)fmod(vars->textures.west.width * (vars->ray.x + vars->ray.y), vars->textures.west.width);
 		paint(vars->ray.count, &img, vars);
 		vars->ray.angle += vars->ray.increment_angle;
 		vars->ray.count++;
