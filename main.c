@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 12:42:59 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/27 12:06:34 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/08/27 12:43:08 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ int		main(int argc, char **argv)
 //	map_initialise(&vars);
 	player_initialise(&vars);
 	vars.mlxvars.mlx = mlx_init();
-	vars.mlxvars.mlx_win = mlx_new_window(vars.mlxvars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "Hello world!");
+	vars.mlxvars.mlx_win = mlx_new_window(vars.mlxvars.mlx,
+			SCREEN_WIDTH, SCREEN_HEIGHT, "Hello world!");
 	east_west_textures_init(&vars);
 	north_south_textures_init(&vars);
 	mlx_loop_hook(vars.mlxvars.mlx, raycasting, &vars);

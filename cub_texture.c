@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 11:14:41 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/27 12:33:15 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/08/27 12:45:14 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void			east_west_textures_init(t_vars *vars)
 {
 	vars->textures.east.img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx,
-			"ivy_texture.xpm", &vars->textures.east.width,
+			"textures/ivy_texture.xpm", &vars->textures.east.width,
 			&vars->textures.east.height);
 	vars->textures.east.img.addr =
 		mlx_get_data_addr(vars->textures.east.img.img,
@@ -23,7 +23,7 @@ void			east_west_textures_init(t_vars *vars)
 				&vars->textures.east.img.line_length,
 				&vars->textures.east.img.endian);
 	vars->textures.west.img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx,
-			"white_texture.xpm", &vars->textures.west.width,
+			"textures/white_texture.xpm", &vars->textures.west.width,
 			&vars->textures.west.height);
 	vars->textures.west.img.addr =
 		mlx_get_data_addr(vars->textures.west.img.img,
@@ -35,7 +35,7 @@ void			east_west_textures_init(t_vars *vars)
 void			north_south_textures_init(t_vars *vars)
 {
 	vars->textures.north.img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx,
-			"stone_texture.xpm", &vars->textures.north.width,
+			"textures/stone_texture.xpm", &vars->textures.north.width,
 			&vars->textures.north.height);
 	vars->textures.north.img.addr =
 		mlx_get_data_addr(vars->textures.north.img.img,
@@ -43,7 +43,7 @@ void			north_south_textures_init(t_vars *vars)
 				&vars->textures.north.img.line_length,
 				&vars->textures.north.img.endian);
 	vars->textures.south.img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx,
-			"brick_texture.xpm", &vars->textures.south.width,
+			"textures/brick_texture.xpm", &vars->textures.south.width,
 			&vars->textures.south.height);
 	vars->textures.south.img.addr =
 		mlx_get_data_addr(vars->textures.south.img.img,
