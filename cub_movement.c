@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/28 13:29:56 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/07/28 13:37:17 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/08/28 13:33:27 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	left_traslation(t_vars *vars)
 	vars->player.cos = cos(angle_radians) * vars->player.speed;
 	new_x = vars->player.x + vars->player.cos;
 	new_y = vars->player.y + vars->player.sin;
-	if (map[(int)new_y][(int)new_x] == 0)
+	if (map[(int)new_y][(int)new_x] == 0 || map[(int)new_y][(int)new_x] == 5)
 	{
 		vars->player.x = new_x;
 		vars->player.y = new_y;
@@ -41,7 +41,7 @@ void	right_traslation(t_vars *vars)
 	vars->player.cos = cos(angle_radians) * vars->player.speed;
 	new_x = vars->player.x + vars->player.cos;
 	new_y = vars->player.y + vars->player.sin;
-	if (map[(int)new_y][(int)new_x] == 0)
+	if (map[(int)new_y][(int)new_x] == 0 || map[(int)new_y][(int)new_x] == 5)
 	{
 		vars->player.x = new_x;
 		vars->player.y = new_y;
@@ -53,14 +53,33 @@ void	forward_traslation(t_vars *vars)
 	float	new_x;
 	float	new_y;
 	float	angle_radians;
+	int		sign;
 
 	angle_radians = vars->player.angle * M_PI / 180;
 	vars->player.sin = sin(angle_radians) * vars->player.speed;
 	vars->player.cos = cos(angle_radians) * vars->player.speed;
 	new_x = vars->player.x + vars->player.cos;
 	new_y = vars->player.y + vars->player.sin;
-	if (map[(int)new_y][(int)new_x] == 0)
+	if (map[(int)new_y][(int)new_x] == 0 || map[(int)new_y][(int)new_x] == 5)
 	{
+		if (vars->player.cos > 0)
+			sign = 1;
+		else
+			sign = -1;
+		if (map[(int)new_y][(int)new_x + sign] == 1)
+		{
+			if ((floor(new_x + 1) - new_x) < 0.5)
+				return;
+		}
+		if (vars->player.sin > 0)
+			sign = 1;
+		else
+			sign = -1;
+		if (map[(int)new_y + sign][(int)new_x] == 1)
+		{
+			if ((floor(new_y + 1) - new_y) < 0.5)
+				return;
+		}
 		vars->player.x = new_x;
 		vars->player.y = new_y;
 	}
@@ -77,7 +96,7 @@ void	backward_traslation(t_vars *vars)
 	vars->player.cos = cos(angle_radians) * vars->player.speed;
 	new_x = vars->player.x - vars->player.cos;
 	new_y = vars->player.y - vars->player.sin;
-	if (map[(int)new_y][(int)new_x] == 0)
+	if (map[(int)new_y][(int)new_x] == 0 || map[(int)new_y][(int)new_x] == 5)
 	{
 		vars->player.x = new_x;
 		vars->player.y = new_y;

@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/27 12:35:59 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/08/28 11:04:04 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <math.h>
-# define MAP_WIDTH 10
-# define MAP_HEIGHT 10
+# define MAP_WIDTH 39
+# define MAP_HEIGHT 52
 # define SCREEN_WIDTH 640
 # define SCREEN_HEIGHT 480
 

@@ -6,14 +6,18 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/27 12:36:13 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/08/28 13:04:26 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	calculate_ray_pos_and_path_incrementer(t_vars *vars)
+void	player_move(t_vars *vars)
 {
+	if (vars->keys.left_rotation == 1)
+		vars->player.angle -= vars->player.rotation;
+	if (vars->keys.right_rotation == 1)
+		vars->player.angle += vars->player.rotation;
 	if (vars->keys.fw_traslation == 1)
 		forward_traslation(vars);
 	if (vars->keys.bw_traslation == 1)
@@ -22,10 +26,6 @@ void	calculate_ray_pos_and_path_incrementer(t_vars *vars)
 		left_traslation(vars);
 	if (vars->keys.right_traslation == 1)
 		right_traslation(vars);
-	vars->ray.x = vars->player.x;
-	vars->ray.y = vars->player.y;
-	vars->ray.sin = sin(vars->ray.angle * M_PI / 180) / vars->ray.precision;
-	vars->ray.cos = cos(vars->ray.angle * M_PI / 180) / vars->ray.precision;
 }
 
 void	find_wall(t_vars *vars)
@@ -34,12 +34,12 @@ void	find_wall(t_vars *vars)
 
 	wall = 0;
 	vars->wall.east_west_hit = 0;
-	while (wall == 0)
+	while (wall == 0 || wall == 5)
 	{
 		vars->ray.x += vars->ray.cos;
 		wall = map[(int)vars->ray.y][(int)vars->ray.x];
 		vars->ray.y += vars->ray.sin;
-		if (wall != 0)
+		if (wall != 0 && wall != 5)
 		{
 			vars->wall.east_west_hit = 1;
 			break ;
@@ -60,8 +60,6 @@ void	calculate_wall_height(t_vars *vars)
 	vars->wall.distance = vars->wall.distance * cos((vars->ray.angle -
 				vars->player.angle) * M_PI / 180);
 	vars->wall.height = (int)((SCREEN_HEIGHT / 2) / vars->wall.distance);
-	if (vars->wall.height > SCREEN_HEIGHT / 2)
-		vars->wall.height = SCREEN_HEIGHT / 2;
 }
 
 void	paint(int x, t_imgdata *img, t_vars *vars)
@@ -86,17 +84,17 @@ int		raycasting(t_vars *vars)
 	img.img = mlx_new_image(vars->mlxvars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
 			&img.line_length, &img.endian);
-	if (vars->keys.left_rotation == 1)
-		vars->player.angle -= vars->player.rotation;
-	if (vars->keys.right_rotation == 1)
-		vars->player.angle += vars->player.rotation;
+	player_move(vars);
 	vars->ray.angle = vars->player.angle - vars->player.halffov;
 	vars->ray.increment_angle = vars->player.fov / SCREEN_WIDTH;
 	vars->ray.count = 0;
-	vars->ray.precision = 64;
+	vars->ray.precision = 128;
 	while (vars->ray.count < SCREEN_WIDTH)
 	{
-		calculate_ray_pos_and_path_incrementer(vars);
+		vars->ray.x = vars->player.x;
+		vars->ray.y = vars->player.y;
+		vars->ray.sin = sin(vars->ray.angle * M_PI / 180) / vars->ray.precision;
+		vars->ray.cos = cos(vars->ray.angle * M_PI / 180) / vars->ray.precision;
 		calculate_wall_height(vars);
 		texture_position_x_init(vars);
 		paint(vars->ray.count, &img, vars);

@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 12:08:00 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/27 12:35:07 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/08/28 12:27:33 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ void	dda_line_algorithm(t_imgdata *img, t_linecoords coords, int colour)
 	i = 0;
 	while (i <= line.steps)
 	{
-		if (line.x < 0 || line.x >= SCREEN_WIDTH ||
-				line.y < 0 || line.y >= SCREEN_HEIGHT)
-			return ;
 		my_mlx_pixel_put(img, line.x, line.y, colour);
 		line.x += line.xinc;
 		line.y += line.yinc;
