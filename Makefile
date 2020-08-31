@@ -10,7 +10,7 @@ CFLAGS	= -Wall -Werror -Wextra
 ${NAME}:	${OBJS}
 	make -C libft/
 	make -C minilibx/
-	$(CC) -g -fsanitize=address -L minilibx/ -lmlx -framework OPENGL -framework Appkit -L libft/ -lft $^ -o ${NAME} 
+	$(CC) -g -fsanitize=address  -L minilibx/ -lmlx -framework OPENGL -framework Appkit -L libft/ -lft $^ -o ${NAME} 
 
 all:		${NAME}
 

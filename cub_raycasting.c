@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/28 13:04:26 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/08/31 12:00:09 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int		raycasting(t_vars *vars)
 	vars->ray.angle = vars->player.angle - vars->player.halffov;
 	vars->ray.increment_angle = vars->player.fov / SCREEN_WIDTH;
 	vars->ray.count = 0;
-	vars->ray.precision = 128;
+	vars->ray.precision = 64;
 	while (vars->ray.count < SCREEN_WIDTH)
 	{
 		vars->ray.x = vars->player.x;
@@ -99,6 +99,8 @@ int		raycasting(t_vars *vars)
 		texture_position_x_init(vars);
 		paint(vars->ray.count, &img, vars);
 		vars->ray.angle += vars->ray.increment_angle;
+		if (vars->ray.count == SCREEN_WIDTH / 2)
+			vars->wall.mid_dist = vars->wall.distance;
 		vars->ray.count++;
 	}
 	mlx_put_image_to_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win,

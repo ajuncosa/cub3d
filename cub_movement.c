@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/28 13:29:56 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/28 13:33:27 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/08/31 11:57:52 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	forward_traslation(t_vars *vars)
 	float	new_x;
 	float	new_y;
 	float	angle_radians;
-	int		sign;
+	int		one;
 
 	angle_radians = vars->player.angle * M_PI / 180;
 	vars->player.sin = sin(angle_radians) * vars->player.speed;
@@ -62,24 +62,26 @@ void	forward_traslation(t_vars *vars)
 	new_y = vars->player.y + vars->player.sin;
 	if (map[(int)new_y][(int)new_x] == 0 || map[(int)new_y][(int)new_x] == 5)
 	{
-		if (vars->player.cos > 0)
-			sign = 1;
-		else
-			sign = -1;
-		if (map[(int)new_y][(int)new_x + sign] == 1)
-		{
-			if ((floor(new_x + 1) - new_x) < 0.5)
-				return;
-		}
-		if (vars->player.sin > 0)
-			sign = 1;
-		else
-			sign = -1;
-		if (map[(int)new_y + sign][(int)new_x] == 1)
-		{
-			if ((floor(new_y + 1) - new_y) < 0.5)
-				return;
-		}
+	/*	if (vars->player.cos > 0)
+ 			one = 1;
+ 		else
+ 			one = -1;
+ 		if (map[(int)new_y][(int)new_x + one] == 1)
+ 		{
+ 			if ((floor(new_x + one) - new_x) < 0.5)
+ 				return;
+ 		}
+ 		if (vars->player.sin > 0)
+ 			one = 1;
+ 		else
+ 			one = -1;
+ 		if (map[(int)new_y + one][(int)new_x] == 1)
+ 		{
+ 			if ((floor(new_y + one) - new_y) < 0.5)
+ 				return;
+ 		}*/
+		if (vars->wall.mid_dist < 0.5)
+			return;
 		vars->player.x = new_x;
 		vars->player.y = new_y;
 	}
