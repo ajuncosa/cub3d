@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 11:14:41 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/27 12:45:14 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/08/31 13:40:13 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void			east_west_textures_init(t_vars *vars)
 {
 	vars->textures.east.img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx,
-			"textures/ivy_texture.xpm", &vars->textures.east.width,
+			"textures/ivy_texture2.xpm", &vars->textures.east.width,
 			&vars->textures.east.height);
 	vars->textures.east.img.addr =
 		mlx_get_data_addr(vars->textures.east.img.img,
@@ -62,6 +62,24 @@ void			texture_position_x_init(t_vars *vars)
 			(vars->ray.x + vars->ray.y), vars->textures.east.width);
 	vars->textures.west.position_x = (int)fmod(vars->textures.west.width *
 			(vars->ray.x + vars->ray.y), vars->textures.west.width);
+}
+
+void	get_cardinal(t_vars *vars)
+{
+	if (vars->wall.east_west_hit == 0)
+	{
+		if (vars->ray.sin > 0)
+			vars->ray.cardinal = 'S';
+		else if (vars->ray.sin < 0)
+			vars->ray.cardinal = 'N';
+	}
+	else if (vars->wall.east_west_hit != 0)
+	{
+		if (vars->ray.cos > 0)
+			vars->ray.cardinal = 'E';
+		else if (vars->ray.cos < 0)
+			vars->ray.cardinal = 'W';
+	}
 }
 
 unsigned int	texture_get_colour(t_vars *vars, int i)

@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/31 11:55:18 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/08/31 13:36:23 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct	s_ray
 	float		precision;
 	float		sin;
 	float		cos;
+	int			cardinal;
 }				t_ray;
 
 typedef struct	s_wall
@@ -153,5 +154,6 @@ void			east_west_textures_init(t_vars *vars);
 void			north_south_textures_init(t_vars *vars);
 void			texture_position_x_init(t_vars *vars);
 void			paint_texture(t_imgdata *img, t_vars *vars, int x);
+void			get_cardinal(t_vars *vars);
 
 #endif

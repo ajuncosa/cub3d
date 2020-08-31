@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/28 13:29:56 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/31 11:57:52 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/08/31 12:47:00 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	forward_traslation(t_vars *vars)
  			if ((floor(new_y + one) - new_y) < 0.5)
  				return;
  		}*/
-		if (vars->wall.mid_dist < 0.5)
+		if (vars->wall.mid_dist < 0.6)
 			return;
 		vars->player.x = new_x;
 		vars->player.y = new_y;

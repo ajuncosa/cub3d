@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/31 12:00:09 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/08/31 13:40:08 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,30 @@ void	calculate_wall_height(t_vars *vars)
 	vars->wall.distance = vars->wall.distance * cos((vars->ray.angle -
 				vars->player.angle) * M_PI / 180);
 	vars->wall.height = (int)((SCREEN_HEIGHT / 2) / vars->wall.distance);
+	if (vars->ray.count == SCREEN_WIDTH / 2)
+		vars->wall.mid_dist = vars->wall.distance;
 }
 
 void	paint(int x, t_imgdata *img, t_vars *vars)
 {
 	t_linecoords	coords;
+	t_textures		texture;
 
 	coords.x0 = x;
 	coords.y0 = 0;
 	coords.x1 = x;
 	coords.y1 = SCREEN_HEIGHT / 2 - vars->wall.height;
 	dda_line_algorithm(img, coords, 0xC4E7F7);
+
+	if (get_cardinal(vars) == 'N')
+		texture = vars->textures.north;
+	else if (get_cardinal(vars) == 'S')
+		texture = vars->textures.south;
+	else if (get_cardinal(vars) == 'E')
+		texture = vars->textures.east;
+	else if (get_cardinal(vars) == 'W')
+		texture = vars->textures.west;
+
 	paint_texture(img, vars, x);
 	coords.y0 = SCREEN_HEIGHT / 2 + vars->wall.height;
 	coords.y1 = SCREEN_HEIGHT;
@@ -99,8 +112,6 @@ int		raycasting(t_vars *vars)
 		texture_position_x_init(vars);
 		paint(vars->ray.count, &img, vars);
 		vars->ray.angle += vars->ray.increment_angle;
-		if (vars->ray.count == SCREEN_WIDTH / 2)
-			vars->wall.mid_dist = vars->wall.distance;
 		vars->ray.count++;
 	}
 	mlx_put_image_to_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win,
