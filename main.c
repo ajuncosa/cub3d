@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 12:42:59 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/31 10:55:47 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/01 11:57:42 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,8 +153,7 @@ int		main(int argc, char **argv)
 	vars.mlxvars.mlx = mlx_init();
 	vars.mlxvars.mlx_win = mlx_new_window(vars.mlxvars.mlx,
 			SCREEN_WIDTH, SCREEN_HEIGHT, "Hello world!");
-	east_west_textures_init(&vars);
-	north_south_textures_init(&vars);
+	init_all_textures(&vars);
 	mlx_loop_hook(vars.mlxvars.mlx, raycasting, &vars);
 	mlx_hook(vars.mlxvars.mlx_win, 2, 0L, handle_keypress, &vars);
 	mlx_hook(vars.mlxvars.mlx_win, 3, 0L, handle_keyrelease, &vars);

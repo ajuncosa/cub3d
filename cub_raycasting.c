@@ -6,7 +6,7 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/31 13:40:08 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/01 11:56:20 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	find_wall(t_vars *vars)
 	}
 }
 
-void	calculate_wall_height(t_vars *vars)
+void	calc_dist_and_wall_height(t_vars *vars)
 {
 	float	x_square;
 	float	y_square;
@@ -64,27 +64,16 @@ void	calculate_wall_height(t_vars *vars)
 		vars->wall.mid_dist = vars->wall.distance;
 }
 
-void	paint(int x, t_imgdata *img, t_vars *vars)
+void	paint(int x, t_imgdata *img, t_vars *vars, t_texvars texture)
 {
 	t_linecoords	coords;
-	t_textures		texture;
 
 	coords.x0 = x;
 	coords.y0 = 0;
 	coords.x1 = x;
 	coords.y1 = SCREEN_HEIGHT / 2 - vars->wall.height;
 	dda_line_algorithm(img, coords, 0xC4E7F7);
-
-	if (get_cardinal(vars) == 'N')
-		texture = vars->textures.north;
-	else if (get_cardinal(vars) == 'S')
-		texture = vars->textures.south;
-	else if (get_cardinal(vars) == 'E')
-		texture = vars->textures.east;
-	else if (get_cardinal(vars) == 'W')
-		texture = vars->textures.west;
-
-	paint_texture(img, vars, x);
+	paint_texture(img, vars, texture, x);
 	coords.y0 = SCREEN_HEIGHT / 2 + vars->wall.height;
 	coords.y1 = SCREEN_HEIGHT;
 	dda_line_algorithm(img, coords, 0x00FF00);
@@ -93,6 +82,7 @@ void	paint(int x, t_imgdata *img, t_vars *vars)
 int		raycasting(t_vars *vars)
 {
 	t_imgdata	img;
+	t_texvars	texture;
 
 	img.img = mlx_new_image(vars->mlxvars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
@@ -108,13 +98,14 @@ int		raycasting(t_vars *vars)
 		vars->ray.y = vars->player.y;
 		vars->ray.sin = sin(vars->ray.angle * M_PI / 180) / vars->ray.precision;
 		vars->ray.cos = cos(vars->ray.angle * M_PI / 180) / vars->ray.precision;
-		calculate_wall_height(vars);
-		texture_position_x_init(vars);
-		paint(vars->ray.count, &img, vars);
+		calc_dist_and_wall_height(vars);
+		texture = init_texture(vars);
+		paint(vars->ray.count, &img, vars, texture);
 		vars->ray.angle += vars->ray.increment_angle;
 		vars->ray.count++;
 	}
 	mlx_put_image_to_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win,
 			img.img, 0, 0);
+	mlx_destroy_image(vars->mlxvars.mlx, img.img);
 	return (0);
 }

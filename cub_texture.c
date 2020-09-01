@@ -6,65 +6,34 @@
 /*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 11:14:41 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/31 13:40:13 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/01 12:14:27 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void			east_west_textures_init(t_vars *vars)
+void		fill_in_tex_variables(t_vars *vars, t_texvars *texture, char *file)
 {
-	vars->textures.east.img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx,
-			"textures/ivy_texture2.xpm", &vars->textures.east.width,
-			&vars->textures.east.height);
-	vars->textures.east.img.addr =
-		mlx_get_data_addr(vars->textures.east.img.img,
-				&vars->textures.east.img.bits_per_pixel,
-				&vars->textures.east.img.line_length,
-				&vars->textures.east.img.endian);
-	vars->textures.west.img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx,
-			"textures/white_texture.xpm", &vars->textures.west.width,
-			&vars->textures.west.height);
-	vars->textures.west.img.addr =
-		mlx_get_data_addr(vars->textures.west.img.img,
-				&vars->textures.west.img.bits_per_pixel,
-				&vars->textures.west.img.line_length,
-				&vars->textures.west.img.endian);
+	texture->img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx, file,
+			&texture->width, &texture->height);
+	texture->img.addr = mlx_get_data_addr(texture->img.img,
+			&texture->img.bits_per_pixel, &texture->img.line_length,
+			&texture->img.endian);
 }
 
-void			north_south_textures_init(t_vars *vars)
+void		init_all_textures(t_vars *vars)
 {
-	vars->textures.north.img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx,
-			"textures/stone_texture.xpm", &vars->textures.north.width,
-			&vars->textures.north.height);
-	vars->textures.north.img.addr =
-		mlx_get_data_addr(vars->textures.north.img.img,
-				&vars->textures.north.img.bits_per_pixel,
-				&vars->textures.north.img.line_length,
-				&vars->textures.north.img.endian);
-	vars->textures.south.img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx,
-			"textures/brick_texture.xpm", &vars->textures.south.width,
-			&vars->textures.south.height);
-	vars->textures.south.img.addr =
-		mlx_get_data_addr(vars->textures.south.img.img,
-				&vars->textures.south.img.bits_per_pixel,
-				&vars->textures.south.img.line_length,
-				&vars->textures.south.img.endian);
+	fill_in_tex_variables(vars, &vars->textures.north,
+			"textures/stone_texture.xpm");
+	fill_in_tex_variables(vars, &vars->textures.south,
+			"textures/brick_texture.xpm");
+	fill_in_tex_variables(vars, &vars->textures.east,
+			"textures/ivy_texture2.xpm");
+	fill_in_tex_variables(vars, &vars->textures.west,
+			"textures/white_texture.xpm");
 }
 
-void			texture_position_x_init(t_vars *vars)
-{
-	vars->textures.north.position_x = (int)fmod(vars->textures.north.width *
-			(vars->ray.x + vars->ray.y), vars->textures.north.width);
-	vars->textures.south.position_x = (int)fmod(vars->textures.south.width *
-			(vars->ray.x + vars->ray.y), vars->textures.south.width);
-	vars->textures.east.position_x = (int)fmod(vars->textures.east.width *
-			(vars->ray.x + vars->ray.y), vars->textures.east.width);
-	vars->textures.west.position_x = (int)fmod(vars->textures.west.width *
-			(vars->ray.x + vars->ray.y), vars->textures.west.width);
-}
-
-void	get_cardinal(t_vars *vars)
+void		get_orientation(t_vars *vars)
 {
 	if (vars->wall.east_west_hit == 0)
 	{
@@ -82,36 +51,26 @@ void	get_cardinal(t_vars *vars)
 	}
 }
 
-unsigned int	texture_get_colour(t_vars *vars, int i)
+t_texvars	init_texture(t_vars *vars)
 {
-	unsigned int	colour;
+	t_texvars	texture;
 
-	if (vars->wall.east_west_hit == 0)
-	{
-		if (vars->ray.sin > 0)
-			colour = ((unsigned int *)vars->textures.south.img.addr)
-				[i * vars->textures.south.width +
-				vars->textures.south.position_x];
-		else if (vars->ray.sin < 0)
-			colour = ((unsigned int *)vars->textures.north.img.addr)
-				[i * vars->textures.north.width +
-				vars->textures.north.position_x];
-	}
-	else if (vars->wall.east_west_hit != 0)
-	{
-		if (vars->ray.cos > 0)
-			colour = ((unsigned int *)vars->textures.east.img.addr)
-				[i * vars->textures.east.width +
-				vars->textures.east.position_x];
-		else if (vars->ray.cos < 0)
-			colour = ((unsigned int *)vars->textures.west.img.addr)
-				[i * vars->textures.west.width +
-				vars->textures.west.position_x];
-	}
-	return (colour);
+	get_orientation(vars);
+	if (vars->ray.cardinal == 'N')
+		texture = vars->textures.north;
+	else if (vars->ray.cardinal == 'S')
+		texture = vars->textures.south;
+	else if (vars->ray.cardinal == 'E')
+		texture = vars->textures.east;
+	else if (vars->ray.cardinal == 'W')
+		texture = vars->textures.west;
+	texture.position_x = (int)fmod(texture.width *
+			(vars->ray.x + vars->ray.y), texture.width);
+	return (texture);
 }
 
-void			paint_texture(t_imgdata *img, t_vars *vars, int x)
+void		paint_texture(t_imgdata *img, t_vars *vars,
+		t_texvars texture, int x)
 {
 	float			y_incrementer;
 	float			y;
@@ -119,16 +78,17 @@ void			paint_texture(t_imgdata *img, t_vars *vars, int x)
 	unsigned int	colour;
 	t_linecoords	coords;
 
-	y_incrementer = (vars->wall.height * 2) / vars->textures.north.height;
+	y_incrementer = (vars->wall.height * 2) / texture.height;
 	y = SCREEN_HEIGHT / 2 - vars->wall.height;
 	i = 0;
-	while (i < vars->textures.north.height)
+	while (i < texture.height)
 	{
 		coords.x0 = x;
 		coords.y0 = y;
 		coords.x1 = x;
 		coords.y1 = y + y_incrementer;
-		colour = texture_get_colour(vars, i);
+		colour = ((unsigned int *)texture.img.addr)
+			[i * texture.width + texture.position_x];
 		dda_line_algorithm(img, coords, colour);
 		y += y_incrementer;
 		i++;
