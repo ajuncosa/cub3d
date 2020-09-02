@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub_movement.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/28 13:29:56 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/31 12:47:00 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/02 11:02:22 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	forward_traslation(t_vars *vars)
  				return;
  		}*/
 		if (vars->wall.mid_dist < 0.6)
-			return;
+			return ;
 		vars->player.x = new_x;
 		vars->player.y = new_y;
 	}

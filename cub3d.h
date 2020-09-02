@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/01 11:57:21 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/02 13:20:38 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,19 @@ typedef struct	s_textures
 	t_texvars	west;
 }				t_textures;
 
+typedef struct	s_sprite
+{
+	t_imgdata	img;
+	int			width;
+	int			height;
+	float		ray_x;
+	float		ray_y;
+	float		dist;
+	float		draw_height;
+	int			position_x;
+}				t_sprite;
+
+
 typedef struct	s_linecoords
 {
 	int			x0;
@@ -132,6 +145,7 @@ typedef struct	s_vars
 	t_wall		wall;
 	t_keys		keys;
 	t_textures	textures;
+	t_sprite	sprite;
 //	t_map		map;
 }				t_vars;
 
@@ -145,7 +159,6 @@ void			left_traslation(t_vars *vars);
 void			right_traslation(t_vars *vars);
 void			forward_traslation(t_vars *vars);
 void			backward_traslation(t_vars *vars);
-
 //int				xbutton_close(t_vars *vars);
 int				raycasting(t_vars *vars);
 void			dda_line_algorithm(t_imgdata *img,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub_texture.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 11:14:41 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/01 12:14:27 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/02 13:20:40 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ void		fill_in_tex_variables(t_vars *vars, t_texvars *texture, char *file)
 void		init_all_textures(t_vars *vars)
 {
 	fill_in_tex_variables(vars, &vars->textures.north,
-			"textures/stone_texture.xpm");
+			"textures/wall.xpm");
 	fill_in_tex_variables(vars, &vars->textures.south,
 			"textures/brick_texture.xpm");
 	fill_in_tex_variables(vars, &vars->textures.east,
-			"textures/ivy_texture2.xpm");
+			"textures/ivy_texture.xpm");
 	fill_in_tex_variables(vars, &vars->textures.west,
 			"textures/white_texture.xpm");
 }
