@@ -3,16 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   cub_line_algorithm.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 12:08:00 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/08/28 12:27:33 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/03 13:10:17 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	dda_line_algorithm(t_imgdata *img, t_linecoords coords, int colour)
+t_linecoords	coords_init(int x0, int y0, int x1, int y1)
+{
+	t_linecoords	coords;
+
+	coords.x0 = x0;
+	coords.y0 = y0;
+	coords.x1 = x1;
+	coords.y1 = y1;
+	return (coords);
+}
+
+void			dda_line_algorithm(t_imgdata *img, t_linecoords coords,
+					int colour)
 {
 	int		i;
 	t_dda	line;

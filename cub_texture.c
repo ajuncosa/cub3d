@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 11:14:41 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/02 13:20:40 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/03 11:59:29 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ t_texvars	init_texture(t_vars *vars)
 	return (texture);
 }
 
-void		paint_texture(t_imgdata *img, t_vars *vars,
-		t_texvars texture, int x)
+void		paint_texture(t_vars *vars, t_texvars texture, int x)
 {
 	float			y_incrementer;
 	float			y;
@@ -83,13 +82,10 @@ void		paint_texture(t_imgdata *img, t_vars *vars,
 	i = 0;
 	while (i < texture.height)
 	{
-		coords.x0 = x;
-		coords.y0 = y;
-		coords.x1 = x;
-		coords.y1 = y + y_incrementer;
+		coords = coords_init(x, y, x, y + y_incrementer);
 		colour = ((unsigned int *)texture.img.addr)
 			[i * texture.width + texture.position_x];
-		dda_line_algorithm(img, coords, colour);
+		dda_line_algorithm(&vars->img, coords, colour);
 		y += y_incrementer;
 		i++;
 	}

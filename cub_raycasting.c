@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/02 13:20:38 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/03 13:29:04 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,16 @@ void	find_wall(t_vars *vars)
 
 	wall = 0;
 	vars->wall.east_west_hit = 0;
-	while (wall == 0 || wall == 5)
+	while (wall == 0 || wall == 5 || wall == 2)
 	{
 		vars->ray.x += vars->ray.cos;
 		wall = map[(int)vars->ray.y][(int)vars->ray.x];
-		vars->ray.y += vars->ray.sin;
-		if (wall != 0 && wall != 5)
+		if (wall != 0 && wall != 5 && wall != 2)
 		{
 			vars->wall.east_west_hit = 1;
 			break ;
 		}
+		vars->ray.y += vars->ray.sin;
 		wall = map[(int)vars->ray.y][(int)vars->ray.x];
 	}
 }
@@ -64,55 +64,25 @@ void	calc_dist_and_wall_height(t_vars *vars)
 		vars->wall.mid_dist = vars->wall.distance;
 }
 
-void	paint(int x, t_imgdata *img, t_vars *vars)
+void	paint(int x, t_vars *vars)
 {
 	t_linecoords	coords;
 	t_texvars		texture;
+	t_sprite		sprite;
 
 	texture = init_texture(vars);
-	coords.x0 = x;
-	coords.y0 = 0;
-	coords.x1 = x;
-	coords.y1 = SCREEN_HEIGHT / 2 - vars->wall.height;
-	dda_line_algorithm(img, coords, 0xC4E7F7);
-	paint_texture(img, vars, texture, x);
-	coords.y0 = SCREEN_HEIGHT / 2 + vars->wall.height;
-	coords.y1 = SCREEN_HEIGHT;
-	dda_line_algorithm(img, coords, 0x00FF00);
-
-	int		sprite = 0;
-	vars->sprite.ray_x = vars->player.x;
-	vars->sprite.ray_y = vars->player.y;
-	while (sprite != 2 && sprite != 1)
-	{
-		//printf("hola\n");
-		vars->sprite.ray_x += vars->ray.cos;
-		sprite = map[(int)vars->sprite.ray_y][(int)vars->sprite.ray_x];
-		vars->sprite.ray_y += vars->ray.sin;
-		if (sprite == 2)
-			break ;
-		sprite = map[(int)vars->sprite.ray_y][(int)vars->sprite.ray_x];
-	}
-	float	x_square = pow(vars->player.x - vars->sprite.ray_x, 2);
-	float	y_square = pow(vars->player.y - vars->sprite.ray_y, 2);
-	printf("hola\n");
-	vars->sprite.dist = sqrt(x_square + y_square);
-	vars->sprite.dist = vars->sprite.dist * cos((vars->ray.angle - vars->player.angle) * M_PI / 180);
-	vars->sprite.draw_height = (int)((SCREEN_HEIGHT / 2) / vars->sprite.dist);
-	coords.x0 = x;
-	coords.y0 = SCREEN_HEIGHT / 2 - vars->sprite.draw_height;
-	coords.x1 = x;
-	coords.y1 = SCREEN_HEIGHT / 2 + vars->sprite.draw_height;
-	dda_line_algorithm(img, coords, 0xFF0000);
+	coords = coords_init(x, 0, x, SCREEN_HEIGHT / 2 - vars->wall.height);
+	dda_line_algorithm(&vars->img, coords, 0xC4E7F7);
+	paint_texture(vars, texture, x);
+	coords = coords_init(x, SCREEN_HEIGHT / 2 + vars->wall.height,
+		x, SCREEN_HEIGHT);
+	dda_line_algorithm(&vars->img, coords, 0x009000);
+	sprite = vars->sprite;
+	paint_sprite(vars, &sprite, x);
 }
 
 int		raycasting(t_vars *vars)
 {
-	t_imgdata	img;
-
-	img.img = mlx_new_image(vars->mlxvars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
-			&img.line_length, &img.endian);
 	player_move(vars);
 	vars->ray.angle = vars->player.angle - vars->player.halffov;
 	vars->ray.increment_angle = vars->player.fov / SCREEN_WIDTH;
@@ -125,12 +95,11 @@ int		raycasting(t_vars *vars)
 		vars->ray.sin = sin(vars->ray.angle * M_PI / 180) / vars->ray.precision;
 		vars->ray.cos = cos(vars->ray.angle * M_PI / 180) / vars->ray.precision;
 		calc_dist_and_wall_height(vars);
-		paint(vars->ray.count, &img, vars);
+		paint(vars->ray.count, vars);
 		vars->ray.angle += vars->ray.increment_angle;
 		vars->ray.count++;
 	}
 	mlx_put_image_to_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win,
-			img.img, 0, 0);
-	mlx_destroy_image(vars->mlxvars.mlx, img.img);
+			vars->img.img, 0, 0);
 	return (0);
 }

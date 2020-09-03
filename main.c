@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 12:42:59 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/02 13:20:37 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/03 13:29:55 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int map[MAP_HEIGHT][MAP_WIDTH] = {
         {1,1,1,1,1,1,1,1,1,1},
-        {1,0,0,0,2,0,0,0,0,1},
-        {1,0,1,0,0,0,0,0,0,1},
-        {1,0,0,1,0,1,0,0,0,1},
-        {1,0,0,1,5,1,0,0,0,1},
-        {1,0,0,1,0,1,0,0,0,1},
         {1,0,0,0,0,0,0,0,0,1},
+        {1,0,1,0,2,0,0,0,0,1},
         {1,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,5,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,2,0,0,1},
+        {1,0,0,1,0,0,0,0,0,1},
         {1,0,0,0,0,0,0,0,0,1},
         {1,1,1,1,1,1,1,1,1,1}
     };
@@ -125,7 +125,7 @@ void	player_initialise(t_vars *vars)
 	vars->player.angle = 270;
 	vars->player.fov = 60;
 	vars->player.halffov = vars->player.fov / 2;
-	vars->player.speed = 0.1;
+	vars->player.speed = 0.2;
 	vars->player.rotation = 3;
 }
 
@@ -155,12 +155,17 @@ int		main(int argc, char **argv)
 			SCREEN_WIDTH, SCREEN_HEIGHT, "Hello world!");
 	init_all_textures(&vars);
 
-	vars.sprite.img.img = mlx_xpm_file_to_image(vars.mlxvars.mlx,
-			"sprite3.xpm", &vars.sprite.width, &vars.sprite.height);
-			
+	vars.sprite.vars.img.img = mlx_xpm_file_to_image(vars.mlxvars.mlx,
+			"textures/sprite3.xpm", &vars.sprite.vars.width, &vars.sprite.vars.height);
+	vars.sprite.vars.img.addr = mlx_get_data_addr(vars.sprite.vars.img.img, &vars.sprite.vars.img.bits_per_pixel, &vars.sprite.vars.img.line_length, &vars.sprite.vars.img.endian);
+
+	vars.img.img = mlx_new_image(vars.mlxvars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+	vars.img.addr = mlx_get_data_addr(vars.img.img, &vars.img.bits_per_pixel,
+			&vars.img.line_length, &vars.img.endian);
 	mlx_loop_hook(vars.mlxvars.mlx, raycasting, &vars);
 	mlx_hook(vars.mlxvars.mlx_win, 2, 0L, handle_keypress, &vars);
 	mlx_hook(vars.mlxvars.mlx_win, 3, 0L, handle_keyrelease, &vars);
 	mlx_hook(vars.mlxvars.mlx_win, 17, 0L, xbutton_close, &vars);
 	mlx_loop(vars.mlxvars.mlx);
+	mlx_destroy_image(vars.mlxvars.mlx, vars.img.img);
 }

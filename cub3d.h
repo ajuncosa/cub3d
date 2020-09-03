@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/02 13:20:38 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/03 12:52:23 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,11 @@ typedef struct	s_textures
 
 typedef struct	s_sprite
 {
-	t_imgdata	img;
-	int			width;
-	int			height;
+	t_texvars	vars;
 	float		ray_x;
 	float		ray_y;
 	float		dist;
 	float		draw_height;
-	int			position_x;
 }				t_sprite;
 
 
@@ -140,6 +137,7 @@ typedef struct	s_map
 typedef struct	s_vars
 {
 	t_mlxvars	mlxvars;
+	t_imgdata	img;
 	t_player	player;
 	t_ray		ray;
 	t_wall		wall;
@@ -163,9 +161,10 @@ void			backward_traslation(t_vars *vars);
 int				raycasting(t_vars *vars);
 void			dda_line_algorithm(t_imgdata *img,
 		t_linecoords coords, int colour);
+t_linecoords	coords_init(int x0, int y0, int x1, int y1);
 void			init_all_textures(t_vars *vars);
-void			paint_texture(t_imgdata *img, t_vars *vars,
-		t_texvars texture, int x);
+void			paint_texture(t_vars *vars, t_texvars texture, int x);
 t_texvars		init_texture(t_vars *vars);
+void			paint_sprite(t_vars *vars, t_sprite *sprite, int x);
 
 #endif
