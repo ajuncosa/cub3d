@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 11:14:41 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/03 11:59:29 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/07 11:27:14 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void		init_all_textures(t_vars *vars)
 			"textures/ivy_texture.xpm");
 	fill_in_tex_variables(vars, &vars->textures.west,
 			"textures/white_texture.xpm");
+	fill_in_tex_variables(vars, &vars->sprite.vars, "textures/sprite3.xpm");
 }
 
 void		get_orientation(t_vars *vars)

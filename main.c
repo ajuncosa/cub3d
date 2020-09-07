@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 12:42:59 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/03 13:29:55 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/07 11:27:57 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,11 +154,6 @@ int		main(int argc, char **argv)
 	vars.mlxvars.mlx_win = mlx_new_window(vars.mlxvars.mlx,
 			SCREEN_WIDTH, SCREEN_HEIGHT, "Hello world!");
 	init_all_textures(&vars);
-
-	vars.sprite.vars.img.img = mlx_xpm_file_to_image(vars.mlxvars.mlx,
-			"textures/sprite3.xpm", &vars.sprite.vars.width, &vars.sprite.vars.height);
-	vars.sprite.vars.img.addr = mlx_get_data_addr(vars.sprite.vars.img.img, &vars.sprite.vars.img.bits_per_pixel, &vars.sprite.vars.img.line_length, &vars.sprite.vars.img.endian);
-
 	vars.img.img = mlx_new_image(vars.mlxvars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	vars.img.addr = mlx_get_data_addr(vars.img.img, &vars.img.bits_per_pixel,
 			&vars.img.line_length, &vars.img.endian);

@@ -6,12 +6,12 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/03 11:40:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/03 13:24:48 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/07 13:45:46 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
+/*
 void	draw_sprite(t_vars *vars, t_sprite *sprite, int x)
 {
 	float			y_incrementer;
@@ -51,29 +51,31 @@ void	sprite_raycasting(t_vars *vars, t_sprite *sprite, int x)
 		(sprite->ray_x + sprite->ray_y), sprite->vars.width);
 	draw_sprite(vars, sprite, x);
 }
-
+*/
 void	paint_sprite(t_vars *vars, t_sprite *sprite, int x)
 {
-	int	sprite_hit;
+	t_linecoords	coords;
 
-	sprite_hit = 0;
-	sprite->ray_x = vars->player.x;
-	sprite->ray_y = vars->player.y;
-	while (sprite_hit != 2 && sprite_hit != 1)
-	{
-		sprite->ray_x += vars->ray.cos;
-		sprite_hit = map[(int)sprite->ray_y][(int)sprite->ray_x];
-		if (sprite_hit == 2)
-		{
-			sprite_raycasting(vars, sprite, x);
-			break ;
-		}
-		sprite->ray_y += vars->ray.sin;
-		sprite_hit = map[(int)sprite->ray_y][(int)sprite->ray_x];
-		if (sprite_hit == 2)
-		{
-			sprite_raycasting(vars, sprite, x);
-			break ;
-		}
-	}
+	sprite->ray_x = (floor(sprite->ray_x) + 0.5);
+	sprite->ray_y = (floor(sprite->ray_y) + 0.5);
+	sprite->dist_x = sprite->ray_x - vars->player.x;
+	sprite->dist_y = sprite->ray_y - vars->player.y;
+	sprite->dist = sqrt(pow(sprite->dist_x, 2) + pow(sprite->dist_y, 2));
+	sprite->draw_height = (int)((SCREEN_HEIGHT / 2) / sprite->dist);
+	sprite->angle = (atan(sprite->sin / sprite->cos) * M_PI) / 180;
+	printf("atan: %f\n", sprite->angle);
+	if ((vars->player.angle - vars->player.halffov) < 0)
+		sprite->angle_zero = 360 + (vars->player.angle - vars->player.halffov);
+	else
+		sprite->angle_zero = vars->player.angle - vars->player.halffov;
+	sprite->angle = sprite->angle_zero - sprite->angle;
+	
+	float pixels_per_degree = SCREEN_WIDTH / vars->player.fov;
+	sprite->screen_x = pixels_per_degree * sprite->angle;
+	sprite->screen_y = SCREEN_HEIGHT / 2;
+	sprite->draw_width = (sprite->vars.width * sprite->draw_height) / sprite->vars.height;
+	printf("primer angulo del fov: %f\nspriteang: %f\npixelspdeg: %f\nx: %f\ny: %f\n", sprite->angle_zero, sprite->angle, pixels_per_degree, sprite->screen_x, sprite->screen_y);
+	coords = coords_init(sprite->screen_x - sprite->draw_width / 2, sprite->screen_y - sprite->draw_height / 2, sprite->screen_x + sprite->draw_width / 2, sprite->screen_y + sprite->draw_height / 2);
+	dda_line_algorithm(&vars->img, coords, 0xFF0000);
+	
 }

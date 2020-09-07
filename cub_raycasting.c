@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/03 13:29:04 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/07 13:31:40 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,19 @@
 void	player_move(t_vars *vars)
 {
 	if (vars->keys.left_rotation == 1)
-		vars->player.angle -= vars->player.rotation;
+	{
+		//if ((vars->player.angle - vars->player.rotation) < 0)
+		//	vars->player.angle = 360 + (vars->player.angle - vars->player.rotation);
+		//else
+			vars->player.angle -= vars->player.rotation;
+	}	
 	if (vars->keys.right_rotation == 1)
-		vars->player.angle += vars->player.rotation;
+	{
+		//if ((vars->player.angle + vars->player.rotation) > 360)
+		//	vars->player.angle = 360 - (vars->player.angle - vars->player.rotation);
+		//else
+			vars->player.angle += vars->player.rotation;
+	}
 	if (vars->keys.fw_traslation == 1)
 		forward_traslation(vars);
 	if (vars->keys.bw_traslation == 1)
@@ -68,7 +78,6 @@ void	paint(int x, t_vars *vars)
 {
 	t_linecoords	coords;
 	t_texvars		texture;
-	t_sprite		sprite;
 
 	texture = init_texture(vars);
 	coords = coords_init(x, 0, x, SCREEN_HEIGHT / 2 - vars->wall.height);
@@ -77,14 +86,22 @@ void	paint(int x, t_vars *vars)
 	coords = coords_init(x, SCREEN_HEIGHT / 2 + vars->wall.height,
 		x, SCREEN_HEIGHT);
 	dda_line_algorithm(&vars->img, coords, 0x009000);
-	sprite = vars->sprite;
-	paint_sprite(vars, &sprite, x);
 }
 
 int		raycasting(t_vars *vars)
 {
+	t_sprite		sprite;
+	int	sprite_hit;
+	int	barrel;
+
+	sprite = vars->sprite;
+	barrel = 0;
+
 	player_move(vars);
-	vars->ray.angle = vars->player.angle - vars->player.halffov;
+	//if ((vars->player.angle - vars->player.halffov) < 0)
+	//	vars->ray.angle = 360 + (vars->player.angle - vars->player.halffov);
+	//else
+		vars->ray.angle = vars->player.angle - vars->player.halffov;
 	vars->ray.increment_angle = vars->player.fov / SCREEN_WIDTH;
 	vars->ray.count = 0;
 	vars->ray.precision = 256;
@@ -95,10 +112,43 @@ int		raycasting(t_vars *vars)
 		vars->ray.sin = sin(vars->ray.angle * M_PI / 180) / vars->ray.precision;
 		vars->ray.cos = cos(vars->ray.angle * M_PI / 180) / vars->ray.precision;
 		calc_dist_and_wall_height(vars);
+
+		if (barrel == 0)
+		{
+			sprite_hit = 0;
+			sprite.ray_x = vars->player.x;
+			sprite.ray_y = vars->player.y;
+			while (sprite_hit != 2 && sprite_hit != 1)
+			{
+				sprite.ray_x += vars->ray.cos;
+				sprite_hit = map[(int)sprite.ray_y][(int)sprite.ray_x];
+				if (sprite_hit == 2)
+				{
+					sprite.cos = vars->ray.cos;
+					sprite.sin = vars->ray.sin;
+					barrel = 1;
+					//sprite_raycasting(vars, sprite, x);
+					break ;
+				}
+				sprite.ray_y += vars->ray.sin;
+				sprite_hit = map[(int)sprite.ray_y][(int)sprite.ray_x];
+				if (sprite_hit == 2)
+				{
+					sprite.cos = vars->ray.cos;
+					sprite.sin = vars->ray.sin;
+					barrel = 1;
+					//sprite_raycasting(vars, sprite, x);
+					break ;
+				}
+			}
+		}
+
 		paint(vars->ray.count, vars);
 		vars->ray.angle += vars->ray.increment_angle;
 		vars->ray.count++;
 	}
+	
+	paint_sprite(vars, &sprite, 0);
 	mlx_put_image_to_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win,
 			vars->img.img, 0, 0);
 	return (0);
