@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/07 13:31:40 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/09 12:54:56 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@ void	player_move(t_vars *vars)
 {
 	if (vars->keys.left_rotation == 1)
 	{
-		//if ((vars->player.angle - vars->player.rotation) < 0)
-		//	vars->player.angle = 360 + (vars->player.angle - vars->player.rotation);
-		//else
+		if ((vars->player.angle - vars->player.rotation) < 0)
+			vars->player.angle = 360 + (vars->player.angle - vars->player.rotation);
+		else
 			vars->player.angle -= vars->player.rotation;
 	}	
 	if (vars->keys.right_rotation == 1)
 	{
-		//if ((vars->player.angle + vars->player.rotation) > 360)
-		//	vars->player.angle = 360 - (vars->player.angle - vars->player.rotation);
-		//else
+		if ((vars->player.angle + vars->player.rotation) > 360)
+			vars->player.angle = 360 - (vars->player.angle - vars->player.rotation);
+		else
 			vars->player.angle += vars->player.rotation;
 	}
 	if (vars->keys.fw_traslation == 1)
@@ -90,17 +90,17 @@ void	paint(int x, t_vars *vars)
 
 int		raycasting(t_vars *vars)
 {
-	t_sprite		sprite;
-	int	sprite_hit;
-	int	barrel;
+	t_sprite	sprite;
+	int			sprite_hit;
+	int			barrel;
 
 	sprite = vars->sprite;
 	barrel = 0;
 
 	player_move(vars);
-	//if ((vars->player.angle - vars->player.halffov) < 0)
-	//	vars->ray.angle = 360 + (vars->player.angle - vars->player.halffov);
-	//else
+	if ((vars->player.angle - vars->player.halffov) < 0)
+		vars->ray.angle = 360 + (vars->player.angle - vars->player.halffov);
+	else
 		vars->ray.angle = vars->player.angle - vars->player.halffov;
 	vars->ray.increment_angle = vars->player.fov / SCREEN_WIDTH;
 	vars->ray.count = 0;
@@ -113,8 +113,6 @@ int		raycasting(t_vars *vars)
 		vars->ray.cos = cos(vars->ray.angle * M_PI / 180) / vars->ray.precision;
 		calc_dist_and_wall_height(vars);
 
-		if (barrel == 0)
-		{
 			sprite_hit = 0;
 			sprite.ray_x = vars->player.x;
 			sprite.ray_y = vars->player.y;
@@ -124,9 +122,15 @@ int		raycasting(t_vars *vars)
 				sprite_hit = map[(int)sprite.ray_y][(int)sprite.ray_x];
 				if (sprite_hit == 2)
 				{
-					sprite.cos = vars->ray.cos;
-					sprite.sin = vars->ray.sin;
-					barrel = 1;
+					if (barrel == 0)
+					{
+						sprite.map_x = (int)sprite.ray_x;
+						sprite.map_y = (int)sprite.ray_y;
+						sprite.angle1 = vars->ray.angle;
+						barrel = 1;
+					}
+					else
+						sprite.angle2 = vars->ray.angle;
 					//sprite_raycasting(vars, sprite, x);
 					break ;
 				}
@@ -134,15 +138,21 @@ int		raycasting(t_vars *vars)
 				sprite_hit = map[(int)sprite.ray_y][(int)sprite.ray_x];
 				if (sprite_hit == 2)
 				{
-					sprite.cos = vars->ray.cos;
-					sprite.sin = vars->ray.sin;
-					barrel = 1;
+					if (barrel == 0)
+					{
+						sprite.map_x = (int)sprite.ray_x;
+						sprite.map_y = (int)sprite.ray_y;
+						sprite.angle1 = vars->ray.angle;
+						barrel = 1;
+					}
+					else
+						sprite.angle2 = vars->ray.angle;
+					
 					//sprite_raycasting(vars, sprite, x);
 					break ;
 				}
 			}
-		}
-
+			
 		paint(vars->ray.count, vars);
 		vars->ray.angle += vars->ray.increment_angle;
 		vars->ray.count++;

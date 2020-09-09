@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/03 11:40:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/07 13:45:46 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/09 13:39:15 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,26 +56,35 @@ void	paint_sprite(t_vars *vars, t_sprite *sprite, int x)
 {
 	t_linecoords	coords;
 
-	sprite->ray_x = (floor(sprite->ray_x) + 0.5);
-	sprite->ray_y = (floor(sprite->ray_y) + 0.5);
-	sprite->dist_x = sprite->ray_x - vars->player.x;
-	sprite->dist_y = sprite->ray_y - vars->player.y;
+	sprite->map_x = (floor(sprite->map_x) + 0.5);
+	sprite->map_y = (floor(sprite->map_y) + 0.5);
+	printf("map_x: %f, map_y: %f\n", sprite->map_x, sprite->map_y);
+	sprite->dist_x = sprite->map_x - vars->player.x;
+	sprite->dist_y = sprite->map_y - vars->player.y;
 	sprite->dist = sqrt(pow(sprite->dist_x, 2) + pow(sprite->dist_y, 2));
 	sprite->draw_height = (int)((SCREEN_HEIGHT / 2) / sprite->dist);
-	sprite->angle = (atan(sprite->sin / sprite->cos) * M_PI) / 180;
-	printf("atan: %f\n", sprite->angle);
+
 	if ((vars->player.angle - vars->player.halffov) < 0)
-		sprite->angle_zero = 360 + (vars->player.angle - vars->player.halffov);
-	else
-		sprite->angle_zero = vars->player.angle - vars->player.halffov;
-	sprite->angle = sprite->angle_zero - sprite->angle;
-	
+ 		sprite->angle0 = 360 + (vars->player.angle - vars->player.halffov);
+ 	else
+ 		sprite->angle0 = vars->player.angle - vars->player.halffov;
+	sprite->angle1 -= sprite->angle0;
+	sprite->angle2 -= sprite->angle0;
+	sprite->angle = (sprite->angle2 + sprite->angle1) / 2; //este es el ángulo relativo del sprite sobre el FOV (hago la media para coger el central. Si cogiese el ángulo total en vez del relativo la screen_x quedaría súper grande)
+	printf("angle: %f\nangle1: %f\nangle2: %f\n", sprite->angle, sprite->angle1, sprite->angle2);
 	float pixels_per_degree = SCREEN_WIDTH / vars->player.fov;
-	sprite->screen_x = pixels_per_degree * sprite->angle;
+	sprite->screen_x = pixels_per_degree * sprite->angle; // me da la x central de donde se va a dibujar el sprite
+	printf("sprite->screen_x: %f\n", sprite->screen_x);
 	sprite->screen_y = SCREEN_HEIGHT / 2;
+	printf("sprite->screen_y: %f\n", sprite->screen_y);
 	sprite->draw_width = (sprite->vars.width * sprite->draw_height) / sprite->vars.height;
-	printf("primer angulo del fov: %f\nspriteang: %f\npixelspdeg: %f\nx: %f\ny: %f\n", sprite->angle_zero, sprite->angle, pixels_per_degree, sprite->screen_x, sprite->screen_y);
-	coords = coords_init(sprite->screen_x - sprite->draw_width / 2, sprite->screen_y - sprite->draw_height / 2, sprite->screen_x + sprite->draw_width / 2, sprite->screen_y + sprite->draw_height / 2);
-	dda_line_algorithm(&vars->img, coords, 0xFF0000);
-	
+	printf("draw_width: %f\n", sprite->draw_width);
+	//printf("primer angulo del fov: %f\nspriteang: %f\npixelspdeg: %f\nx: %f\ny: %f\n", sprite->angle_zero, sprite->angle, pixels_per_degree, sprite->screen_x, sprite->screen_y);
+	int i = sprite->screen_x - (sprite->draw_width / 2);
+	while (i < sprite->screen_x + (sprite->draw_width / 2))
+	{
+		coords = coords_init(i, sprite->screen_y - sprite->draw_height / 2, i, sprite->screen_y + sprite->draw_height / 2);
+		dda_line_algorithm(&vars->img, coords, 0xFF0000);
+		i++;
+	}
 }

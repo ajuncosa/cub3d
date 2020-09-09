@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/07 13:25:27 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/09 13:22:53 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ typedef struct	s_sprite
 	t_texvars	vars;
 	float		ray_x;
 	float		ray_y;
+	float		map_x;
+	float		map_y;
 	float		dist;
 	float		draw_height;
 	float		draw_width;
@@ -111,10 +113,10 @@ typedef struct	s_sprite
 	float		dist_y;
 	float		screen_x;
 	float		screen_y;
-	float		sin;
-	float		cos;
+	float		angle0;
+	float		angle1;
+	float		angle2;
 	float		angle;
-	float		angle_zero;
 }				t_sprite;
 
 

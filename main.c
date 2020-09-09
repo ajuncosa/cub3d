@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 12:42:59 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/07 11:27:57 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/09 10:10:50 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,4 +163,5 @@ int		main(int argc, char **argv)
 	mlx_hook(vars.mlxvars.mlx_win, 17, 0L, xbutton_close, &vars);
 	mlx_loop(vars.mlxvars.mlx);
 	mlx_destroy_image(vars.mlxvars.mlx, vars.img.img);
+
 }
