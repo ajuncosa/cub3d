@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/09 13:22:53 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/11 12:33:50 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,6 @@ typedef struct	s_sprite
 	float		dist;
 	float		draw_height;
 	float		draw_width;
-	float		dist_x;
-	float		dist_y;
 	float		screen_x;
 	float		screen_y;
 	float		angle0;
@@ -176,6 +174,6 @@ t_linecoords	coords_init(int x0, int y0, int x1, int y1);
 void			init_all_textures(t_vars *vars);
 void			paint_texture(t_vars *vars, t_texvars texture, int x);
 t_texvars		init_texture(t_vars *vars);
-void			paint_sprite(t_vars *vars, t_sprite *sprite, int x);
+void			paint_sprite(t_vars *vars, t_sprite *sprite);
 
 #endif

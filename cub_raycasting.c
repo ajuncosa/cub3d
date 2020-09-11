@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/09 12:54:56 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/11 12:43:28 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,6 @@ int		raycasting(t_vars *vars)
 					}
 					else
 						sprite.angle2 = vars->ray.angle;
-					//sprite_raycasting(vars, sprite, x);
 					break ;
 				}
 				sprite.ray_y += vars->ray.sin;
@@ -147,8 +146,6 @@ int		raycasting(t_vars *vars)
 					}
 					else
 						sprite.angle2 = vars->ray.angle;
-					
-					//sprite_raycasting(vars, sprite, x);
 					break ;
 				}
 			}
@@ -158,7 +155,7 @@ int		raycasting(t_vars *vars)
 		vars->ray.count++;
 	}
 	
-	paint_sprite(vars, &sprite, 0);
+	paint_sprite(vars, &sprite);
 	mlx_put_image_to_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win,
 			vars->img.img, 0, 0);
 	return (0);
