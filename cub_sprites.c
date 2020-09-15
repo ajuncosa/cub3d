@@ -34,41 +34,28 @@ void	paint_sprite(t_vars *vars, t_sprite *sprite)
 	sprite->angle1 -= sprite->angle0;
 	sprite->angle2 -= sprite->angle0;
 	sprite->angle = (sprite->angle2 + sprite->angle1) / 2; //este es el ángulo relativo del sprite sobre el FOV (hago la media para coger el central. Si cogiese el ángulo total en vez del relativo la screen_x quedaría súper grande)
-	//printf("angle: %f\nangle1: %f\nangle2: %f\n", sprite->angle, sprite->angle1, sprite->angle2);
 	float pixels_per_degree = SCREEN_WIDTH / vars->player.fov;
 	sprite->screen_x = pixels_per_degree * sprite->angle; // me da la x central de donde se va a dibujar el sprite
-	//printf("sprite->screen_x: %f\n", sprite->screen_x);
 	sprite->screen_y = SCREEN_HEIGHT / 2;
-	//printf("sprite->screen_y: %f\n", sprite->screen_y);
 	sprite->draw_width = (sprite->vars.width * sprite->draw_height) / sprite->vars.height; // regla de tres
-	//printf("draw_width: %f\nheight: %f\n", sprite->draw_width, sprite->draw_height);
-	//printf("primer angulo del fov: %f\npixelspdeg: %f\nx: %f\ny: %f\n\n", sprite->angle0, pixels_per_degree, sprite->screen_x, sprite->screen_y);
-
-	
 	y_incrementer = (sprite->draw_height * 2) / sprite->vars.height;
 	x_incrementer = (sprite->draw_width * 2) / sprite->vars.width;
-	//printf("yinc: %f, xinc: %f\n", y_incrementer, x_incrementer);
 	x = sprite->screen_x - sprite->draw_width;
 	sprite->vars.position_x = 0;
 	while (sprite->vars.position_x <= sprite->vars.width)
 	{
-		j = 0;
-		while (j < x_incrementer && x < sprite->screen_x + sprite->draw_width)
+		y = sprite->screen_y - sprite->draw_height;
+		i = 0;
+		while (i < sprite->vars.height)
 		{
-			i = 0;
-			y = sprite->screen_y - sprite->draw_height;
-			while (i < sprite->vars.height)
-			{
-				coords = coords_init(x, y, x, y + y_incrementer);
-				colour = ((unsigned int *)sprite->vars.img.addr)[i * sprite->vars.width + sprite->vars.position_x];
-				dda_line_algorithm(&vars->img, coords, colour);
-				y += y_incrementer;
-				i++;
-			}
-			j++;
-			x++;
+			coords = coords_init(x, y, x + x_incrementer, y + y_incrementer);
+			colour = ((unsigned int *)sprite->vars.img.addr)[i * sprite->vars.width + sprite->vars.position_x];
+			if (colour != 0x000000)
+				draw_square(&vars->img, coords, colour);
+			y += y_incrementer;
+			i++;
 		}
-		//x += x_incrementer;
 		sprite->vars.position_x++;
+		x += x_incrementer;
 	}
 }

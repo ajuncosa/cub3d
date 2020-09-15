@@ -171,6 +171,7 @@ void			backward_traslation(t_vars *vars);
 int				raycasting(t_vars *vars);
 void			dda_line_algorithm(t_imgdata *img,
 		t_linecoords coords, int colour);
+void			draw_square(t_imgdata *img, t_linecoords coords, int colour);
 t_linecoords	coords_init(int x0, int y0, int x1, int y1);
 void			init_all_textures(t_vars *vars);
 void			paint_texture(t_vars *vars, t_texvars texture, int x);

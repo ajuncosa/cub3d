@@ -45,3 +45,22 @@ void			dda_line_algorithm(t_imgdata *img, t_linecoords coords,
 		i++;
 	}
 }
+
+void			draw_square(t_imgdata *img, t_linecoords coords, int colour)
+{
+	int	x0;
+	int	x1;
+	int	y0;
+	int	y1;
+
+	x0 = coords.x0;
+	x1 = coords.x1;
+	y0 = coords.y0;
+	y1 = coords.y1;
+	while(y0 <= y1)
+	{
+		coords = coords_init(x0, y0, x1, y0);
+		dda_line_algorithm(img, coords, colour);
+		y0++;
+	}
+}

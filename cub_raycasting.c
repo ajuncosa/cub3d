@@ -97,7 +97,6 @@ int		raycasting(t_vars *vars)
 	sprite = vars->sprite;
 	barrel = 0;
 
-printf("%d\n%d\n%d\n\n", vars->keys.fw_traslation, vars->keys.right_traslation, vars->keys.left_traslation);
 	player_move(vars);
 	if ((vars->player.angle - vars->player.halffov) < 0)
 		vars->ray.angle = 360 + (vars->player.angle - vars->player.halffov);
@@ -114,49 +113,49 @@ printf("%d\n%d\n%d\n\n", vars->keys.fw_traslation, vars->keys.right_traslation, 
 		vars->ray.cos = cos(vars->ray.angle * M_PI / 180) / vars->ray.precision;
 		calc_dist_and_wall_height(vars);
 
-			sprite_hit = 0;
-			sprite.ray_x = vars->player.x;
-			sprite.ray_y = vars->player.y;
-			while (sprite_hit != 2 && sprite_hit != 1)
+		sprite_hit = 0;
+		sprite.ray_x = vars->player.x;
+		sprite.ray_y = vars->player.y;
+		while (sprite_hit != 2 && sprite_hit != 1)
+		{
+			sprite.ray_x += vars->ray.cos;
+			sprite_hit = map[(int)sprite.ray_y][(int)sprite.ray_x];
+			if (sprite_hit == 2)
 			{
-				sprite.ray_x += vars->ray.cos;
-				sprite_hit = map[(int)sprite.ray_y][(int)sprite.ray_x];
-				if (sprite_hit == 2)
+				if (barrel == 0)
 				{
-					if (barrel == 0)
-					{
-						sprite.map_x = (int)sprite.ray_x;
-						sprite.map_y = (int)sprite.ray_y;
-						sprite.angle1 = vars->ray.angle;
-						barrel = 1;
-					}
-					else
-						sprite.angle2 = vars->ray.angle;
-					break ;
+					sprite.map_x = (int)sprite.ray_x;
+					sprite.map_y = (int)sprite.ray_y;
+					sprite.angle1 = vars->ray.angle;
+					barrel = 1;
 				}
-				sprite.ray_y += vars->ray.sin;
-				sprite_hit = map[(int)sprite.ray_y][(int)sprite.ray_x];
-				if (sprite_hit == 2)
-				{
-					if (barrel == 0)
-					{
-						sprite.map_x = (int)sprite.ray_x;
-						sprite.map_y = (int)sprite.ray_y;
-						sprite.angle1 = vars->ray.angle;
-						barrel = 1;
-					}
-					else
-						sprite.angle2 = vars->ray.angle;
-					break ;
-				}
+				else
+					sprite.angle2 = vars->ray.angle;
+				break ;
 			}
+			sprite.ray_y += vars->ray.sin;
+			sprite_hit = map[(int)sprite.ray_y][(int)sprite.ray_x];
+			if (sprite_hit == 2)
+			{
+				if (barrel == 0)
+				{
+					sprite.map_x = (int)sprite.ray_x;
+					sprite.map_y = (int)sprite.ray_y;
+					sprite.angle1 = vars->ray.angle;
+					barrel = 1;
+				}
+				else
+					sprite.angle2 = vars->ray.angle;
+				break ;
+			}
+		}
 			
 		paint(vars->ray.count, vars);
 		vars->ray.angle += vars->ray.increment_angle;
 		vars->ray.count++;
 	}
 	
-	//paint_sprite(vars, &sprite);
+	paint_sprite(vars, &sprite);
 	mlx_put_image_to_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win,
 			vars->img.img, 0, 0);
 	return (0);
