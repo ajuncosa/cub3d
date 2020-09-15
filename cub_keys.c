@@ -12,6 +12,17 @@
 
 #include "cub3d.h"
 
+void	init_keys(t_vars *vars)
+{
+	vars->keys.fw_traslation = 0;
+	vars->keys.bw_traslation = 0;
+	vars->keys.left_traslation = 0;
+	vars->keys.right_traslation = 0;
+	vars->keys.left_rotation = 0;
+	vars->keys.right_rotation = 0;
+}
+
+
 int		handle_keypress(int keycode, t_vars *vars)
 {
 	if (keycode == 53)

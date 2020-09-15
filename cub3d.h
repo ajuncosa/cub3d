@@ -160,6 +160,7 @@ extern int map[MAP_HEIGHT][MAP_WIDTH];
 
 //void			player_initialise(t_vars *vars);
 void			my_mlx_pixel_put(t_imgdata *data, int x, int y, int color);
+void			init_keys(t_vars *vars);
 int				handle_keypress(int keycode, t_vars *vars);
 int				handle_keyrelease(int keycode, t_vars *vars);
 void			left_traslation(t_vars *vars);

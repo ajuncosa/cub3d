@@ -11,47 +11,7 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-/*
-void	draw_sprite(t_vars *vars, t_sprite *sprite, int x)
-{
-	float			y_incrementer;
-	float			y;
-	int				i;
-	unsigned int	colour;
-	t_linecoords	coords;
 
-	y_incrementer = (sprite->draw_height * 2) / sprite->vars.height;
-	y = SCREEN_HEIGHT / 2 - sprite->draw_height;
-	i = 0;
-	
-	while (i < sprite->vars.height)
-	{
-		coords = coords_init(x, y, x, y + y_incrementer);
-		colour = ((unsigned int *)sprite->vars.img.addr)
-			[i * sprite->vars.width + sprite->vars.position_x];
-		if (colour != 0x000000)
-			dda_line_algorithm(&vars->img, coords, colour);
-		y += y_incrementer;
-		i++;
-	}
-}
-
-void	sprite_raycasting(t_vars *vars, t_sprite *sprite, int x)
-{
-	float	x_square;
-	float	y_square;
-
-	x_square = pow(vars->player.x - sprite->ray_x, 2);
-	y_square = pow(vars->player.y - sprite->ray_y, 2);
-	sprite->dist = sqrt(x_square + y_square);
-	sprite->dist = sprite->dist * cos((vars->ray.angle -
-		vars->player.angle) * M_PI / 180);
-	sprite->draw_height = (int)((SCREEN_HEIGHT / 2) / sprite->dist);
-	sprite->vars.position_x = (int)fmod(sprite->vars.width *
-		(sprite->ray_x + sprite->ray_y), sprite->vars.width);
-	draw_sprite(vars, sprite, x);
-}
-*/
 void	paint_sprite(t_vars *vars, t_sprite *sprite)
 {
 	t_linecoords	coords;
@@ -87,7 +47,7 @@ void	paint_sprite(t_vars *vars, t_sprite *sprite)
 	
 	y_incrementer = (sprite->draw_height * 2) / sprite->vars.height;
 	x_incrementer = (sprite->draw_width * 2) / sprite->vars.width;
-	printf("yinc: %f, xinc: %f\n", y_incrementer, x_incrementer);
+	//printf("yinc: %f, xinc: %f\n", y_incrementer, x_incrementer);
 	x = sprite->screen_x - sprite->draw_width;
 	sprite->vars.position_x = 0;
 	while (sprite->vars.position_x <= sprite->vars.width)
@@ -111,12 +71,4 @@ void	paint_sprite(t_vars *vars, t_sprite *sprite)
 		//x += x_incrementer;
 		sprite->vars.position_x++;
 	}
-	
-/*	int i = sprite->screen_x - (sprite->draw_width / 2);
-	while (i < sprite->screen_x + (sprite->draw_width / 2))
-	{
-		coords = coords_init(i, sprite->screen_y - sprite->draw_height / 2, i, sprite->screen_y + sprite->draw_height / 2);
-		dda_line_algorithm(&vars->img, coords, 0xFF0000);
-		i++;
-	}*/
 }

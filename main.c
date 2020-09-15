@@ -150,6 +150,7 @@ int		main(int argc, char **argv)
 */
 //	map_initialise(&vars);
 	player_initialise(&vars);
+	init_keys(&vars);
 	vars.mlxvars.mlx = mlx_init();
 	vars.mlxvars.mlx_win = mlx_new_window(vars.mlxvars.mlx,
 			SCREEN_WIDTH, SCREEN_HEIGHT, "Hello world!");

@@ -97,6 +97,7 @@ int		raycasting(t_vars *vars)
 	sprite = vars->sprite;
 	barrel = 0;
 
+printf("%d\n%d\n%d\n\n", vars->keys.fw_traslation, vars->keys.right_traslation, vars->keys.left_traslation);
 	player_move(vars);
 	if ((vars->player.angle - vars->player.halffov) < 0)
 		vars->ray.angle = 360 + (vars->player.angle - vars->player.halffov);
@@ -155,7 +156,7 @@ int		raycasting(t_vars *vars)
 		vars->ray.count++;
 	}
 	
-	paint_sprite(vars, &sprite);
+	//paint_sprite(vars, &sprite);
 	mlx_put_image_to_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win,
 			vars->img.img, 0, 0);
 	return (0);
