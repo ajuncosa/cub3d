@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 12:08:00 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/08 13:38:19 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/16 12:29:20 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void			draw_square(t_imgdata *img, t_linecoords coords, int colour)
 	x1 = coords.x1;
 	y0 = coords.y0;
 	y1 = coords.y1;
-	while(y0 <= y1)
+	while (y0 <= y1)
 	{
 		coords = coords_init(x0, y0, x1, y0);
 		dda_line_algorithm(img, coords, colour);

@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/11 12:43:28 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/16 12:58:33 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,9 @@ void	paint(int x, t_vars *vars)
 int		raycasting(t_vars *vars)
 {
 	t_sprite	sprite;
-	int			sprite_hit;
-	int			barrel;
 
 	sprite = vars->sprite;
-	barrel = 0;
-
+	sprite.found = 0;
 	player_move(vars);
 	if ((vars->player.angle - vars->player.halffov) < 0)
 		vars->ray.angle = 360 + (vars->player.angle - vars->player.halffov);
@@ -112,49 +109,11 @@ int		raycasting(t_vars *vars)
 		vars->ray.sin = sin(vars->ray.angle * M_PI / 180) / vars->ray.precision;
 		vars->ray.cos = cos(vars->ray.angle * M_PI / 180) / vars->ray.precision;
 		calc_dist_and_wall_height(vars);
-
-		sprite_hit = 0;
-		sprite.ray_x = vars->player.x;
-		sprite.ray_y = vars->player.y;
-		while (sprite_hit != 2 && sprite_hit != 1)
-		{
-			sprite.ray_x += vars->ray.cos;
-			sprite_hit = map[(int)sprite.ray_y][(int)sprite.ray_x];
-			if (sprite_hit == 2)
-			{
-				if (barrel == 0)
-				{
-					sprite.map_x = (int)sprite.ray_x;
-					sprite.map_y = (int)sprite.ray_y;
-					sprite.angle1 = vars->ray.angle;
-					barrel = 1;
-				}
-				else
-					sprite.angle2 = vars->ray.angle;
-				break ;
-			}
-			sprite.ray_y += vars->ray.sin;
-			sprite_hit = map[(int)sprite.ray_y][(int)sprite.ray_x];
-			if (sprite_hit == 2)
-			{
-				if (barrel == 0)
-				{
-					sprite.map_x = (int)sprite.ray_x;
-					sprite.map_y = (int)sprite.ray_y;
-					sprite.angle1 = vars->ray.angle;
-					barrel = 1;
-				}
-				else
-					sprite.angle2 = vars->ray.angle;
-				break ;
-			}
-		}
-			
+		find_sprite(vars, &sprite);
 		paint(vars->ray.count, vars);
 		vars->ray.angle += vars->ray.increment_angle;
 		vars->ray.count++;
 	}
-	
 	paint_sprite(vars, &sprite);
 	mlx_put_image_to_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win,
 			vars->img.img, 0, 0);

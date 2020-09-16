@@ -6,50 +6,11 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/03 11:40:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/16 13:40:28 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/14 13:08:41 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	sprite_found_fill_vars(t_vars *vars, t_sprite *sprite)
-{
-	if (sprite->found == 0)
-	{
-		sprite->map_x = (int)sprite->ray_x;
-		sprite->map_y = (int)sprite->ray_y;
-		sprite->angle1 = vars->ray.angle;
-		sprite->found = 1;
-	}
-	else
-		sprite->angle2 = vars->ray.angle;
-}
-
-void	find_sprite(t_vars *vars, t_sprite *sprite)
-{
-	int	sprite_hit;
-
-	sprite_hit = 0;
-	sprite->ray_x = vars->player.x;
-	sprite->ray_y = vars->player.y;
-	while (sprite_hit != 2 && sprite_hit != 1)
-	{
-		sprite->ray_x += vars->ray.cos;
-		sprite_hit = map[(int)sprite->ray_y][(int)sprite->ray_x];
-		if (sprite_hit == 2)
-		{
-			sprite_found_fill_vars(vars, sprite);
-			break ;
-		}
-		sprite->ray_y += vars->ray.sin;
-		sprite_hit = map[(int)sprite->ray_y][(int)sprite->ray_x];
-		if (sprite_hit == 2)
-		{
-			sprite_found_fill_vars(vars, sprite);
-			break ;
-		}
-	}
-}
 
 void	paint_sprite(t_vars *vars, t_sprite *sprite)
 {
@@ -71,33 +32,45 @@ void	paint_sprite(t_vars *vars, t_sprite *sprite)
  	else
  		sprite->angle0 = vars->player.angle - vars->player.halffov;
 	sprite->angle1 -= sprite->angle0;
-	printf("%f\n%f\n", sprite->angle2, sprite->angle0);
 	sprite->angle2 -= sprite->angle0;
 	sprite->angle = (sprite->angle2 + sprite->angle1) / 2; //este es el ángulo relativo del sprite sobre el FOV (hago la media para coger el central. Si cogiese el ángulo total en vez del relativo la screen_x quedaría súper grande)
-	
+	printf("angle0: %f\nangle: %f\nangle1: %f\nangle2: %f\n\n", sprite->angle0, sprite->angle, sprite->angle1, sprite->angle2);
 	float pixels_per_degree = SCREEN_WIDTH / vars->player.fov;
 	sprite->screen_x = pixels_per_degree * sprite->angle; // me da la x central de donde se va a dibujar el sprite
-	printf("%f\n\n", sprite->screen_x);
+	//printf("sprite->screen_x: %f\n", sprite->screen_x);
 	sprite->screen_y = SCREEN_HEIGHT / 2;
-	sprite->draw_width = (sprite->vars.width * sprite->draw_height) / sprite->vars.height; // regla de tres
+	//printf("sprite->screen_y: %f\n", sprite->screen_y);
+	sprite->draw_width = (int)((sprite->vars.width * sprite->draw_height) / sprite->vars.height); // regla de tres
+	//printf("draw_width: %f\nheight: %f\n", sprite->draw_width, sprite->draw_height);
+	//printf("primer angulo del fov: %f\npixelspdeg: %f\nx: %f\ny: %f\n\n", sprite->angle0, pixels_per_degree, sprite->screen_x, sprite->screen_y);
+
+	
 	y_incrementer = (sprite->draw_height * 2) / sprite->vars.height;
 	x_incrementer = (sprite->draw_width * 2) / sprite->vars.width;
+	//printf("yinc: %f, xinc: %f\n", y_incrementer, x_incrementer);
 	x = sprite->screen_x - sprite->draw_width;
 	sprite->vars.position_x = 0;
-	while (sprite->vars.position_x <= sprite->vars.width)
+	while (sprite->vars.position_x < sprite->vars.width)
 	{
-		y = sprite->screen_y - sprite->draw_height;
-		i = 0;
-		while (i < sprite->vars.height)
+		j = 0; // la j es un int y el x_incrementer es un float; a lo mejor se soluciona si hago un draw_square?
+		while (j < x_incrementer && x < sprite->screen_x + sprite->draw_width)
 		{
-			coords = coords_init(x, y, x + x_incrementer, y + y_incrementer);
-			colour = ((unsigned int *)sprite->vars.img.addr)[i * sprite->vars.width + sprite->vars.position_x];
-			if (colour != 0x000000)
-				draw_square(&vars->img, coords, colour);
-			y += y_incrementer;
-			i++;
+			i = 0;
+			y = sprite->screen_y - sprite->draw_height;
+			while (i < sprite->vars.height)
+			{
+				coords = coords_init(x, y, x, y + y_incrementer);
+				colour = ((unsigned int *)sprite->vars.img.addr)[i * sprite->vars.width + sprite->vars.position_x];
+				dda_line_algorithm(&vars->img, coords, colour);
+				y += y_incrementer;
+				i++;
+			}
+			j++;
+			x++;
 		}
+		//x += x_incrementer;
 		sprite->vars.position_x++;
-		x += x_incrementer;
+	
 	}
+		printf("sprite pos x: %d\n\n", sprite->vars.position_x);
 }
