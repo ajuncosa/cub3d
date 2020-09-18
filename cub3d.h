@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/16 12:58:38 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/18 13:14:26 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <math.h>
-# define MAP_WIDTH 10
-# define MAP_HEIGHT 10
+# define MAP_WIDTH 10 //30
+# define MAP_HEIGHT 10 //67
 # define SCREEN_WIDTH 640
 # define SCREEN_HEIGHT 480
 
@@ -103,10 +103,12 @@ typedef struct	s_sprite
 {
 	t_texvars	vars;
 	int			found;
+	int			array_x; //estos son sus posiciones en el array
+	int			array_y;
 	float		ray_x;
 	float		ray_y;
-	float		map_x;
-	float		map_y;
+	float		map_x; //esto es su posicion en el array calculado al buscar sprites en el raycasting
+	float		map_y; //necesito array y map para poder comparar la posicion encontrada (map) con la que define ese sprite en concreto (array) y reconocer si es o no es ese sprite
 	float		dist;
 	float		draw_height;
 	float		draw_width;
@@ -153,7 +155,7 @@ typedef struct	s_vars
 	t_wall		wall;
 	t_keys		keys;
 	t_textures	textures;
-	t_sprite	sprite;
+	t_sprite	**sprite; // ¿por que funciona con ** pero no con *??????????
 //	t_map		map;
 }				t_vars;
 
@@ -164,11 +166,11 @@ void			my_mlx_pixel_put(t_imgdata *data, int x, int y, int color);
 void			init_keys(t_vars *vars);
 int				handle_keypress(int keycode, t_vars *vars);
 int				handle_keyrelease(int keycode, t_vars *vars);
+int				xbutton_close(t_vars *vars);
 void			left_traslation(t_vars *vars);
 void			right_traslation(t_vars *vars);
 void			forward_traslation(t_vars *vars);
 void			backward_traslation(t_vars *vars);
-//int				xbutton_close(t_vars *vars);
 int				raycasting(t_vars *vars);
 void			dda_line_algorithm(t_imgdata *img,
 		t_linecoords coords, int colour);

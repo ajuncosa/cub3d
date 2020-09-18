@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/03 11:40:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/16 13:40:28 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/17 13:35:47 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	find_sprite(t_vars *vars, t_sprite *sprite)
 		sprite_hit = map[(int)sprite->ray_y][(int)sprite->ray_x];
 		if (sprite_hit == 2)
 		{
+			printf("%d, %d\n", (int)sprite->ray_x, (int)sprite->ray_y);
 			sprite_found_fill_vars(vars, sprite);
 			break ;
 		}
@@ -45,6 +46,7 @@ void	find_sprite(t_vars *vars, t_sprite *sprite)
 		sprite_hit = map[(int)sprite->ray_y][(int)sprite->ray_x];
 		if (sprite_hit == 2)
 		{
+			printf("%d, %d\n", (int)sprite->ray_x, (int)sprite->ray_y);
 			sprite_found_fill_vars(vars, sprite);
 			break ;
 		}
@@ -59,7 +61,6 @@ void	paint_sprite(t_vars *vars, t_sprite *sprite)
 	float			y;
 	float			x;
 	int				i;
-	int				j;
 	unsigned int	colour;
 
 	sprite->map_x = (floor(sprite->map_x) + 0.5);
@@ -71,13 +72,12 @@ void	paint_sprite(t_vars *vars, t_sprite *sprite)
  	else
  		sprite->angle0 = vars->player.angle - vars->player.halffov;
 	sprite->angle1 -= sprite->angle0;
-	printf("%f\n%f\n", sprite->angle2, sprite->angle0);
 	sprite->angle2 -= sprite->angle0;
 	sprite->angle = (sprite->angle2 + sprite->angle1) / 2; //este es el ángulo relativo del sprite sobre el FOV (hago la media para coger el central. Si cogiese el ángulo total en vez del relativo la screen_x quedaría súper grande)
-	
+	//printf("ang 1: %f\nang 2: %f\nang 0: %f\n", sprite->angle1, sprite->angle2, sprite->angle0);
 	float pixels_per_degree = SCREEN_WIDTH / vars->player.fov;
 	sprite->screen_x = pixels_per_degree * sprite->angle; // me da la x central de donde se va a dibujar el sprite
-	printf("%f\n\n", sprite->screen_x);
+	//printf("screen x: %f\n\n", sprite->screen_x);
 	sprite->screen_y = SCREEN_HEIGHT / 2;
 	sprite->draw_width = (sprite->vars.width * sprite->draw_height) / sprite->vars.height; // regla de tres
 	y_incrementer = (sprite->draw_height * 2) / sprite->vars.height;

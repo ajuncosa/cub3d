@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub_keys.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 10:01:06 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/07/28 13:34:41 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/18 10:21:59 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	init_keys(t_vars *vars)
 	vars->keys.left_rotation = 0;
 	vars->keys.right_rotation = 0;
 }
-
 
 int		handle_keypress(int keycode, t_vars *vars)
 {
@@ -60,4 +59,10 @@ int		handle_keyrelease(int keycode, t_vars *vars)
 	else if (keycode == 1)
 		vars->keys.bw_traslation = 0;
 	return (0);
+}
+
+int		xbutton_close(t_vars *vars)
+{
+	mlx_destroy_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win);
+	exit(0);
 }

@@ -1,4 +1,4 @@
-SRCS	= main.c cub_keys.c cub_raycasting.c cub_movement.c cub_line_algorithm.c cub_texture.c cub_sprites.c
+SRCS	= main.c cub_events.c cub_raycasting.c cub_movement.c cub_line_algorithm.c cub_texture.c cub_sprites.c
 OBJS	= ${SRCS:.c=.o}
 NAME	= cub3d
 CC		= gcc
