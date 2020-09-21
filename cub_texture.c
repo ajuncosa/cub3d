@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 11:14:41 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/18 10:39:14 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/21 13:33:27 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void		fill_in_tex_variables(t_vars *vars, t_texvars *texture, char *file)
 
 void		init_all_textures(t_vars *vars)
 {
+	int	i;
+
 	fill_in_tex_variables(vars, &vars->textures.north,
 			"textures/wall.xpm");
 	fill_in_tex_variables(vars, &vars->textures.south,
@@ -31,7 +33,12 @@ void		init_all_textures(t_vars *vars)
 			"textures/ivy_texture.xpm");
 	fill_in_tex_variables(vars, &vars->textures.west,
 			"textures/white_texture.xpm");
-//	fill_in_tex_variables(vars, &vars->sprite.vars, "textures/sprite3.xpm");
+	i = 0;
+	while (i < vars->sprite_count)
+	{
+		fill_in_tex_variables(vars, &vars->sprite[i].vars, "textures/sprite3.xpm");
+		i++;
+	}
 }
 
 void		get_orientation(t_vars *vars)

@@ -6,48 +6,61 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/03 11:40:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/17 13:35:47 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/21 13:28:38 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	sprite_found_fill_vars(t_vars *vars, t_sprite *sprite)
+void	sprite_found_fill_vars(t_vars *vars, float ray_x, float ray_y)
 {
-	if (sprite->found == 0)
+	int			count;
+	t_sprite	*sprite;
+
+	count = 0;
+	sprite = vars->sprite;
+	while (count < vars->sprite_count)
 	{
-		sprite->map_x = (int)sprite->ray_x;
-		sprite->map_y = (int)sprite->ray_y;
-		sprite->angle1 = vars->ray.angle;
-		sprite->found = 1;
+		if (sprite[count].array_x == (int)ray_x && sprite[count].array_y == (int)ray_y)
+			break ;
+		count++;
+	}
+	if (sprite[count].found == 0)
+	{
+		sprite[count].map_x = (int)ray_x + 0.5;
+		sprite[count].map_y = (int)ray_y + 0.5;
+		sprite[count].angle1 = vars->ray.angle;
+		sprite[count].found = 1;
 	}
 	else
-		sprite->angle2 = vars->ray.angle;
+		sprite[count].angle2 = vars->ray.angle;
 }
 
-void	find_sprite(t_vars *vars, t_sprite *sprite)
+void	find_sprite(t_vars *vars)
 {
-	int	sprite_hit;
+	int		sprite_hit;
+	float	ray_x;
+	float	ray_y;
 
 	sprite_hit = 0;
-	sprite->ray_x = vars->player.x;
-	sprite->ray_y = vars->player.y;
+	ray_x = vars->player.x;
+	ray_y = vars->player.y;
 	while (sprite_hit != 2 && sprite_hit != 1)
 	{
-		sprite->ray_x += vars->ray.cos;
-		sprite_hit = map[(int)sprite->ray_y][(int)sprite->ray_x];
+		ray_x += vars->ray.cos;
+		sprite_hit = map[(int)ray_y][(int)ray_x];
 		if (sprite_hit == 2)
 		{
-			printf("%d, %d\n", (int)sprite->ray_x, (int)sprite->ray_y);
-			sprite_found_fill_vars(vars, sprite);
+		//	printf("%d, %d\n", (int)ray_x, (int)ray_y);
+			sprite_found_fill_vars(vars, ray_x, ray_y);
 			break ;
 		}
-		sprite->ray_y += vars->ray.sin;
-		sprite_hit = map[(int)sprite->ray_y][(int)sprite->ray_x];
+		ray_y += vars->ray.sin;
+		sprite_hit = map[(int)ray_y][(int)ray_x];
 		if (sprite_hit == 2)
 		{
-			printf("%d, %d\n", (int)sprite->ray_x, (int)sprite->ray_y);
-			sprite_found_fill_vars(vars, sprite);
+		//	printf("%d, %d\n", (int)ray_x, (int)ray_y);
+			sprite_found_fill_vars(vars, ray_x, ray_y);
 			break ;
 		}
 	}
@@ -63,8 +76,6 @@ void	paint_sprite(t_vars *vars, t_sprite *sprite)
 	int				i;
 	unsigned int	colour;
 
-	sprite->map_x = (floor(sprite->map_x) + 0.5);
-	sprite->map_y = (floor(sprite->map_y) + 0.5);
 	sprite->dist = sqrt(pow(sprite->map_x - vars->player.x, 2) + pow(sprite->map_y - vars->player.y, 2));
 	sprite->draw_height = (int)((SCREEN_HEIGHT / 2) / sprite->dist); // altura de la mitad del dibujo del sprite
 	if ((vars->player.angle - vars->player.halffov) < 0)
@@ -84,10 +95,14 @@ void	paint_sprite(t_vars *vars, t_sprite *sprite)
 	x_incrementer = (sprite->draw_width * 2) / sprite->vars.width;
 	x = sprite->screen_x - sprite->draw_width;
 	sprite->vars.position_x = 0;
+	printf("%d\n", sprite->vars.width);
+	printf("%d\n", sprite->vars.position_x);
 	while (sprite->vars.position_x <= sprite->vars.width)
 	{
+		printf("hola\n");
 		y = sprite->screen_y - sprite->draw_height;
 		i = 0;
+
 		while (i < sprite->vars.height)
 		{
 			coords = coords_init(x, y, x + x_incrementer, y + y_incrementer);

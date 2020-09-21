@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 12:42:59 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/18 12:49:03 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/21 13:33:26 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int map[MAP_HEIGHT][MAP_WIDTH] = {
         {1,1,1,1,1,1,1,1,1,1},
         {1,0,0,0,0,0,0,0,0,1},
         {1,0,1,0,2,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,5,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,1},
+        {1,0,2,0,0,0,0,2,0,1},
+        {1,0,0,0,5,0,0,2,0,1},
+        {1,0,0,0,0,0,0,2,0,1},
         {1,0,0,0,0,0,2,0,0,1},
         {1,0,0,1,0,0,0,0,0,1},
         {1,0,0,0,0,0,0,0,0,1},
@@ -157,12 +157,28 @@ int		main(int argc, char **argv)
 	printf("%s\n", map);
 */
 //	map_initialise(&vars);
+
 	player_initialise(&vars);
 	init_keys(&vars);
 
 	//count sprites:
 	int i = 0;
 	int j = 0;
+	vars.sprite_count = 0;
+	while (map[i][j])
+	{
+		j = 0;
+		while (j < MAP_WIDTH)
+		{
+			if (map[i][j] == 2)
+				vars.sprite_count++;
+			j++;
+		}
+		i++;
+	}
+	if (!(vars.sprite = malloc(vars.sprite_count * sizeof(t_sprite))))
+		return (1);
+	i = 0;
 	int count = 0;
 	while (map[i][j])
 	{
@@ -170,26 +186,10 @@ int		main(int argc, char **argv)
 		while (j < MAP_WIDTH)
 		{
 			if (map[i][j] == 2)
-				count++;
-			j++;
-		}
-		i++;
-	}
-	if (!(vars.sprite = malloc(count * sizeof(t_sprite*) + 1)))
-		return (1);
-	vars.sprite[count] = NULL;
-	i = 0;
-	count = 0;
-	while (map[i][j])
-	{
-		j = 0;
-		while (j < MAP_WIDTH)
-		{
-			if (map[i][j] == 2)
 			{
-				vars.sprite[count] = malloc(sizeof(t_sprite));
-				vars.sprite[count]->array_x = j;
-				vars.sprite[count]->array_y = i;
+				vars.sprite[count].array_x = j;
+				vars.sprite[count].array_y = i;
+				vars.sprite[count].id = map[i][j];
 				count++;
 			}
 			j++;
@@ -210,11 +210,5 @@ int		main(int argc, char **argv)
 	mlx_hook(vars.mlxvars.mlx_win, 17, 0L, xbutton_close, &vars);
 	mlx_loop(vars.mlxvars.mlx);
 	mlx_destroy_image(vars.mlxvars.mlx, vars.img.img);
-	i = 0;
-	/*while (vars.sprite[i] != '\0')
-	{
-		free(vars.sprite[i]);
-		i++;
-	}*/
 	free(vars.sprite);
 }
