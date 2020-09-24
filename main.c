@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 12:42:59 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/21 13:33:26 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/24 12:49:35 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ int map[MAP_HEIGHT][MAP_WIDTH] = {
         {1,1,1,1,1,1,1,1,1,1},
         {1,0,0,0,0,0,0,0,0,1},
         {1,0,1,0,2,0,0,0,0,1},
-        {1,0,2,0,0,0,0,2,0,1},
-        {1,0,0,0,5,0,0,2,0,1},
-        {1,0,0,0,0,0,0,2,0,1},
-        {1,0,0,0,0,0,2,0,0,1},
-        {1,0,0,1,0,0,0,0,0,1},
+        {1,0,2,0,0,0,0,0,0,1},
+        {1,0,0,0,5,0,0,0,2,1},
+        {1,0,0,0,0,0,0,0,2,1},
+        {1,0,0,0,0,0,0,0,0,1},
+        {1,0,0,1,0,0,2,0,0,1},
         {1,0,0,0,0,0,0,0,0,1},
         {1,1,1,1,1,1,1,1,1,1}
     };/*
@@ -99,15 +99,6 @@ void	map_initialise(t_vars *vars)
 	
 }
 */
-void	my_mlx_pixel_put(t_imgdata *data, int x, int y, int color)
-{
-    char    *dst;
-
-	if (x < 0 || x >= SCREEN_WIDTH || y < 0 || y >= SCREEN_HEIGHT)
-		return ;
-    dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-    *(unsigned int*)dst = color;
-}
 
 void	player_initialise(t_vars *vars)
 {
@@ -133,7 +124,7 @@ void	player_initialise(t_vars *vars)
 	vars->player.angle = 270;
 	vars->player.fov = 60;
 	vars->player.halffov = vars->player.fov / 2;
-	vars->player.speed = 0.2;
+	vars->player.speed = 0.02;
 	vars->player.rotation = 3;
 }
 
@@ -160,43 +151,8 @@ int		main(int argc, char **argv)
 
 	player_initialise(&vars);
 	init_keys(&vars);
-
-	//count sprites:
-	int i = 0;
-	int j = 0;
-	vars.sprite_count = 0;
-	while (map[i][j])
-	{
-		j = 0;
-		while (j < MAP_WIDTH)
-		{
-			if (map[i][j] == 2)
-				vars.sprite_count++;
-			j++;
-		}
-		i++;
-	}
-	if (!(vars.sprite = malloc(vars.sprite_count * sizeof(t_sprite))))
+	if (init_sprite_array(&vars) == 1)
 		return (1);
-	i = 0;
-	int count = 0;
-	while (map[i][j])
-	{
-		j = 0;
-		while (j < MAP_WIDTH)
-		{
-			if (map[i][j] == 2)
-			{
-				vars.sprite[count].array_x = j;
-				vars.sprite[count].array_y = i;
-				vars.sprite[count].id = map[i][j];
-				count++;
-			}
-			j++;
-		}
-		i++;
-	}
-
 	vars.mlxvars.mlx = mlx_init();
 	vars.mlxvars.mlx_win = mlx_new_window(vars.mlxvars.mlx,
 			SCREEN_WIDTH, SCREEN_HEIGHT, "Hello world!");

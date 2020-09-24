@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/21 12:45:10 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/24 13:28:54 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,16 +91,16 @@ void	paint(int x, t_vars *vars)
 int		raycasting(t_vars *vars)
 {
 	int	i = 0;
+	/*
 	while (i < vars->sprite_count)
 	{
 		vars->sprite[i].found = 0;
 		i++;
-	}
+	}*/
 	player_move(vars);
-	if ((vars->player.angle - vars->player.halffov) < 0)
-		vars->ray.angle = 360 + (vars->player.angle - vars->player.halffov);
-	else
-		vars->ray.angle = vars->player.angle - vars->player.halffov;
+	vars->ray.angle = vars->player.angle - vars->player.halffov;
+	vars->ray.angle += (vars->ray.angle < 0) ? 360 : 0;
+	vars->ray.angle0 = vars->ray.angle;
 	vars->ray.increment_angle = vars->player.fov / SCREEN_WIDTH;
 	vars->ray.count = 0;
 	vars->ray.precision = 256;
@@ -111,7 +111,6 @@ int		raycasting(t_vars *vars)
 		vars->ray.sin = sin(vars->ray.angle * M_PI / 180) / vars->ray.precision;
 		vars->ray.cos = cos(vars->ray.angle * M_PI / 180) / vars->ray.precision;
 		calc_dist_and_wall_height(vars);
-		find_sprite(vars);
 		paint(vars->ray.count, vars);
 		vars->ray.angle += vars->ray.increment_angle;
 		vars->ray.count++;
@@ -119,11 +118,38 @@ int		raycasting(t_vars *vars)
 	i = 0;
 	while (i < vars->sprite_count)
 	{
-		if (vars->sprite[i].found != 0)
-			paint_sprite(vars, &vars->sprite[i]);
+		calculate_sprite_info(vars, &vars->sprite[i]);
 		i++;
 	}
+	
+/*	i = 0;
+	while (i < vars->sprite_count)
+	{
+		printf("%f\n", vars->sprite[i].dist);
+		i++;
+	}
+	printf("\n");*/
 
+
+	if (vars->sprite_count > 1)
+		reorder_sprite_array(vars);
+
+	i = 0;
+	while (i < vars->sprite_count)
+	{
+		paint_sprite(vars, &vars->sprite[i]);
+		i++;
+	}
+	/*i = 0;
+	while (i < vars->sprite_count)
+	{
+		if (vars->sprite[i].found != 0)
+		{
+			printf("no de barril: %d\n", i);
+			paint_sprite(vars, &vars->sprite[i]);
+		}
+		i++;
+	}*/
 	mlx_put_image_to_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win,
 			vars->img.img, 0, 0);
 	return (0);

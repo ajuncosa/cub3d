@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/21 12:37:50 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/24 13:01:26 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct	s_player
 typedef struct	s_ray
 {
 	float		angle;
+	float		angle0;
 	float		increment_angle;
 	int			count;
 	float		x;
@@ -103,22 +104,18 @@ typedef struct	s_sprite
 {
 	t_texvars	vars;
 	int			id; // qué textura de sprite tiene según el nº en el mapa
-	int			found;
-	int			array_x; //estos son sus posiciones en el array
-	int			array_y;
-	//float		ray_x;
-	//float		ray_y;
-	float		map_x; //esto es su posicion en el array calculado al buscar sprites en el raycasting
-	float		map_y; //necesito array y map para poder comparar la posicion encontrada (map) con la que define ese sprite en concreto (array) y reconocer si es o no es ese sprite
+//	int			found;
+	float		map_x;
+	float		map_y;
 	float		dist;
 	float		draw_height;
 	float		draw_width;
 	float		screen_x;
 	float		screen_y;
-	float		angle0;
-	float		angle1;
-	float		angle2;
 	float		angle;
+	float		rel_angle;
+	float		y_incrementer;
+	float		x_incrementer;
 }				t_sprite;
 
 
@@ -181,7 +178,9 @@ t_linecoords	coords_init(int x0, int y0, int x1, int y1);
 void			init_all_textures(t_vars *vars);
 void			paint_texture(t_vars *vars, t_texvars texture, int x);
 t_texvars		init_texture(t_vars *vars);
-void			find_sprite(t_vars *vars);
+int				init_sprite_array(t_vars *vars);
+void			calculate_sprite_info(t_vars *vars, t_sprite *sprite);
+void			reorder_sprite_array(t_vars *vars);
 void			paint_sprite(t_vars *vars, t_sprite *sprite);
 
 #endif
