@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/24 13:01:26 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/25 12:40:42 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct	s_sprite
 {
 	t_texvars	vars;
 	int			id; // qué textura de sprite tiene según el nº en el mapa
+	int			numero;
 //	int			found;
 	float		map_x;
 	float		map_y;
@@ -180,7 +181,7 @@ void			paint_texture(t_vars *vars, t_texvars texture, int x);
 t_texvars		init_texture(t_vars *vars);
 int				init_sprite_array(t_vars *vars);
 void			calculate_sprite_info(t_vars *vars, t_sprite *sprite);
-void			reorder_sprite_array(t_vars *vars);
+void			sort_sprite_array(t_vars *vars);
 void			paint_sprite(t_vars *vars, t_sprite *sprite);
 
 #endif

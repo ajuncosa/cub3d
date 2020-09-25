@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/03 11:40:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/24 13:28:57 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/25 12:48:49 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int		init_sprite_array(t_vars *vars)
 				vars->sprite[count].map_x = j + 0.5;
 				vars->sprite[count].map_y = i + 0.5;
 				vars->sprite[count].id = map[i][j];
+				vars->sprite[count].numero = count + 1;
 				count++;
 			}
 			j++;
@@ -72,9 +73,8 @@ void	calculate_sprite_info(t_vars *vars, t_sprite *sprite)
 	xinc = (sprite->map_x - vars->player.x);
 	yinc = (sprite->map_y - vars->player.y);
 	sprite->dist = sqrt(pow(xinc, 2) + pow(yinc, 2));
-	sprite->angle = atan2(yinc, xinc);
-	sprite->angle = sprite->angle * 180 / M_PI; // Convert to degrees
-	sprite->angle += (sprite->angle < 0) ? 360 : 0; // Make sure its in proper range
+	sprite->angle = atan2(yinc, xinc) * 180 / M_PI;
+	sprite->angle += (sprite->angle < 0) ? 360 : 0;
 	sprite->dist = sprite->dist * cos((sprite->angle - vars->player.angle) * M_PI / 180); // fix fisheye
 	sprite->draw_height = (int)((SCREEN_HEIGHT / 2) / sprite->dist);
 	sprite->rel_angle = sprite->angle - vars->ray.angle0;
@@ -83,11 +83,9 @@ void	calculate_sprite_info(t_vars *vars, t_sprite *sprite)
 	sprite->screen_x = pixels_per_degree * sprite->rel_angle;
 	sprite->screen_y = SCREEN_HEIGHT / 2;
 	sprite->draw_width = (sprite->vars.width * sprite->draw_height / sprite->vars.height);
-	
-	printf("%f\n", sprite->dist);
 }
 
-void	reorder_sprite_array(t_vars *vars)
+void	sort_sprite_array(t_vars *vars)
 {
 	int			i;
 	int			j;
@@ -96,14 +94,14 @@ void	reorder_sprite_array(t_vars *vars)
 	i = 0;
 	while (i < vars->sprite_count)
 	{
-		j = 1;
+		j = 0;
 		while (j < vars->sprite_count)
 		{
 			if (vars->sprite[j].dist < vars->sprite[i].dist)
 			{
 				tmp = vars->sprite[j];
 				vars->sprite[j] = vars->sprite[i];
-				vars->sprite[i] = vars->sprite[j];
+				vars->sprite[i] = tmp;
 			}
 			j++;
 		}

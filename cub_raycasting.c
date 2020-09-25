@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/24 13:28:54 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/25 13:16:43 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,8 @@ void	paint(int x, t_vars *vars)
 
 int		raycasting(t_vars *vars)
 {
-	int	i = 0;
-	/*
-	while (i < vars->sprite_count)
-	{
-		vars->sprite[i].found = 0;
-		i++;
-	}*/
+	int	i;
+	
 	player_move(vars);
 	vars->ray.angle = vars->player.angle - vars->player.halffov;
 	vars->ray.angle += (vars->ray.angle < 0) ? 360 : 0;
@@ -121,35 +116,17 @@ int		raycasting(t_vars *vars)
 		calculate_sprite_info(vars, &vars->sprite[i]);
 		i++;
 	}
-	
-/*	i = 0;
-	while (i < vars->sprite_count)
-	{
-		printf("%f\n", vars->sprite[i].dist);
-		i++;
-	}
-	printf("\n");*/
+	printf("%d, %f\n", vars->sprite[vars->sprite_count - 1].numero, vars->sprite[vars->sprite_count - 1].screen_x);
 
-
+	i = 0;
 	if (vars->sprite_count > 1)
-		reorder_sprite_array(vars);
-
+		sort_sprite_array(vars);
 	i = 0;
 	while (i < vars->sprite_count)
 	{
 		paint_sprite(vars, &vars->sprite[i]);
 		i++;
 	}
-	/*i = 0;
-	while (i < vars->sprite_count)
-	{
-		if (vars->sprite[i].found != 0)
-		{
-			printf("no de barril: %d\n", i);
-			paint_sprite(vars, &vars->sprite[i]);
-		}
-		i++;
-	}*/
 	mlx_put_image_to_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win,
 			vars->img.img, 0, 0);
 	return (0);
