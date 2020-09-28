@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/03 11:40:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/25 12:48:49 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/28 14:39:30 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		init_sprite_array(t_vars *vars)
 	int i;
 	int j;
 	int	count;
-	
+
 	count_sprites(vars);
 	if (!(vars->sprite = malloc(vars->sprite_count * sizeof(t_sprite))))
 		return (1);
@@ -61,6 +61,8 @@ int		init_sprite_array(t_vars *vars)
 		}
 		i++;
 	}
+	if (!(vars->wall.distance = malloc(SCREEN_WIDTH * sizeof(float))))
+		return (1);
 	return (0);
 }
 
@@ -75,10 +77,11 @@ void	calculate_sprite_info(t_vars *vars, t_sprite *sprite)
 	sprite->dist = sqrt(pow(xinc, 2) + pow(yinc, 2));
 	sprite->angle = atan2(yinc, xinc) * 180 / M_PI;
 	sprite->angle += (sprite->angle < 0) ? 360 : 0;
-	sprite->dist = sprite->dist * cos((sprite->angle - vars->player.angle) * M_PI / 180); // fix fisheye
+	//sprite->dist = sprite->dist * cos((sprite->angle - vars->player.angle) * M_PI / 180); // fix fisheye
 	sprite->draw_height = (int)((SCREEN_HEIGHT / 2) / sprite->dist);
 	sprite->rel_angle = sprite->angle - vars->ray.angle0;
-	sprite->rel_angle += (sprite->rel_angle < 0) ? 360 : 0;
+	if (sprite->rel_angle > 0 || sprite->rel_angle < -30) // para poder usar los negativos cercanos al limite izq de la pantalla al calcular la screen_x
+		sprite->rel_angle += (sprite->rel_angle < 0) ? 360 : 0;
 	pixels_per_degree = SCREEN_WIDTH / vars->player.fov;
 	sprite->screen_x = pixels_per_degree * sprite->rel_angle;
 	sprite->screen_y = SCREEN_HEIGHT / 2;
@@ -116,6 +119,8 @@ void	paint_sprite(t_vars *vars, t_sprite *sprite)
 	unsigned int	colour;
 	t_linecoords	coords;
 	int				i;
+	int				x_new;
+
 
 	sprite->y_incrementer = (sprite->draw_height * 2) / sprite->vars.height;
 	sprite->x_incrementer = (sprite->draw_width * 2) / sprite->vars.width;
@@ -127,7 +132,13 @@ void	paint_sprite(t_vars *vars, t_sprite *sprite)
 		i = 0;
 		while (i < sprite->vars.height)
 		{
-			coords = coords_init(x, y, x + sprite->x_incrementer, y + sprite->y_incrementer);
+			x_new = x;
+			printf("%f, %f\n", vars->wall.distance[x_new], sprite->dist);
+			/*while (vars->wall.distance[x_new] < sprite->dist)
+				printf("HOLA\n");*/
+			//if (vars->wall.distance[(int)x] > sprite->dist)
+
+			coords = coords_init(x_new, y, x + sprite->x_incrementer, y + sprite->y_incrementer);
 			colour = ((unsigned int *)sprite->vars.img.addr)[i * sprite->vars.width + sprite->vars.position_x];
 			if (colour != 0x000000)
 				draw_square(&vars->img, coords, colour);
