@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 12:42:59 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/28 12:52:28 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/29 11:30:25 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	player_initialise(t_vars *vars)
 	vars->player.angle = 270;
 	vars->player.fov = 60;
 	vars->player.halffov = vars->player.fov / 2;
-	vars->player.speed = 0.2;
+	vars->player.speed = 0.02;
 	vars->player.rotation = 3;
 }
 
@@ -167,4 +167,5 @@ int		main(int argc, char **argv)
 	mlx_loop(vars.mlxvars.mlx);
 	mlx_destroy_image(vars.mlxvars.mlx, vars.img.img);
 	free(vars.sprite);
+	free(vars.wall.distance);
 }

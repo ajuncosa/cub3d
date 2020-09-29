@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/28 14:36:17 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/29 12:07:48 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	calc_dist_and_wall_height(t_vars *vars)
 				vars->player.angle) * M_PI / 180);
 	vars->wall.height = (int)((SCREEN_HEIGHT / 2) / vars->wall.distance[vars->ray.count]);
 	if (vars->ray.count == SCREEN_WIDTH / 2)
-		vars->wall.mid_dist = vars->wall.distance[vars->ray.count];
+		vars->wall.mid_dist = vars->wall.distance[vars->ray.count]; // para evitar que el jugador se acerque a las paredes (en fowrard traslation en cub_movement)
 }
 
 void	paint(int x, t_vars *vars)
@@ -116,15 +116,12 @@ int		raycasting(t_vars *vars)
 		calculate_sprite_info(vars, &vars->sprite[i]);
 		i++;
 	}
-	i = 0;
 	if (vars->sprite_count > 1)
 		sort_sprite_array(vars);
 	i = 0;
 	while (i < vars->sprite_count)
 	{ 
-		// if para que solo entre en imprimir si el sprite esta en los limites de la pantalla
-		if ((vars->sprite[i].screen_x + vars->sprite[i].draw_width > 0 && vars->sprite[i].screen_x + vars->sprite[i].draw_width < SCREEN_WIDTH) || (vars->sprite[i].screen_x - vars->sprite[i].draw_width < SCREEN_WIDTH && vars->sprite[i].screen_x - vars->sprite[i].draw_width > 0))
-			paint_sprite(vars, &vars->sprite[i]);
+		paint_sprite(vars, &vars->sprite[i]);
 		i++;
 	}
 	mlx_put_image_to_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win,

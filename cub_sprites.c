@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/03 11:40:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/28 14:39:30 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/29 13:04:04 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,29 +119,22 @@ void	paint_sprite(t_vars *vars, t_sprite *sprite)
 	unsigned int	colour;
 	t_linecoords	coords;
 	int				i;
-	int				x_new;
-
 
 	sprite->y_incrementer = (sprite->draw_height * 2) / sprite->vars.height;
 	sprite->x_incrementer = (sprite->draw_width * 2) / sprite->vars.width;
 	x = sprite->screen_x - sprite->draw_width;
 	sprite->vars.position_x = 0;
+	//printf("%d, %f\n", sprite->numero, sprite->screen_x);
 	while (sprite->vars.position_x <= sprite->vars.width)
 	{
 		y = sprite->screen_y - sprite->draw_height;
 		i = 0;
 		while (i < sprite->vars.height)
 		{
-			x_new = x;
-			printf("%f, %f\n", vars->wall.distance[x_new], sprite->dist);
-			/*while (vars->wall.distance[x_new] < sprite->dist)
-				printf("HOLA\n");*/
-			//if (vars->wall.distance[(int)x] > sprite->dist)
-
-			coords = coords_init(x_new, y, x + sprite->x_incrementer, y + sprite->y_incrementer);
+			coords = coords_init(x, y, x + sprite->x_incrementer, y + sprite->y_incrementer);
 			colour = ((unsigned int *)sprite->vars.img.addr)[i * sprite->vars.width + sprite->vars.position_x];
 			if (colour != 0x000000)
-				draw_square(&vars->img, coords, colour);
+				draw_square(vars, sprite, coords, colour);
 			y += sprite->y_incrementer;
 			i++;
 		}
