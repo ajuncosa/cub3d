@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/29 12:38:50 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/30 11:32:02 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ typedef struct	s_ray
 
 typedef struct	s_wall
 {
-	float		*distance;
+	float		distance;
+	float		*dist;
 	float		mid_dist;
 	float		height;
 	int			east_west_hit;

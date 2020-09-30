@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/29 12:07:48 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/30 11:33:50 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,13 @@ void	calc_dist_and_wall_height(t_vars *vars)
 	find_wall(vars);
 	x_square = pow(vars->player.x - vars->ray.x, 2);
 	y_square = pow(vars->player.y - vars->ray.y, 2);
-	vars->wall.distance[vars->ray.count] = sqrt(x_square + y_square);
-	vars->wall.distance[vars->ray.count] = vars->wall.distance[vars->ray.count] * cos((vars->ray.angle -
+	vars->wall.distance = sqrt(x_square + y_square);
+	vars->wall.dist[vars->ray.count] = vars->wall.distance;
+	vars->wall.distance = vars->wall.distance * cos((vars->ray.angle -
 				vars->player.angle) * M_PI / 180);
-	vars->wall.height = (int)((SCREEN_HEIGHT / 2) / vars->wall.distance[vars->ray.count]);
+	vars->wall.height = (int)((SCREEN_HEIGHT / 2) / vars->wall.distance);
 	if (vars->ray.count == SCREEN_WIDTH / 2)
-		vars->wall.mid_dist = vars->wall.distance[vars->ray.count]; // para evitar que el jugador se acerque a las paredes (en fowrard traslation en cub_movement)
+		vars->wall.mid_dist = vars->wall.distance; // para evitar que el jugador se acerque a las paredes (en fowrard traslation en cub_movement)
 }
 
 void	paint(int x, t_vars *vars)

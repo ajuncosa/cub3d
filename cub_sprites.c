@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/03 11:40:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/29 13:04:04 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/30 11:34:19 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int		init_sprite_array(t_vars *vars)
 		}
 		i++;
 	}
-	if (!(vars->wall.distance = malloc(SCREEN_WIDTH * sizeof(float))))
+	if (!(vars->wall.dist = malloc(SCREEN_WIDTH * sizeof(float))))
 		return (1);
 	return (0);
 }
@@ -124,7 +124,6 @@ void	paint_sprite(t_vars *vars, t_sprite *sprite)
 	sprite->x_incrementer = (sprite->draw_width * 2) / sprite->vars.width;
 	x = sprite->screen_x - sprite->draw_width;
 	sprite->vars.position_x = 0;
-	//printf("%d, %f\n", sprite->numero, sprite->screen_x);
 	while (sprite->vars.position_x <= sprite->vars.width)
 	{
 		y = sprite->screen_y - sprite->draw_height;

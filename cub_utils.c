@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 12:08:00 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/29 13:30:27 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/30 11:32:11 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void			draw_square(t_vars *vars, t_sprite *sprite, t_linecoords coords, int colo
 	while (x0 <= x1)
 	{
 		coords = coords_init(x0, y0, x0, y1);
-		//if (vars->wall.distance[x0] > sprite->dist)
+		if (vars->wall.dist[x0] > sprite->dist)
 			dda_line_algorithm(&vars->img, coords, colour);
 		x0++;
 	}
