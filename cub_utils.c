@@ -6,20 +6,20 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 12:08:00 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/30 11:32:11 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/30 12:15:56 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	my_mlx_pixel_put(t_imgdata *data, int x, int y, int color)
+void			my_mlx_pixel_put(t_imgdata *data, int x, int y, int color)
 {
-    char    *dst;
+	char	*dst;
 
 	if (x < 0 || x >= SCREEN_WIDTH || y < 0 || y >= SCREEN_HEIGHT)
 		return ;
-    dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-    *(unsigned int*)dst = color;
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
 }
 
 t_linecoords	coords_init(int x0, int y0, int x1, int y1)
@@ -56,7 +56,8 @@ void			dda_line_algorithm(t_imgdata *img, t_linecoords coords,
 	}
 }
 
-void			draw_square(t_vars *vars, t_sprite *sprite, t_linecoords coords, int colour)
+void			draw_square(t_vars *vars, t_sprite *sprite,
+					t_linecoords coords, int colour)
 {
 	int	x0;
 	int	x1;

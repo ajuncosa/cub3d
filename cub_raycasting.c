@@ -6,37 +6,11 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/30 11:33:50 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/12 10:19:09 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	player_move(t_vars *vars)
-{
-	if (vars->keys.left_rotation == 1)
-	{
-		if ((vars->player.angle - vars->player.rotation) < 0)
-			vars->player.angle = 360 + (vars->player.angle - vars->player.rotation);
-		else
-			vars->player.angle -= vars->player.rotation;
-	}	
-	if (vars->keys.right_rotation == 1)
-	{
-		if ((vars->player.angle + vars->player.rotation) > 360)
-			vars->player.angle = 360 - (vars->player.angle - vars->player.rotation);
-		else
-			vars->player.angle += vars->player.rotation;
-	}
-	if (vars->keys.fw_traslation == 1)
-		forward_traslation(vars);
-	if (vars->keys.bw_traslation == 1)
-		backward_traslation(vars);
-	if (vars->keys.left_traslation == 1)
-		left_traslation(vars);
-	if (vars->keys.right_traslation == 1)
-		right_traslation(vars);
-}
 
 void	find_wall(t_vars *vars)
 {
@@ -72,7 +46,7 @@ void	calc_dist_and_wall_height(t_vars *vars)
 				vars->player.angle) * M_PI / 180);
 	vars->wall.height = (int)((SCREEN_HEIGHT / 2) / vars->wall.distance);
 	if (vars->ray.count == SCREEN_WIDTH / 2)
-		vars->wall.mid_dist = vars->wall.distance; // para evitar que el jugador se acerque a las paredes (en fowrard traslation en cub_movement)
+		vars->wall.mid_dist = vars->wall.distance;
 }
 
 void	paint(int x, t_vars *vars)
@@ -89,10 +63,28 @@ void	paint(int x, t_vars *vars)
 	dda_line_algorithm(&vars->img, coords, 0x009000);
 }
 
-int		raycasting(t_vars *vars)
+void	sprites_info_and_draw(t_vars *vars)
 {
 	int	i;
-	
+
+	i = 0;
+	while (i < vars->sprite_count)
+	{
+		calculate_sprite_info(vars, &vars->sprite[i]);
+		i++;
+	}
+	if (vars->sprite_count > 1)
+		sort_sprite_array(vars);
+	i = 0;
+	while (i < vars->sprite_count)
+	{
+		paint_sprite(vars, &vars->sprite[i]);
+		i++;
+	}
+}
+
+int		raycasting(t_vars *vars)
+{
 	player_move(vars);
 	vars->ray.angle = vars->player.angle - vars->player.halffov;
 	vars->ray.angle += (vars->ray.angle < 0) ? 360 : 0;
@@ -111,20 +103,7 @@ int		raycasting(t_vars *vars)
 		vars->ray.angle += vars->ray.increment_angle;
 		vars->ray.count++;
 	}
-	i = 0;
-	while (i < vars->sprite_count)
-	{
-		calculate_sprite_info(vars, &vars->sprite[i]);
-		i++;
-	}
-	if (vars->sprite_count > 1)
-		sort_sprite_array(vars);
-	i = 0;
-	while (i < vars->sprite_count)
-	{ 
-		paint_sprite(vars, &vars->sprite[i]);
-		i++;
-	}
+	sprites_info_and_draw(vars);
 	mlx_put_image_to_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win,
 			vars->img.img, 0, 0);
 	return (0);

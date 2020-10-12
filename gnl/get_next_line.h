@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/10 18:07:17 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/30 13:37:41 by ajuncosa         ###   ########.fr       */
+/*   Created: 2020/01/22 14:32:44 by ajuncosa          #+#    #+#             */
+/*   Updated: 2020/10/01 12:31:04 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-char	*ft_strdup(const char *s1)
-{
-	size_t	i;
-	char	*copy;
+# include <unistd.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include "../libft/libft.h"
+# define BUFFER_SIZE 1000
 
-	if (!(copy = malloc((ft_strlen(s1) + 1))))
-		return (NULL);
-	i = 0;
-	while (s1[i] != '\0')
-	{
-		copy[i] = s1[i];
-		i++;
-	}
-	copy[i] = '\0';
-	return (copy);
-}
+int		get_next_line(int fd, char **line);
+
+#endif

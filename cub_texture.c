@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 11:14:41 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/23 13:38:24 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/09/30 12:51:34 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void		init_all_textures(t_vars *vars)
 	i = 0;
 	while (i < vars->sprite_count)
 	{
-		fill_in_tex_variables(vars, &vars->sprite[i].vars, "textures/sprite3.xpm");
+		fill_in_tex_variables(vars, &vars->sprite[i].vars,
+				"textures/sprite3.xpm");
 		i++;
 	}
 }

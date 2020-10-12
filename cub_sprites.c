@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/03 11:40:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/30 11:34:19 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/12 11:04:57 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,24 +46,20 @@ int		init_sprite_array(t_vars *vars)
 	count = 0;
 	while (map[i][j])
 	{
-		j = 0;
-		while (j < MAP_WIDTH)
+		j = -1;
+		while (++j < MAP_WIDTH)
 		{
 			if (map[i][j] == 2)
 			{
 				vars->sprite[count].map_x = j + 0.5;
 				vars->sprite[count].map_y = i + 0.5;
-				vars->sprite[count].id = map[i][j];
-				vars->sprite[count].numero = count + 1;
+				//vars->sprite[count].id = map[i][j];
 				count++;
 			}
-			j++;
 		}
 		i++;
 	}
-	if (!(vars->wall.dist = malloc(SCREEN_WIDTH * sizeof(float))))
-		return (1);
-	return (0);
+	return (!(vars->wall.dist = malloc(SCREEN_WIDTH * sizeof(float))) ? 0 : 1);
 }
 
 void	calculate_sprite_info(t_vars *vars, t_sprite *sprite)
@@ -77,7 +73,6 @@ void	calculate_sprite_info(t_vars *vars, t_sprite *sprite)
 	sprite->dist = sqrt(pow(xinc, 2) + pow(yinc, 2));
 	sprite->angle = atan2(yinc, xinc) * 180 / M_PI;
 	sprite->angle += (sprite->angle < 0) ? 360 : 0;
-	//sprite->dist = sprite->dist * cos((sprite->angle - vars->player.angle) * M_PI / 180); // fix fisheye
 	sprite->draw_height = (int)((SCREEN_HEIGHT / 2) / sprite->dist);
 	sprite->rel_angle = sprite->angle - vars->ray.angle0;
 	if (sprite->rel_angle > 0 || sprite->rel_angle < -30) // para poder usar los negativos cercanos al limite izq de la pantalla al calcular la screen_x
@@ -127,15 +122,14 @@ void	paint_sprite(t_vars *vars, t_sprite *sprite)
 	while (sprite->vars.position_x <= sprite->vars.width)
 	{
 		y = sprite->screen_y - sprite->draw_height;
-		i = 0;
-		while (i < sprite->vars.height)
+		i = -1;
+		while (++i < sprite->vars.height)
 		{
 			coords = coords_init(x, y, x + sprite->x_incrementer, y + sprite->y_incrementer);
 			colour = ((unsigned int *)sprite->vars.img.addr)[i * sprite->vars.width + sprite->vars.position_x];
 			if (colour != 0x000000)
 				draw_square(vars, sprite, coords, colour);
 			y += sprite->y_incrementer;
-			i++;
 		}
 		sprite->vars.position_x++;
 		x += sprite->x_incrementer;

@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/30 11:32:02 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/12 10:14:15 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,16 @@
 # include "libft/libft.h"
 # include <stdio.h>
 # include <unistd.h>
+# include <stdlib.h>
 # include <fcntl.h>
 # include <math.h>
-# define MAP_WIDTH 10 //30
-# define MAP_HEIGHT 10 //67
+
+
+# define MAP_WIDTH 10
+# define MAP_HEIGHT 10
 # define SCREEN_WIDTH 640
 # define SCREEN_HEIGHT 480
+extern int map[MAP_HEIGHT][MAP_WIDTH];
 
 typedef struct	s_imgdata
 {
@@ -104,8 +108,7 @@ typedef struct	s_textures
 typedef struct	s_sprite
 {
 	t_texvars	vars;
-	int			id; // qué textura de sprite tiene según el nº en el mapa
-	int			numero;
+	//int			id; // qué textura de sprite tiene según el nº en el mapa
 	float		map_x;
 	float		map_y;
 	float		dist;
@@ -118,7 +121,6 @@ typedef struct	s_sprite
 	float		y_incrementer;
 	float		x_incrementer;
 }				t_sprite;
-
 
 typedef struct	s_linecoords
 {
@@ -159,14 +161,13 @@ typedef struct	s_vars
 //	t_map		map;
 }				t_vars;
 
-extern int map[MAP_HEIGHT][MAP_WIDTH];
-
 //void			player_initialise(t_vars *vars);
 void			my_mlx_pixel_put(t_imgdata *data, int x, int y, int color);
 void			init_keys(t_vars *vars);
 int				handle_keypress(int keycode, t_vars *vars);
 int				handle_keyrelease(int keycode, t_vars *vars);
 int				xbutton_close(t_vars *vars);
+void			player_move(t_vars *vars);
 void			left_traslation(t_vars *vars);
 void			right_traslation(t_vars *vars);
 void			forward_traslation(t_vars *vars);
@@ -174,7 +175,8 @@ void			backward_traslation(t_vars *vars);
 int				raycasting(t_vars *vars);
 void			dda_line_algorithm(t_imgdata *img,
 		t_linecoords coords, int colour);
-void			draw_square(t_vars *vars, t_sprite *sprite, t_linecoords coords, int colour);
+void			draw_square(t_vars *vars, t_sprite *sprite,
+		t_linecoords coords, int colour);
 t_linecoords	coords_init(int x0, int y0, int x1, int y1);
 void			init_all_textures(t_vars *vars);
 void			paint_texture(t_vars *vars, t_texvars texture, int x);
