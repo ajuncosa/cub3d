@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajuncosa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 11:18:24 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/01/28 13:20:05 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/14 12:09:27 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int				ft_isdigit(int c);
 int				ft_isalnum(int c);
 int				ft_isascii(int c);
 int				ft_isprint(int c);
+int				ft_isspace(char c);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 int				ft_toupper(int c);
 int				ft_tolower(int c);

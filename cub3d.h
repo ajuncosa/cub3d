@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/12 10:14:15 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/14 13:41:20 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,12 @@
 
 # include "minilibx/mlx.h"
 # include "libft/libft.h"
+# include "gnl/get_next_line.h"
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <math.h>
-
-
-# define MAP_WIDTH 10
-# define MAP_HEIGHT 10
-# define SCREEN_WIDTH 640
-# define SCREEN_HEIGHT 480
-extern int map[MAP_HEIGHT][MAP_WIDTH];
 
 typedef struct	s_imgdata
 {
@@ -103,6 +97,11 @@ typedef struct	s_textures
 	t_texvars	south;
 	t_texvars	east;
 	t_texvars	west;
+	char		*file_north;
+	char		*file_south;
+	char		*file_west;
+	char		*file_east;
+	char		*file_sprite;
 }				t_textures;
 
 typedef struct	s_sprite
@@ -141,12 +140,25 @@ typedef struct	s_dda
 	float		y;
 }				t_dda;
 
-/*
 typedef struct	s_map
 {
-	int			map_array[MAP_HEIGHT][MAP_WIDTH];
+	char		**map;
+	int			width;
+	int			height;
 }				t_map;
-*/
+
+typedef struct	s_window
+{
+	int			width;
+	int			height;
+}				t_window;
+
+typedef	struct	s_color
+{
+	int			floor[3];
+	int			ceiling[3];
+}				t_color;
+
 typedef struct	s_vars
 {
 	t_mlxvars	mlxvars;
@@ -158,10 +170,22 @@ typedef struct	s_vars
 	t_textures	textures;
 	t_sprite	*sprite;
 	int			sprite_count;
-//	t_map		map;
+ 	t_map		map;
+	t_window	window;
+	t_color		color;
 }				t_vars;
 
-//void			player_initialise(t_vars *vars);
+int				read_file(t_vars *vars, const char *file_name);
+int				empty_end_of_line(char *str);
+void			flood_fill(t_vars *vars, int x, int y, int prev_color);
+int				parse_resolution_line(t_vars *vars, char *str);
+int				parse_texture_line(t_vars *vars, int type, char *str);
+int				parse_color_line(t_vars *vars, int type, char *str);
+void			initialize_vars(t_vars *vars);
+int				check_variables(t_vars *vars);
+int				count_map_size(t_vars *vars, char *str);
+int				check_player_pos(t_vars *vars, int y, char *str);
+int				parse_map(t_vars *vars, int fd);
 void			my_mlx_pixel_put(t_imgdata *data, int x, int y, int color);
 void			init_keys(t_vars *vars);
 int				handle_keypress(int keycode, t_vars *vars);

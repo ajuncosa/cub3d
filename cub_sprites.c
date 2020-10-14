@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/03 11:40:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/12 11:04:57 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/14 13:49:01 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void	count_sprites(t_vars *vars)
 	i = 0;
 	j = 0;
 	vars->sprite_count = 0;
-	while (map[i][j])
+	while (vars->map.map[i][j])
 	{
 		j = 0;
-		while (j < MAP_WIDTH)
+		while (j < vars->map.width)
 		{
-			if (map[i][j] == 2)
+			if (vars->map.map[i][j] == 2)
 				vars->sprite_count++;
 			j++;
 		}
@@ -44,12 +44,12 @@ int		init_sprite_array(t_vars *vars)
 		return (1);
 	i = 0;
 	count = 0;
-	while (map[i][j])
+	while (vars->map.map[i][j])
 	{
 		j = -1;
-		while (++j < MAP_WIDTH)
+		while (++j < vars->map.width)
 		{
-			if (map[i][j] == 2)
+			if (vars->map.map[i][j] == 2)
 			{
 				vars->sprite[count].map_x = j + 0.5;
 				vars->sprite[count].map_y = i + 0.5;
@@ -59,7 +59,7 @@ int		init_sprite_array(t_vars *vars)
 		}
 		i++;
 	}
-	return (!(vars->wall.dist = malloc(SCREEN_WIDTH * sizeof(float))) ? 0 : 1);
+	return (!(vars->wall.dist = malloc(vars->window.width * sizeof(float))) ? 0 : 1);
 }
 
 void	calculate_sprite_info(t_vars *vars, t_sprite *sprite)
@@ -73,13 +73,13 @@ void	calculate_sprite_info(t_vars *vars, t_sprite *sprite)
 	sprite->dist = sqrt(pow(xinc, 2) + pow(yinc, 2));
 	sprite->angle = atan2(yinc, xinc) * 180 / M_PI;
 	sprite->angle += (sprite->angle < 0) ? 360 : 0;
-	sprite->draw_height = (int)((SCREEN_HEIGHT / 2) / sprite->dist);
+	sprite->draw_height = (int)((vars->window.height / 2) / sprite->dist);
 	sprite->rel_angle = sprite->angle - vars->ray.angle0;
 	if (sprite->rel_angle > 0 || sprite->rel_angle < -30) // para poder usar los negativos cercanos al limite izq de la pantalla al calcular la screen_x
 		sprite->rel_angle += (sprite->rel_angle < 0) ? 360 : 0;
-	pixels_per_degree = SCREEN_WIDTH / vars->player.fov;
+	pixels_per_degree = vars->window.width / vars->player.fov;
 	sprite->screen_x = pixels_per_degree * sprite->rel_angle;
-	sprite->screen_y = SCREEN_HEIGHT / 2;
+	sprite->screen_y = vars->window.height / 2;
 	sprite->draw_width = (sprite->vars.width * sprite->draw_height / sprite->vars.height);
 }
 

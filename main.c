@@ -6,54 +6,18 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 12:42:59 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/12 10:31:43 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/14 13:47:28 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int map[MAP_HEIGHT][MAP_WIDTH] = {
-        {1,1,1,1,1,1,1,1,1,1},
-        {1,0,0,0,0,0,0,0,0,1},
-        {1,0,1,0,2,0,0,0,0,1},
-        {1,0,2,0,0,0,0,0,0,1},
-        {1,0,0,0,5,0,0,0,2,1},
-        {1,0,0,0,0,0,0,0,2,1},
-        {1,0,0,0,0,0,0,0,0,1},
-        {1,0,0,1,0,0,2,0,0,1},
-        {1,0,0,0,0,0,0,0,0,1},
-        {1,1,1,1,1,1,1,1,1,1}
-    };
-
-/*
-void	map_initialise(t_vars *vars)
-{
-	
-}
-*/
 
 void	player_initialise(t_vars *vars)
 {
-	int i;
-	int j;
 
-	j = 0;
-	while (j < MAP_HEIGHT)
-	{
-		i = 0;
-		while (i < MAP_WIDTH)
-		{
-			if (map[j][i] == 5)
-			{
-				vars->player.x = i + 0.5;
-				vars->player.y = j + 0.5;
-				break;
-			}
-			i++;
-		}
-		j++;
-	}
-	vars->player.angle = 270;
+	vars->player.x += 0.5;
+	vars->player.y += 0.5;
 	vars->player.fov = 60;
 	vars->player.halffov = vars->player.fov / 2;
 	vars->player.speed = 0.2;
@@ -63,14 +27,45 @@ void	player_initialise(t_vars *vars)
 int		main(int argc, char **argv)
 {
 	t_vars		vars;
+	int			file_ok;
 
-//	map_initialise(&vars);
+	file_ok = read_file(&vars, "map1.cub");
+
+	printf("file: %d\n", file_ok);
+	printf("===FILE %s===\n", (file_ok == 1) ? "OK" : "BAD");
+	printf("\n====VARS====\n");
+	printf("window: %d x %d\n", vars.window.width, vars.window.height);
+	printf("texture_north: %s \n", vars.textures.file_north);
+	printf("texture_east: %s \n", vars.textures.file_east);
+	printf("texture_west: %s \n", vars.textures.file_west);
+	printf("texture_south: %s \n", vars.textures.file_south);
+	printf("sprite_texture: %s \n", vars.textures.file_sprite);
+	printf("Floor color: %d,%d,%d\n", vars.color.floor[0], vars.color.floor[1], vars.color.floor[2]);
+	printf("Ceiling color: %d,%d,%d\n", vars.color.ceiling[0], vars.color.ceiling[1], vars.color.ceiling[2]);
+	printf("map_width: %d \n", vars.map.width);
+	printf("map_height: %d \n", vars.map.height);
+	printf("player_x: %f \n", vars.player.x);
+	printf("player_y: %f \n", vars.player.y);
+	printf("player_dir: %f \n", vars.player.angle);
+
+	int y = 0, x;
+	while (y < vars.map.height)
+	{
+		x = 0;
+		while (x < vars.map.width)
+		{
+			printf("%c", vars.map.map[y][x]);
+			x++;
+		}
+		printf("\n");
+		y++;
+	}
 
 	player_initialise(&vars);
 	init_keys(&vars);
 	if (!init_sprite_array(&vars))
 		return (1);
-	vars.mlxvars.mlx = mlx_init();
+/*	vars.mlxvars.mlx = mlx_init();
 	vars.mlxvars.mlx_win = mlx_new_window(vars.mlxvars.mlx,
 			SCREEN_WIDTH, SCREEN_HEIGHT, "Hello world!");
 	init_all_textures(&vars);
@@ -84,6 +79,6 @@ int		main(int argc, char **argv)
 	mlx_loop(vars.mlxvars.mlx);
 	mlx_destroy_image(vars.mlxvars.mlx, vars.img.img);
 	free(vars.sprite);
-	free(vars.wall.dist);
+	free(vars.wall.dist);*/
 	return (0);
 }
