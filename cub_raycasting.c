@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/12 10:19:09 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/15 11:58:17 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@ void	find_wall(t_vars *vars)
 {
 	int		wall;
 
-	wall = 0;
+	wall = '0';
 	vars->wall.east_west_hit = 0;
-	while (wall == 0 || wall == 5 || wall == 2)
+	while (wall != '1')
 	{
 		vars->ray.x += vars->ray.cos;
-		wall = map[(int)vars->ray.y][(int)vars->ray.x];
-		if (wall != 0 && wall != 5 && wall != 2)
+		wall = vars->map.map[(int)vars->ray.y][(int)vars->ray.x];
+		if (wall == '1')
 		{
 			vars->wall.east_west_hit = 1;
 			break ;
 		}
 		vars->ray.y += vars->ray.sin;
-		wall = map[(int)vars->ray.y][(int)vars->ray.x];
+		wall = vars->map.map[(int)vars->ray.y][(int)vars->ray.x];
 	}
 }
 
@@ -41,11 +41,12 @@ void	calc_dist_and_wall_height(t_vars *vars)
 	x_square = pow(vars->player.x - vars->ray.x, 2);
 	y_square = pow(vars->player.y - vars->ray.y, 2);
 	vars->wall.distance = sqrt(x_square + y_square);
-	vars->wall.dist[vars->ray.count] = vars->wall.distance;
+	if (vars->sprite_count > 0)
+		vars->wall.dist[vars->ray.count] = vars->wall.distance;
 	vars->wall.distance = vars->wall.distance * cos((vars->ray.angle -
 				vars->player.angle) * M_PI / 180);
-	vars->wall.height = (int)((SCREEN_HEIGHT / 2) / vars->wall.distance);
-	if (vars->ray.count == SCREEN_WIDTH / 2)
+	vars->wall.height = (int)((vars->window.height / 2) / vars->wall.distance);
+	if (vars->ray.count == vars->window.width / 2)
 		vars->wall.mid_dist = vars->wall.distance;
 }
 
@@ -55,12 +56,12 @@ void	paint(int x, t_vars *vars)
 	t_texvars		texture;
 
 	texture = init_texture(vars);
-	coords = coords_init(x, 0, x, SCREEN_HEIGHT / 2 - vars->wall.height);
-	dda_line_algorithm(&vars->img, coords, 0xC4E7F7);
+	coords = coords_init(x, 0, x, vars->window.height / 2 - vars->wall.height);
+	dda_line_algorithm(vars, coords, 0xC4E7F7);
 	paint_texture(vars, texture, x);
-	coords = coords_init(x, SCREEN_HEIGHT / 2 + vars->wall.height,
-		x, SCREEN_HEIGHT);
-	dda_line_algorithm(&vars->img, coords, 0x009000);
+	coords = coords_init(x, vars->window.height / 2 + vars->wall.height,
+		x, vars->window.height);
+	dda_line_algorithm(vars, coords, 0x009000);
 }
 
 void	sprites_info_and_draw(t_vars *vars)
@@ -89,10 +90,10 @@ int		raycasting(t_vars *vars)
 	vars->ray.angle = vars->player.angle - vars->player.halffov;
 	vars->ray.angle += (vars->ray.angle < 0) ? 360 : 0;
 	vars->ray.angle0 = vars->ray.angle;
-	vars->ray.increment_angle = vars->player.fov / SCREEN_WIDTH;
+	vars->ray.increment_angle = vars->player.fov / vars->window.width;
 	vars->ray.count = 0;
 	vars->ray.precision = 256;
-	while (vars->ray.count < SCREEN_WIDTH)
+	while (vars->ray.count < vars->window.width)
 	{
 		vars->ray.x = vars->player.x;
 		vars->ray.y = vars->player.y;

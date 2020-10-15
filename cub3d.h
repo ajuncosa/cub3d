@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/14 13:41:20 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/15 12:30:56 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ int				check_variables(t_vars *vars);
 int				count_map_size(t_vars *vars, char *str);
 int				check_player_pos(t_vars *vars, int y, char *str);
 int				parse_map(t_vars *vars, int fd);
-void			my_mlx_pixel_put(t_imgdata *data, int x, int y, int color);
+void			my_mlx_pixel_put(t_vars *vars, int x, int y, int color);
 void			init_keys(t_vars *vars);
 int				handle_keypress(int keycode, t_vars *vars);
 int				handle_keyrelease(int keycode, t_vars *vars);
@@ -197,12 +197,12 @@ void			right_traslation(t_vars *vars);
 void			forward_traslation(t_vars *vars);
 void			backward_traslation(t_vars *vars);
 int				raycasting(t_vars *vars);
-void			dda_line_algorithm(t_imgdata *img,
+void			dda_line_algorithm(t_vars *vars,
 		t_linecoords coords, int colour);
 void			draw_square(t_vars *vars, t_sprite *sprite,
 		t_linecoords coords, int colour);
 t_linecoords	coords_init(int x0, int y0, int x1, int y1);
-void			init_all_textures(t_vars *vars);
+int				init_all_textures(t_vars *vars);
 void			paint_texture(t_vars *vars, t_texvars texture, int x);
 t_texvars		init_texture(t_vars *vars);
 int				init_sprite_array(t_vars *vars);

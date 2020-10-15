@@ -6,40 +6,49 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 11:14:41 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/30 12:51:34 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/15 12:35:30 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void		fill_in_tex_variables(t_vars *vars, t_texvars *texture, char *file)
+int		fill_in_tex_variables(t_vars *vars, t_texvars *texture, char *file)
 {
-	texture->img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx, file,
-			&texture->width, &texture->height);
-	texture->img.addr = mlx_get_data_addr(texture->img.img,
+	if (!(texture->img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx, file,
+			&texture->width, &texture->height)))
+		return (0);
+	if (!(texture->img.addr = mlx_get_data_addr(texture->img.img,
 			&texture->img.bits_per_pixel, &texture->img.line_length,
-			&texture->img.endian);
+			&texture->img.endian)))
+		return (0);
+	return (1);
 }
 
-void		init_all_textures(t_vars *vars)
+int		init_all_textures(t_vars *vars)
 {
 	int	i;
 
-	fill_in_tex_variables(vars, &vars->textures.north,
-			"textures/wall.xpm");
-	fill_in_tex_variables(vars, &vars->textures.south,
-			"textures/brick_texture.xpm");
-	fill_in_tex_variables(vars, &vars->textures.east,
-			"textures/ivy_texture.xpm");
-	fill_in_tex_variables(vars, &vars->textures.west,
-			"textures/white_texture.xpm");
+	if (!fill_in_tex_variables(vars, &vars->textures.north,
+			vars->textures.file_north))
+		return (0);
+	if (!fill_in_tex_variables(vars, &vars->textures.south,
+			vars->textures.file_south))
+		return (0);
+	if (!fill_in_tex_variables(vars, &vars->textures.east,
+			vars->textures.file_east))
+		return (0);
+	if (!fill_in_tex_variables(vars, &vars->textures.west,
+			vars->textures.file_west))
+		return (0);
 	i = 0;
 	while (i < vars->sprite_count)
 	{
-		fill_in_tex_variables(vars, &vars->sprite[i].vars,
-				"textures/sprite3.xpm");
+		if (!fill_in_tex_variables(vars, &vars->sprite[i].vars,
+				vars->textures.file_sprite))
+			return (0);
 		i++;
 	}
+	return (1);
 }
 
 void		get_orientation(t_vars *vars)
@@ -87,14 +96,14 @@ void		paint_texture(t_vars *vars, t_texvars texture, int x)
 	t_linecoords	coords;
 
 	y_incrementer = (vars->wall.height * 2) / texture.height;
-	y = SCREEN_HEIGHT / 2 - vars->wall.height;
+	y = vars->window.height / 2 - vars->wall.height;
 	i = 0;
 	while (i < texture.height)
 	{
 		coords = coords_init(x, y, x, y + y_incrementer);
 		colour = ((unsigned int *)texture.img.addr)
 			[i * texture.width + texture.position_x];
-		dda_line_algorithm(&vars->img, coords, colour);
+		dda_line_algorithm(vars, coords, colour);
 		y += y_incrementer;
 		i++;
 	}

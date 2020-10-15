@@ -6,19 +6,19 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 12:08:00 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/30 12:15:56 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/15 11:09:26 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void			my_mlx_pixel_put(t_imgdata *data, int x, int y, int color)
+void			my_mlx_pixel_put(t_vars *vars, int x, int y, int color)
 {
 	char	*dst;
 
-	if (x < 0 || x >= SCREEN_WIDTH || y < 0 || y >= SCREEN_HEIGHT)
+	if (x < 0 || x >= vars->window.width || y < 0 || y >= vars->window.height)
 		return ;
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	dst = vars->img.addr + (y * vars->img.line_length + x * (vars->img.bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 
@@ -33,7 +33,7 @@ t_linecoords	coords_init(int x0, int y0, int x1, int y1)
 	return (coords);
 }
 
-void			dda_line_algorithm(t_imgdata *img, t_linecoords coords,
+void			dda_line_algorithm(t_vars *vars, t_linecoords coords,
 					int colour)
 {
 	int		i;
@@ -49,7 +49,7 @@ void			dda_line_algorithm(t_imgdata *img, t_linecoords coords,
 	i = 0;
 	while (i <= line.steps)
 	{
-		my_mlx_pixel_put(img, line.x, line.y, colour);
+		my_mlx_pixel_put(vars, line.x, line.y, colour);
 		line.x += line.xinc;
 		line.y += line.yinc;
 		i++;
@@ -74,7 +74,7 @@ void			draw_square(t_vars *vars, t_sprite *sprite,
 	{
 		coords = coords_init(x0, y0, x0, y1);
 		if (vars->wall.dist[x0] > sprite->dist)
-			dda_line_algorithm(&vars->img, coords, colour);
+			dda_line_algorithm(vars, coords, colour);
 		x0++;
 	}
 }

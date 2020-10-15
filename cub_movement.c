@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/28 13:29:56 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/12 10:18:23 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/15 12:06:58 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	left_traslation(t_vars *vars)
 	vars->player.cos = cos(angle_radians) * vars->player.speed;
 	new_x = vars->player.x + vars->player.cos;
 	new_y = vars->player.y + vars->player.sin;
-	if (map[(int)new_y][(int)new_x] == 0 || map[(int)new_y][(int)new_x] == 5)
+	if (vars->map.map[(int)new_y][(int)new_x] == '9')
 	{
 		vars->player.x = new_x;
 		vars->player.y = new_y;
@@ -63,7 +63,7 @@ void	right_traslation(t_vars *vars)
 	vars->player.cos = cos(angle_radians) * vars->player.speed;
 	new_x = vars->player.x + vars->player.cos;
 	new_y = vars->player.y + vars->player.sin;
-	if (map[(int)new_y][(int)new_x] == 0 || map[(int)new_y][(int)new_x] == 5)
+	if (vars->map.map[(int)new_y][(int)new_x] == '9')
 	{
 		vars->player.x = new_x;
 		vars->player.y = new_y;
@@ -82,7 +82,7 @@ void	forward_traslation(t_vars *vars)
 	vars->player.cos = cos(angle_radians) * vars->player.speed;
 	new_x = vars->player.x + vars->player.cos;
 	new_y = vars->player.y + vars->player.sin;
-	if (map[(int)new_y][(int)new_x] == 0 || map[(int)new_y][(int)new_x] == 5)
+	if (vars->map.map[(int)new_y][(int)new_x] == '9')
 	{
 		if (vars->wall.mid_dist < 0.6)
 			return ;
@@ -102,7 +102,7 @@ void	backward_traslation(t_vars *vars)
 	vars->player.cos = cos(angle_radians) * vars->player.speed;
 	new_x = vars->player.x - vars->player.cos;
 	new_y = vars->player.y - vars->player.sin;
-	if (map[(int)new_y][(int)new_x] == 0 || map[(int)new_y][(int)new_x] == 5)
+	if (vars->map.map[(int)new_y][(int)new_x] == '9')
 	{
 		vars->player.x = new_x;
 		vars->player.y = new_y;

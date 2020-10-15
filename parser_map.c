@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:14 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/14 13:39:20 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/15 11:36:43 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		alloc_map(t_vars *vars)
 	return (1);
 }
 
-int		nisu(t_vars *vars, char *line, int *i)
+int		check_if_map_line(t_vars *vars, char *line, int *i)
 {
 	int	j;
 
@@ -98,11 +98,11 @@ int		parse_map(t_vars *vars, int fd)
 	i = 0;
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
-		if (!nisu(vars, line, &i))
+		if (!check_if_map_line(vars, line, &i))
 			return (0);
 		free(line);
 	}
-	if (!nisu(vars, line, &i))
+	if (!check_if_map_line(vars, line, &i))
 		return (0);
 	free(line);
 	if (vars->player.x == -1 || vars->player.y == -1

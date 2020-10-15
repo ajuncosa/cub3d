@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/03 11:40:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/14 13:49:01 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/15 12:15:13 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@ void	count_sprites(t_vars *vars)
 	i = 0;
 	j = 0;
 	vars->sprite_count = 0;
-	while (vars->map.map[i][j])
+	while (i < vars->map.height)
 	{
 		j = 0;
 		while (j < vars->map.width)
 		{
-			if (vars->map.map[i][j] == 2)
+			if (vars->map.map[i][j] != '0' && vars->map.map[i][j] != '1'
+				&& vars->map.map[i][j] != '9' && vars->map.map[i][j] != ' ')
 				vars->sprite_count++;
 			j++;
 		}
@@ -40,16 +41,19 @@ int		init_sprite_array(t_vars *vars)
 	int	count;
 
 	count_sprites(vars);
-	if (!(vars->sprite = malloc(vars->sprite_count * sizeof(t_sprite))))
+	if (vars->sprite_count == 0)
 		return (1);
+	if (!(vars->sprite = malloc(vars->sprite_count * sizeof(t_sprite))))
+		return (0);
 	i = 0;
 	count = 0;
-	while (vars->map.map[i][j])
+	while (i < vars->map.height)
 	{
 		j = -1;
 		while (++j < vars->map.width)
 		{
-			if (vars->map.map[i][j] == 2)
+			if (vars->map.map[i][j] != '0' && vars->map.map[i][j] != '1'
+				&& vars->map.map[i][j] != '9' && vars->map.map[i][j] != ' ')
 			{
 				vars->sprite[count].map_x = j + 0.5;
 				vars->sprite[count].map_y = i + 0.5;

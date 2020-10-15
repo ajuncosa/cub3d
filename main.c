@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 12:42:59 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/14 13:47:28 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/15 12:52:29 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,19 @@ int		main(int argc, char **argv)
 	t_vars		vars;
 	int			file_ok;
 
-	file_ok = read_file(&vars, "map1.cub");
+	if (argc != 2)
+	{
+		printf("Error: wrong no of arguments\n");
+		return (1);
+	}
+	file_ok = read_file(&vars, argv[1]);
+	if (!file_ok)
+	{
+		printf("error\n");
+		return (1);
+	}
 
-	printf("file: %d\n", file_ok);
+	/*printf("file: %d\n", file_ok);
 	printf("===FILE %s===\n", (file_ok == 1) ? "OK" : "BAD");
 	printf("\n====VARS====\n");
 	printf("window: %d x %d\n", vars.window.width, vars.window.height);
@@ -47,7 +57,6 @@ int		main(int argc, char **argv)
 	printf("player_x: %f \n", vars.player.x);
 	printf("player_y: %f \n", vars.player.y);
 	printf("player_dir: %f \n", vars.player.angle);
-
 	int y = 0, x;
 	while (y < vars.map.height)
 	{
@@ -59,17 +68,24 @@ int		main(int argc, char **argv)
 		}
 		printf("\n");
 		y++;
-	}
+	}*/
 
 	player_initialise(&vars);
 	init_keys(&vars);
 	if (!init_sprite_array(&vars))
+	{
+		printf("error\n");
 		return (1);
-/*	vars.mlxvars.mlx = mlx_init();
+	}
+	vars.mlxvars.mlx = mlx_init();
 	vars.mlxvars.mlx_win = mlx_new_window(vars.mlxvars.mlx,
-			SCREEN_WIDTH, SCREEN_HEIGHT, "Hello world!");
-	init_all_textures(&vars);
-	vars.img.img = mlx_new_image(vars.mlxvars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+			vars.window.width, vars.window.height, "Hello world!");
+	if (!init_all_textures(&vars))
+	{
+		printf("error\n");
+		return (1);
+	}
+	vars.img.img = mlx_new_image(vars.mlxvars.mlx, vars.window.width, vars.window.height);
 	vars.img.addr = mlx_get_data_addr(vars.img.img, &vars.img.bits_per_pixel,
 			&vars.img.line_length, &vars.img.endian);
 	mlx_loop_hook(vars.mlxvars.mlx, raycasting, &vars);
@@ -79,6 +95,6 @@ int		main(int argc, char **argv)
 	mlx_loop(vars.mlxvars.mlx);
 	mlx_destroy_image(vars.mlxvars.mlx, vars.img.img);
 	free(vars.sprite);
-	free(vars.wall.dist);*/
+	free(vars.wall.dist);
 	return (0);
 }
