@@ -6,13 +6,13 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 11:14:41 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/15 12:35:30 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/16 12:18:24 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		fill_in_tex_variables(t_vars *vars, t_texvars *texture, char *file)
+int			fill_in_tex_variables(t_vars *vars, t_texvars *texture, char *file)
 {
 	if (!(texture->img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx, file,
 			&texture->width, &texture->height)))
@@ -24,7 +24,7 @@ int		fill_in_tex_variables(t_vars *vars, t_texvars *texture, char *file)
 	return (1);
 }
 
-int		init_all_textures(t_vars *vars)
+int			init_all_textures(t_vars *vars)
 {
 	int	i;
 

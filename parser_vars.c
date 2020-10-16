@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:42 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/14 13:33:49 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/16 12:22:43 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int		check_variables(t_vars *vars)
 		|| vars->textures.file_north == NULL
 		|| vars->textures.file_south == NULL
 		|| vars->textures.file_east == NULL || vars->textures.file_west == NULL
-		|| vars->textures.file_sprite == NULL || vars->color.floor[0] == -1
-		|| vars->color.floor[1] == -1 || vars->color.floor[2] == -1
-		|| vars->color.ceiling[0] == -1 || vars->color.ceiling[1] == -1
-		|| vars->color.ceiling[2] == -1)
+		|| vars->textures.file_sprite == NULL || vars->color.f[0] == -1
+		|| vars->color.f[1] == -1 || vars->color.f[2] == -1
+		|| vars->color.c[0] == -1 || vars->color.c[1] == -1
+		|| vars->color.c[2] == -1)
 		return (0);
 	return (1);
 }
@@ -35,12 +35,12 @@ void	initialize_vars(t_vars *vars)
 	vars->textures.file_east = NULL;
 	vars->textures.file_west = NULL;
 	vars->textures.file_sprite = NULL;
-	vars->color.floor[0] = -1;
-	vars->color.floor[1] = -1;
-	vars->color.floor[2] = -1;
-	vars->color.ceiling[0] = -1;
-	vars->color.ceiling[1] = -1;
-	vars->color.ceiling[2] = -1;
+	vars->color.f[0] = -1;
+	vars->color.f[1] = -1;
+	vars->color.f[2] = -1;
+	vars->color.c[0] = -1;
+	vars->color.c[1] = -1;
+	vars->color.c[2] = -1;
 	vars->map.height = 0;
 	vars->map.width = 0;
 	vars->player.x = -1;

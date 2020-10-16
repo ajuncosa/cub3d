@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/16 11:40:57 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/16 13:33:28 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,8 @@ typedef struct	s_sprite
 	float		screen_y;
 	float		angle;
 	float		rel_angle;
-	float		y_incrementer;
-	float		x_incrementer;
+	float		y_inc;
+	float		x_inc;
 }				t_sprite;
 
 typedef struct	s_linecoords
@@ -155,8 +155,8 @@ typedef struct	s_window
 
 typedef	struct	s_color
 {
-	int			floor[3];
-	int			ceiling[3];
+	int			f[3];
+	int			c[3];
 }				t_color;
 
 typedef struct	s_vars
@@ -170,7 +170,7 @@ typedef struct	s_vars
 	t_textures	textures;
 	t_sprite	*sprite;
 	int			sprite_count;
- 	t_map		map;
+	t_map		map;
 	t_window	window;
 	t_color		color;
 }				t_vars;
@@ -187,6 +187,7 @@ int				count_map_size(t_vars *vars, char *str);
 int				check_player_pos(t_vars *vars, int y, char *str);
 int				parse_map(t_vars *vars, int fd);
 void			my_mlx_pixel_put(t_vars *vars, int x, int y, int color);
+void			player_initialise(t_vars *vars);
 void			init_keys(t_vars *vars);
 int				handle_keypress(int keycode, t_vars *vars);
 int				handle_keyrelease(int keycode, t_vars *vars);

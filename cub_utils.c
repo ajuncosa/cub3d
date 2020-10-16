@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 12:08:00 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/16 11:44:22 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/16 13:09:12 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void			my_mlx_pixel_put(t_vars *vars, int x, int y, int color)
 
 	if (x < 0 || x >= vars->window.width || y < 0 || y >= vars->window.height)
 		return ;
-	dst = vars->img.addr + (y * vars->img.line_length + x * (vars->img.bits_per_pixel / 8));
+	dst = vars->img.addr + (y * vars->img.line_length
+		+ x * (vars->img.bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 
@@ -80,6 +81,6 @@ void			draw_square(t_vars *vars, t_sprite *sprite,
 }
 
 unsigned long	create_rgb(int r, int g, int b)
-{   
-    return (r << 16) + (g << 8) + b;
+{
+	return ((r << 16) + (g << 8) + b);
 }

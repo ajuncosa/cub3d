@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:05 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/14 12:45:39 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/16 12:53:23 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,43 @@
 
 int		valid_colors(t_vars *vars, int type)
 {
-	if (type == 1 && vars->color.ceiling[0] >= 0
-		&& vars->color.ceiling[0] <= 255
-		&& vars->color.ceiling[1] >= 0 && vars->color.ceiling[1] <= 255
-		&& vars->color.ceiling[2] >= 0 && vars->color.ceiling[2] <= 255)
+	if (type == 1 && vars->color.c[0] >= 0
+		&& vars->color.c[0] <= 255
+		&& vars->color.c[1] >= 0 && vars->color.c[1] <= 255
+		&& vars->color.c[2] >= 0 && vars->color.c[2] <= 255)
 		return (1);
-	if (type == 2 && vars->color.floor[0] >= 0 && vars->color.floor[0] <= 255
-		&& vars->color.floor[1] >= 0 && vars->color.floor[1] <= 255
-		&& vars->color.floor[2] >= 0 && vars->color.floor[2] <= 255)
+	if (type == 2 && vars->color.f[0] >= 0 && vars->color.f[0] <= 255
+		&& vars->color.f[1] >= 0 && vars->color.f[1] <= 255
+		&& vars->color.f[2] >= 0 && vars->color.f[2] <= 255)
 		return (1);
 	return (0);
 }
 
-int		save_color(t_vars *vars, int type, int color, char *str)
+int		save_color(t_color *colors, int type, int color, char *str)
 {
 	if (!ft_isdigit(str[0]))
 		return (0);
 	if (type == 1)
 	{
-		if (vars->color.ceiling[0] != -1 && vars->color.ceiling[1] != -1 && vars->color.ceiling[2] != -1)
+		if (colors->c[0] != -1 && colors->c[1] != -1 && colors->c[2] != -1)
 			return (0);
 		if (color == 0)
-			vars->color.ceiling[0] = ft_atoi(str);
+			colors->c[0] = ft_atoi(str);
 		else if (color == 1)
-			vars->color.ceiling[1] = ft_atoi(str);
+			colors->c[1] = ft_atoi(str);
 		else
-			vars->color.ceiling[2] = ft_atoi(str);
+			colors->c[2] = ft_atoi(str);
 	}
 	else
 	{
-		if (vars->color.floor[0] != -1 && vars->color.floor[1] != -1 && vars->color.floor[2] != -1)
+		if (colors->f[0] != -1 && colors->f[1] != -1 && colors->f[2] != -1)
 			return (0);
 		if (color == 0)
-			vars->color.floor[0] = ft_atoi(str);
+			colors->f[0] = ft_atoi(str);
 		else if (color == 1)
-			vars->color.floor[1] = ft_atoi(str);
+			colors->f[1] = ft_atoi(str);
 		else
-			vars->color.floor[2] = ft_atoi(str);
+			colors->f[2] = ft_atoi(str);
 	}
 	return (1);
 }
@@ -68,7 +68,7 @@ int		parse_color_line(t_vars *vars, int type, char *str)
 	j = 0;
 	while (j < 3)
 	{
-		if (!save_color(vars, type, j, &str[i]))
+		if (!save_color(&vars->color, type, j, &str[i]))
 			return (0);
 		while (ft_isdigit(str[i]))
 			i++;
