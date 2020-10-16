@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 12:08:00 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/15 11:09:26 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/16 11:44:22 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,9 @@ void			draw_square(t_vars *vars, t_sprite *sprite,
 			dda_line_algorithm(vars, coords, colour);
 		x0++;
 	}
+}
+
+unsigned long	create_rgb(int r, int g, int b)
+{   
+    return (r << 16) + (g << 8) + b;
 }

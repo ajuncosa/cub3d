@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/15 11:58:17 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/16 11:44:56 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,18 @@ void	paint(int x, t_vars *vars)
 {
 	t_linecoords	coords;
 	t_texvars		texture;
+	unsigned long	rgb_floor;
+	unsigned long	rgb_ceiling;
 
+	rgb_floor = create_rgb(vars->color.floor[0], vars->color.floor[1], vars->color.floor[2]);
+	rgb_ceiling = create_rgb(vars->color.ceiling[0], vars->color.ceiling[1], vars->color.ceiling[2]);
 	texture = init_texture(vars);
 	coords = coords_init(x, 0, x, vars->window.height / 2 - vars->wall.height);
-	dda_line_algorithm(vars, coords, 0xC4E7F7);
+	dda_line_algorithm(vars, coords, rgb_ceiling);
 	paint_texture(vars, texture, x);
 	coords = coords_init(x, vars->window.height / 2 + vars->wall.height,
 		x, vars->window.height);
-	dda_line_algorithm(vars, coords, 0x009000);
+	dda_line_algorithm(vars, coords, rgb_floor);
 }
 
 void	sprites_info_and_draw(t_vars *vars)

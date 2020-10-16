@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 12:42:59 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/15 12:52:29 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/16 11:41:11 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ int		main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		printf("Error: wrong no of arguments\n");
+		write(1, "Error: wrong no of arguments\n", 30);
 		return (1);
 	}
 	file_ok = read_file(&vars, argv[1]);
 	if (!file_ok)
 	{
-		printf("error\n");
+		write(1, "Error: something wrong in the file\n", 36);
 		return (1);
 	}
 

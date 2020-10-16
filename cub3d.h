@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/15 12:30:56 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/16 11:40:57 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,5 +209,6 @@ int				init_sprite_array(t_vars *vars);
 void			calculate_sprite_info(t_vars *vars, t_sprite *sprite);
 void			sort_sprite_array(t_vars *vars);
 void			paint_sprite(t_vars *vars, t_sprite *sprite);
+unsigned long	create_rgb(int r, int g, int b);
 
 #endif
