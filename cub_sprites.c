@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/03 11:40:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/16 13:42:53 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/19 13:47:10 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	calculate_sprite_info(t_vars *vars, t_sprite *sprite)
 	sprite->angle += (sprite->angle < 0) ? 360 : 0;
 	sprite->draw_height = (int)((vars->window.height / 2) / sprite->dist);
 	sprite->rel_angle = sprite->angle - vars->ray.angle0;
-	if (sprite->rel_angle > 0 || sprite->rel_angle < -30) // para poder usar los negativos cercanos al limite izq de la pantalla al calcular la screen_x
+	if (sprite->rel_angle > 0 || sprite->rel_angle < -30)
 		sprite->rel_angle += (sprite->rel_angle < 0) ? 360 : 0;
 	pixels_per_degree = vars->window.width / vars->player.fov;
 	sprite->screen_x = pixels_per_degree * sprite->rel_angle;
@@ -70,7 +70,7 @@ void	paint_sprite(t_vars *vars, t_sprite *sprite)
 	sprite->x_inc = (sprite->draw_width * 2) / sprite->vars.width;
 	x = sprite->screen_x - sprite->draw_width;
 	sprite->vars.position_x = 0;
-	while (sprite->vars.position_x <= sprite->vars.width)
+	while (sprite->vars.position_x < sprite->vars.width)
 	{
 		y = sprite->screen_y - sprite->draw_height;
 		i = -1;
@@ -78,7 +78,7 @@ void	paint_sprite(t_vars *vars, t_sprite *sprite)
 		{
 			coords = coords_init(x, y, x + sprite->x_inc, y + sprite->y_inc);
 			col = ((unsigned int *)sprite->vars.img.addr)
-				[i * sprite->vars.width + sprite->vars.position_x];
+					[i * sprite->vars.width + sprite->vars.position_x];
 			(col != 0x000000) ? draw_square(vars, sprite, coords, col) : 0;
 			y += sprite->y_inc;
 		}

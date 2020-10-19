@@ -6,13 +6,14 @@ NAME	= cub3D
 CC		= gcc
 RM		= rm -f
 CFLAGS	= -Wall -Werror -Wextra
+SANITIZE = -g -fsanitize=address
 %.o: %.c
 	${CC} ${FLAGS} -c $< -o $@
 
 ${NAME}:	${OBJS}
 	make -C libft/
 	make -C minilibx/
-	$(CC) -g -fsanitize=address  -L minilibx/ -lmlx -framework OPENGL -framework Appkit -L libft/ -lft $^ -o ${NAME} 
+	$(CC) -L minilibx/ -lmlx -framework OPENGL -framework Appkit -L libft/ -lft $^ -o ${NAME} 
 
 all:		${NAME}
 

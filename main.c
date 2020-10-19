@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 12:42:59 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/16 13:36:33 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/19 13:42:36 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,19 @@ int		main(int argc, char **argv)
 {
 	t_vars		vars;
 	int			file_ok;
+	int			i;
 
 	if (argc != 2)
 	{
 		write(1, "Error: wrong no of arguments\n", 30);
+		return (1);
+	}
+	i = 0;
+	while (argv[1][i] != '.' && argv[1][i] != '\0')
+		i++;
+	if (ft_strncmp(&argv[1][i], ".cub", 5))
+	{
+		write(1, "Error: invalid name of file\n", 29);
 		return (1);
 	}
 	file_ok = read_file(&vars, argv[1]);

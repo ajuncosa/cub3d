@@ -5,8 +5,8 @@ WE ./textures/wood_1.xpm
 EA ./textures/greystone_1.xpm
 
 S ./textures/sprite3.xpm
-F 00,150,0
-C 200,200,200
+F 190,150,0
+C 230,215,200
 
 1111111111
 1001000011
