@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:10 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/19 13:46:36 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/22 11:56:47 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,19 @@ int		detect_line_type(t_vars *vars, char *str)
 
 	i = 0;
 	if (str[i] == '\0')
+	{
+		if (vars->in_map == 1)
+			vars->in_map = 2;
 		return (1);
+	}
 	while (ft_isspace(str[i]))
 		i++;
 	if (str[i] == '\0')
+	{
+		if (vars->in_map == 1)
+			vars->in_map = 2;
 		return (1);
+	}
 	if (str[i] == 'R')
 		return (parse_resolution_line(vars, &str[i]));
 	if (ft_strchr("NSEW", str[i]))
@@ -84,15 +92,20 @@ int		check_map(t_vars *vars)
 	while (i < vars->map.width)
 	{
 		if (vars->map.map[0][i] == '9'
-			|| vars->map.map[vars->map.height - 1][i] == '9')
+			|| vars->map.map[vars->map.height - 1][i] == '9'
+			|| vars->map.map[0][i] == '8'
+			|| vars->map.map[vars->map.height - 1][i] == '8')
 			return (0);
+
 		i++;
 	}
 	i = 0;
 	while (i < vars->map.height)
 	{
 		if (vars->map.map[i][0] == '9'
-			|| vars->map.map[i][vars->map.width - 1] == '9')
+			|| vars->map.map[i][vars->map.width - 1] == '9'
+			|| vars->map.map[i][0] == '8'
+			|| vars->map.map[i][vars->map.width - 1] == '8')
 			return (0);
 		i++;
 	}
@@ -104,6 +117,7 @@ int		read_file(t_vars *vars, const char *file_name)
 	int fd;
 	int	map_ok;
 
+	vars->in_map = 0;
 	initialize_vars(vars);
 	if ((fd = open(file_name, O_RDONLY)) == -1)
 		return (0);
@@ -117,5 +131,14 @@ int		read_file(t_vars *vars, const char *file_name)
 		return (0);
 	flood_fill(vars, vars->player.x, vars->player.y, '0');
 	map_ok = check_map(vars);
+	sprites_back_to_original_nbr(vars);
+	for (size_t i = 0; i < vars->map.height; i++)
+    {
+        for (size_t j = 0; j < vars->map.width; j++)
+        {
+            printf("%c", vars->map.map[i][j]);
+        }
+        printf("\n");
+    }
 	return (map_ok == 1) ? 1 : 0;
 }

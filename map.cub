@@ -4,7 +4,7 @@ SO ./textures/brick_texture.xpm
 WE ./textures/wood_1.xpm
 EA ./textures/greystone_1.xpm
 
-S ./textures/sprite3.xpm
+    S ./textures/sprite3.xpm
 F 190,150,0
 C 230,215,200
 

@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/16 13:33:28 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/22 11:40:59 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,11 +173,13 @@ typedef struct	s_vars
 	t_map		map;
 	t_window	window;
 	t_color		color;
+	int			in_map;
 }				t_vars;
 
 int				read_file(t_vars *vars, const char *file_name);
 int				empty_end_of_line(char *str);
 void			flood_fill(t_vars *vars, int x, int y, int prev_color);
+void			sprites_back_to_original_nbr(t_vars *vars);
 int				parse_resolution_line(t_vars *vars, char *str);
 int				parse_texture_line(t_vars *vars, int type, char *str);
 int				parse_color_line(t_vars *vars, int type, char *str);

@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:38 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/14 13:35:05 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/21 13:54:29 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,35 @@ void	flood_fill(t_vars *vars, int x, int y, int prev_color)
 {
 	if (x < 0 || x >= vars->map.width || y < 0 || y >= vars->map.height)
 		return ;
-	if (vars->map.map[y][x] != prev_color)
+	if (vars->map.map[y][x] != prev_color && vars->map.map[y][x] != '2')
 		return ;
-	vars->map.map[y][x] = '9';
+	if (vars->map.map[y][x] == '2')
+		vars->map.map[y][x] = '8';
+	else
+		vars->map.map[y][x] = '9';
 	flood_fill(vars, x + 1, y, prev_color);
 	flood_fill(vars, x - 1, y, prev_color);
 	flood_fill(vars, x, y + 1, prev_color);
 	flood_fill(vars, x, y - 1, prev_color);
+}
+
+void	sprites_back_to_original_nbr(t_vars *vars)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < vars->map.height)
+	{
+		j = 0;
+		while (j < vars->map.width)
+		{
+			if (vars->map.map[i][j] == '8')
+				vars->map.map[i][j] = '2';
+			j++;
+		}
+		i++;
+	}
 }
 
 int		check_player_pos(t_vars *vars, int y, char *str)

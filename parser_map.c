@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:14 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/15 11:36:43 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/22 11:51:19 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ int		count_map_size(t_vars *vars, char *str)
 
 	if (!check_variables(vars))
 		return (0);
+	if (vars->in_map == 2)
+		return (0);
+	vars->in_map = 1;
 	line_size = ft_strlen(str);
 	if (vars->map.width < line_size)
 		vars->map.width = line_size;
@@ -41,10 +44,7 @@ int		fill_map(t_vars *vars, char *line, int i)
 		j++;
 	}
 	if (!check_player_pos(vars, i, line))
-	{
-		free(line);
 		return (0);
-	}
 	return (1);
 }
 
@@ -81,7 +81,10 @@ int		check_if_map_line(t_vars *vars, char *line, int *i)
 	if (ft_isdigit(line[j]))
 	{
 		if (!(fill_map(vars, line, *i)))
+		{
+			free(line);
 			return (0);
+		}
 		*i += 1;
 	}
 	return (1);
