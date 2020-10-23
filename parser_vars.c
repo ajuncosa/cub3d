@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:42 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/16 12:22:43 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/23 13:29:17 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int		check_variables(t_vars *vars)
 		|| vars->color.f[1] == -1 || vars->color.f[2] == -1
 		|| vars->color.c[0] == -1 || vars->color.c[1] == -1
 		|| vars->color.c[2] == -1)
+	{
+		write(1, "Error\nMissing information. Map must be last\n", 61);
 		return (0);
+	}
 	return (1);
 }
 

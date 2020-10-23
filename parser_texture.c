@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:34 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/14 13:04:41 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/23 11:54:37 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int		is_null_texture(t_vars *vars, int type)
 int		save_texture_dir(t_vars *vars, int type, char *str)
 {
 	if (!is_null_texture(vars, type))
+	{
+		write(1, "Error\nDuplicated texture lines\n", 31);
 		return (0);
+	}
 	if (type == 1)
 		vars->textures.file_north = ft_strdup(str);
 	else if (type == 2)
@@ -49,11 +52,17 @@ int		parse_texture_line(t_vars *vars, int type, char *str)
 
 	i = (type == 5) ? 1 : 2;
 	if (!ft_isspace(str[i]))
+	{
+		write(1, "Error\nMissing space after texture type identifier\n", 50);
 		return (0);
+	}
 	while (ft_isspace(str[i]))
 		i++;
 	if (!ft_isascii(str[i]))
+	{
+		write(1, "Error\nWrong texture string\n", 27);
 		return (0);
+	}
 	if (!save_texture_dir(vars, type, &str[i]))
 		return (0);
 	return (1);

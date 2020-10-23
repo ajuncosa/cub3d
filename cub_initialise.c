@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 13:21:34 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/16 13:42:01 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/23 12:49:17 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,7 @@ int		init_sprite_array(t_vars *vars)
 	{
 		j = -1;
 		while (++j < vars->map.width)
-		{
 			fill_array(vars, i, j, &count);
-		}
 		i++;
 	}
 	if (!(vars->wall.dist = malloc(vars->window.width * sizeof(float))))

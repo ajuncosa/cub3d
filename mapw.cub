@@ -6,7 +6,7 @@ EA ./textures/greystone_1.xpm
 
 S ./textures/sprite3.xpm
 C 215,215,215
-F 40,40,40
+F 40,40,
 
  111111               1 11
 10000001             101001   111

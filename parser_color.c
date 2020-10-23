@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:05 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/16 12:53:23 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/23 14:12:59 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,34 +23,54 @@ int		valid_colors(t_vars *vars, int type)
 		&& vars->color.f[1] >= 0 && vars->color.f[1] <= 255
 		&& vars->color.f[2] >= 0 && vars->color.f[2] <= 255)
 		return (1);
+	write(1, "Error\nRGB colours must be in range 0-225\n", 41);
 	return (0);
+}
+
+void	save_ceiling_color(t_color *colors, int color, char *str)
+{
+	if (color == 0)
+		colors->c[0] = ft_atoi(str);
+	else if (color == 1)
+		colors->c[1] = ft_atoi(str);
+	else
+		colors->c[2] = ft_atoi(str);
+}
+
+void	save_floor_color(t_color *colors, int color, char *str)
+{
+	if (color == 0)
+		colors->f[0] = ft_atoi(str);
+	else if (color == 1)
+		colors->f[1] = ft_atoi(str);
+	else
+		colors->f[2] = ft_atoi(str);
 }
 
 int		save_color(t_color *colors, int type, int color, char *str)
 {
 	if (!ft_isdigit(str[0]))
+	{
+		write(1, "Error\nRGB colours must be digits\n", 33);
 		return (0);
+	}
 	if (type == 1)
 	{
 		if (colors->c[0] != -1 && colors->c[1] != -1 && colors->c[2] != -1)
+		{
+			write(1, "Error\nDuplicated C line\n", 24);
 			return (0);
-		if (color == 0)
-			colors->c[0] = ft_atoi(str);
-		else if (color == 1)
-			colors->c[1] = ft_atoi(str);
-		else
-			colors->c[2] = ft_atoi(str);
+		}
+		save_ceiling_color(colors, color, str);
 	}
 	else
 	{
 		if (colors->f[0] != -1 && colors->f[1] != -1 && colors->f[2] != -1)
+		{
+			write(1, "Error\nDuplicated F line\n", 24);
 			return (0);
-		if (color == 0)
-			colors->f[0] = ft_atoi(str);
-		else if (color == 1)
-			colors->f[1] = ft_atoi(str);
-		else
-			colors->f[2] = ft_atoi(str);
+		}
+		save_floor_color(colors, color, str);
 	}
 	return (1);
 }
@@ -62,7 +82,10 @@ int		parse_color_line(t_vars *vars, int type, char *str)
 
 	i = 1;
 	if (!ft_isspace(str[i]))
+	{
+		write(1, "Error\nMissing space after colour type identifier\n", 49);
 		return (0);
+	}
 	while (ft_isspace(str[i]))
 		i++;
 	j = 0;
@@ -73,12 +96,18 @@ int		parse_color_line(t_vars *vars, int type, char *str)
 		while (ft_isdigit(str[i]))
 			i++;
 		if (j != 2 && str[i] != ',')
+		{
+			write(1, "Error\nWrong format in colour line\n", 34);
 			return (0);
+		}
 		if (str[i] == ',')
 			i++;
 		j++;
 	}
 	if (!empty_end_of_line(&str[i]))
+	{
+		write(1, "Error\nWrong format in colour line\n", 34);
 		return (0);
-	return (valid_colors(vars, type) == 0 ? 0 : 1);
+	}
+	return (valid_colors(vars, type));
 }
