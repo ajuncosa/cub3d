@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/22 11:40:59 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/26 12:45:48 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <math.h>
+# define MAX_SCREEN_WIDTH 2560
+# define MAX_SCREEN_HEIGHT 1380
 
 typedef struct	s_imgdata
 {
@@ -48,6 +50,7 @@ typedef struct	s_player
 	float		cos;
 	float		speed;
 	float		rotation;
+	float		radius;
 }				t_player;
 
 typedef struct	s_ray
@@ -68,7 +71,6 @@ typedef struct	s_wall
 {
 	float		distance;
 	float		*dist;
-	float		mid_dist;
 	float		height;
 	int			east_west_hit;
 }				t_wall;

@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/16 12:22:24 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/26 12:42:32 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ void	calc_dist_and_wall_height(t_vars *vars)
 	vars->wall.distance = vars->wall.distance * cos((vars->ray.angle -
 				vars->player.angle) * M_PI / 180);
 	vars->wall.height = (int)((vars->window.height / 2) / vars->wall.distance);
-	if (vars->ray.count == vars->window.width / 2)
-		vars->wall.mid_dist = vars->wall.distance;
 }
 
 void	paint(int x, t_vars *vars)

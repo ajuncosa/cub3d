@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 13:21:34 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/23 12:49:17 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/26 12:40:50 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ void	player_initialise(t_vars *vars)
 	vars->player.y += 0.5;
 	vars->player.fov = 60;
 	vars->player.halffov = vars->player.fov / 2;
-	vars->player.speed = 0.2;
+	vars->player.speed = 0.1;
 	vars->player.rotation = 3;
+	vars->player.radius = 5;
 }
 
 void	count_sprites(t_vars *vars)

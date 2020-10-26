@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/28 13:29:56 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/15 12:06:58 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/26 12:42:06 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,20 @@ void	left_traslation(t_vars *vars)
 	float	new_x;
 	float	new_y;
 	float	angle_radians;
+	int		check_x;
+	int		check_y;
 
 	angle_radians = (vars->player.angle - 90) * M_PI / 180;
 	vars->player.sin = sin(angle_radians) * vars->player.speed;
 	vars->player.cos = cos(angle_radians) * vars->player.speed;
 	new_x = vars->player.x + vars->player.cos;
 	new_y = vars->player.y + vars->player.sin;
-	if (vars->map.map[(int)new_y][(int)new_x] == '9')
-	{
-		vars->player.x = new_x;
+	check_x = (int)(new_x + vars->player.cos * vars->player.radius);
+	check_y = (int)(new_y + vars->player.sin * vars->player.radius);
+	if (vars->map.map[check_y][(int)vars->player.x] == '9')
 		vars->player.y = new_y;
-	}
+	if (vars->map.map[(int)vars->player.y][check_x] == '9')
+		vars->player.x = new_x;
 }
 
 void	right_traslation(t_vars *vars)
@@ -57,17 +60,20 @@ void	right_traslation(t_vars *vars)
 	float	new_x;
 	float	new_y;
 	float	angle_radians;
+	int		check_x;
+	int		check_y;
 
 	angle_radians = (vars->player.angle + 90) * M_PI / 180;
 	vars->player.sin = sin(angle_radians) * vars->player.speed;
 	vars->player.cos = cos(angle_radians) * vars->player.speed;
 	new_x = vars->player.x + vars->player.cos;
 	new_y = vars->player.y + vars->player.sin;
-	if (vars->map.map[(int)new_y][(int)new_x] == '9')
-	{
-		vars->player.x = new_x;
+	check_x = (int)(new_x + vars->player.cos * vars->player.radius);
+	check_y = (int)(new_y + vars->player.sin * vars->player.radius);
+	if (vars->map.map[check_y][(int)vars->player.x] == '9')
 		vars->player.y = new_y;
-	}
+	if (vars->map.map[(int)vars->player.y][check_x] == '9')
+		vars->player.x = new_x;
 }
 
 void	forward_traslation(t_vars *vars)
@@ -75,20 +81,20 @@ void	forward_traslation(t_vars *vars)
 	float	new_x;
 	float	new_y;
 	float	angle_radians;
-	int		one;
+	int		check_x;
+	int		check_y;
 
 	angle_radians = vars->player.angle * M_PI / 180;
 	vars->player.sin = sin(angle_radians) * vars->player.speed;
 	vars->player.cos = cos(angle_radians) * vars->player.speed;
 	new_x = vars->player.x + vars->player.cos;
 	new_y = vars->player.y + vars->player.sin;
-	if (vars->map.map[(int)new_y][(int)new_x] == '9')
-	{
-		if (vars->wall.mid_dist < 0.6)
-			return ;
-		vars->player.x = new_x;
+	check_x = (int)(new_x + vars->player.cos * vars->player.radius);
+	check_y = (int)(new_y + vars->player.sin * vars->player.radius);
+	if (vars->map.map[check_y][(int)vars->player.x] == '9')
 		vars->player.y = new_y;
-	}
+	if (vars->map.map[(int)vars->player.y][check_x] == '9')
+		vars->player.x = new_x;
 }
 
 void	backward_traslation(t_vars *vars)
@@ -96,15 +102,18 @@ void	backward_traslation(t_vars *vars)
 	float	new_x;
 	float	new_y;
 	float	angle_radians;
+	int		check_x;
+	int		check_y;
 
 	angle_radians = vars->player.angle * M_PI / 180;
 	vars->player.sin = sin(angle_radians) * vars->player.speed;
 	vars->player.cos = cos(angle_radians) * vars->player.speed;
 	new_x = vars->player.x - vars->player.cos;
 	new_y = vars->player.y - vars->player.sin;
-	if (vars->map.map[(int)new_y][(int)new_x] == '9')
-	{
-		vars->player.x = new_x;
+	check_x = (int)(new_x - vars->player.cos * vars->player.radius);
+	check_y = (int)(new_y - vars->player.sin * vars->player.radius);
+	if (vars->map.map[check_y][(int)vars->player.x] == '9')
 		vars->player.y = new_y;
-	}
+	if (vars->map.map[(int)vars->player.y][check_x] == '9')
+		vars->player.x = new_x;
 }

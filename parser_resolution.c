@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:28 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/23 14:09:08 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/26 12:03:27 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,17 @@ int		save_width_and_height(t_vars *vars, char *str, int *i, int type)
 		return (0);
 	}
 	if (type == 1)
+	{
 		vars->window.width = ft_atoi(&str[*i]);
+		if (vars->window.width > MAX_SCREEN_WIDTH)
+			vars->window.width = MAX_SCREEN_WIDTH;
+	}
 	else
+	{
 		vars->window.height = ft_atoi(&str[*i]);
+		if (vars->window.height > MAX_SCREEN_HEIGHT)
+			vars->window.height = MAX_SCREEN_HEIGHT;
+	}
 	while (ft_isdigit(str[*i]))
 		*i += 1;
 	return (1);

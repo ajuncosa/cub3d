@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 12:42:59 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/23 12:51:42 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/26 11:12:41 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int		main(int argc, char **argv)
 	int			file_ok;
 	int			i;
 
-	if (argc != 2)
+
+	if (argc < 2 || argc > 3)
 	{
 		write(1, "Error\nWrong no of arguments\n", 28);
 		return (1);
