@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/26 12:45:48 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/30 13:54:43 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,13 @@ typedef	struct	s_color
 	int			c[3];
 }				t_color;
 
+typedef struct		s_bmp
+{
+	unsigned char	file_header[14];
+	unsigned char	info_header[40];
+}					t_bmp;
+
+
 typedef struct	s_vars
 {
 	t_mlxvars	mlxvars;
@@ -176,6 +183,8 @@ typedef struct	s_vars
 	t_window	window;
 	t_color		color;
 	int			in_map;
+	int			save_arg;
+	t_bmp		bmp;
 }				t_vars;
 
 int				read_file(t_vars *vars, const char *file_name);
@@ -215,5 +224,6 @@ void			calculate_sprite_info(t_vars *vars, t_sprite *sprite);
 void			sort_sprite_array(t_vars *vars);
 void			paint_sprite(t_vars *vars, t_sprite *sprite);
 unsigned long	create_rgb(int r, int g, int b);
+int				create_bmp(t_vars *vars);
 
 #endif

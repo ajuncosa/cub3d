@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/26 12:42:32 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/30 13:19:52 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,8 @@ void	paint(int x, t_vars *vars)
 	unsigned long	rgb_f;
 	unsigned long	rgb_c;
 
-	rgb_f = create_rgb(vars->color.f[0],
-		vars->color.f[1], vars->color.f[2]);
-	rgb_c = create_rgb(vars->color.c[0],
-		vars->color.c[1], vars->color.c[2]);
+	rgb_f = create_rgb(vars->color.f[0], vars->color.f[1], vars->color.f[2]);
+	rgb_c = create_rgb(vars->color.c[0], vars->color.c[1], vars->color.c[2]);
 	texture = init_texture(vars);
 	coords = coords_init(x, 0, x, vars->window.height / 2 - vars->wall.height);
 	dda_line_algorithm(vars, coords, rgb_c);
@@ -109,7 +107,8 @@ int		raycasting(t_vars *vars)
 		vars->ray.count++;
 	}
 	sprites_info_and_draw(vars);
-	mlx_put_image_to_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win,
+	if (!vars->save_arg)
+		mlx_put_image_to_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win,
 			vars->img.img, 0, 0);
 	return (0);
 }

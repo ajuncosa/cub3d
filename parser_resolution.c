@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:28 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/26 12:03:27 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/10/30 13:21:20 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		parse_resolution_line(t_vars *vars, char *str)
 	}
 	if (!ft_isspace(str[i]))
 	{
-		write(1, "Error\nMissing space after R type identifier\n", 42);
+		write(1, "Error\nMissing space after R type identifier\n", 44);
 		return (0);
 	}
 	if (!save_width_and_height(vars, str, &i, 1))
