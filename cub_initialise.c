@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 13:21:34 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/26 12:40:50 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/05 11:20:33 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@ int		init_sprite_array(t_vars *vars)
 		i++;
 	}
 	if (!(vars->wall.dist = malloc(vars->window.width * sizeof(float))))
+	{
+		free(vars->sprite);
 		return (0);
+	}
 	return (1);
 }

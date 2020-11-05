@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub_keys.c                                         :+:      :+:    :+:   */
+/*   cub_events.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 10:01:06 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/18 10:21:59 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/05 11:26:14 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ int		handle_keypress(int keycode, t_vars *vars)
 {
 	if (keycode == 53)
 	{
+		mlx_destroy_image(vars->mlxvars.mlx, vars->img.img);
+		free(vars->sprite);
+		free(vars->wall.dist);
 		mlx_destroy_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win);
 		exit(0);
 	}
@@ -63,6 +66,9 @@ int		handle_keyrelease(int keycode, t_vars *vars)
 
 int		xbutton_close(t_vars *vars)
 {
+	mlx_destroy_image(vars->mlxvars.mlx, vars->img.img);
+	free(vars->sprite);
+	free(vars->wall.dist);
 	mlx_destroy_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win);
 	exit(0);
 }

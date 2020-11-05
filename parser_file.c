@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:10 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/23 13:14:55 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/05 10:17:08 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int		check_file(t_vars *vars, int fd)
 		return (0);
 	if (vars->map.height < 4 || vars->map.width < 4)
 	{
-		write(1, "Error\nMap is too small or does not exist\n", 81);
+		write(1, "Error\nMap is too small or does not exist\n", 41);
 		return (0);
 	}
 	return (1);

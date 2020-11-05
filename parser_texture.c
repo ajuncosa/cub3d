@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:34 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/23 11:54:37 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/05 11:40:10 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int		is_null_texture(t_vars *vars, int type)
 
 int		save_texture_dir(t_vars *vars, int type, char *str)
 {
+	char	*check;
+
 	if (!is_null_texture(vars, type))
 	{
 		write(1, "Error\nDuplicated texture lines\n", 31);
@@ -43,6 +45,12 @@ int		save_texture_dir(t_vars *vars, int type, char *str)
 		vars->textures.file_west = ft_strdup(str);
 	else
 		vars->textures.file_sprite = ft_strdup(str);
+	check = ft_strrchr(str, '.');
+	if (check == 0 || ft_strncmp(check, ".xpm", 5))
+	{
+		write(1, "Error\nTexture file must be .xpm\n", 32);
+		return (0);
+	}
 	return (1);
 }
 

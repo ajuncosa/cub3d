@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:14 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/23 13:27:54 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/05 10:19:54 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int		fill_map(t_vars *vars, char *line, int i)
 	}
 	if (!check_player_pos(vars, i, line))
 	{
-		write(1, "Error\nInvalid map: more than one player start pos\n", 55);
+		write(1, "Error\nInvalid map: more than one player start pos\n", 50);
 		return (0);
 	}
 	return (1);
