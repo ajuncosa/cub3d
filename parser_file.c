@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:10 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/05 10:17:08 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/06 13:07:32 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int		check_map(t_vars *vars)
 	return (1);
 }
 
-int		read_file(t_vars *vars, const char *file_name)
+void	read_file(t_vars *vars, const char *file_name)
 {
 	int fd;
 	int	map_ok;
@@ -123,20 +123,21 @@ int		read_file(t_vars *vars, const char *file_name)
 	if ((fd = open(file_name, O_RDONLY)) == -1)
 	{
 		write(1, "Error\nFile not found\n", 21);
-		return (0);
+		error_parsing_exit(vars, fd);
 	}
 	if (!check_file(vars, fd))
-		return (0);
+		error_parsing_exit(vars, fd);
 	if (close(fd) == -1)
-		return (0);
+		error_parsing_exit(vars, fd);
 	if ((fd = open(file_name, O_RDONLY)) == -1)
-		return (0);
+		exit(0);
 	if (!parse_map(vars, fd))
-		return (0);
+		error_parsing_exit(vars, fd);
 	if (close(fd) == -1)
-		return (0);
+		error_parsing_exit(vars, fd);
 	flood_fill(vars, vars->player.x, vars->player.y, '0');
 	map_ok = check_map(vars);
 	sprites_back_to_original_nbr(vars);
-	return (map_ok == 1) ? 1 : 0;
+	if (!map_ok)
+		error_parsing_exit(vars, fd);
 }

@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:14 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/05 10:19:54 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/06 13:25:07 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ int		alloc_map(t_vars *vars)
 	{
 		j = 0;
 		if (!(vars->map.map[i] = malloc(vars->map.width * sizeof(char))))
+		{
+			free(vars->map.map);
 			return (0);
+		}
 		while (j < vars->map.width)
 		{
 			vars->map.map[i][j] = '0';

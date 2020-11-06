@@ -5,7 +5,7 @@ OBJS	= ${SRCS:.c=.o}
 NAME	= cub3D
 CC		= gcc
 RM		= rm -f
-CFLAGS	= -Wall -Werror -Wextra
+CFLAGS	= -Wall -Werror -Wextra -g3
 SANITIZE = -g -fsanitize=address
 %.o: %.c
 	${CC} -c $< -o $@
@@ -13,7 +13,7 @@ SANITIZE = -g -fsanitize=address
 ${NAME}:	${OBJS}
 	make -C libft/
 	make -C minilibx/
-	$(CC) ${SANITIZE} -L minilibx/ -lmlx -framework OPENGL -framework Appkit -L libft/ -lft $^ -o ${NAME} 
+	$(CC) $(SANITIZE) -L minilibx/ -lmlx -framework OPENGL -framework Appkit -L libft/ -lft $^ -o ${NAME} 
 
 all:		${NAME}
 

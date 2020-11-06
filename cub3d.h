@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/05 11:40:50 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/06 13:59:36 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,11 +187,12 @@ typedef struct		s_vars
 	t_bmp			bmp;
 }					t_vars;
 
-int					args_and_file_error_management(t_vars *vars,
-						int argc, char **argv);
+void				error_parsing_exit(t_vars *vars, int fd);
+void				exit_programme(t_vars *vars);
+void				args_error_management(t_vars *vars, int argc, char **argv);
 int					init_player_keys_tex_sprite(t_vars *vars);
-int					bmp_check(t_vars *vars);
-int					read_file(t_vars *vars, const char *file_name);
+void				bmp_check(t_vars *vars);
+void				read_file(t_vars *vars, const char *file_name);
 int					empty_end_of_line(char *str);
 void				flood_fill(t_vars *vars, int x, int y, int prev_color);
 void				sprites_back_to_original_nbr(t_vars *vars);
