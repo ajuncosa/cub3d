@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 13:14:32 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/06 14:06:13 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/09 10:42:09 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,25 +83,23 @@ void	args_error_management(t_vars *vars, int argc, char **argv)
 	}
 }
 
-int		init_player_keys_tex_sprite(t_vars *vars)
+void	init_player_keys_tex_sprite(t_vars *vars)
 {
+	int	i;
+
+	i = 0;
 	player_initialise(vars);
 	init_keys(vars);
 	if (!init_sprite_array(vars))
 	{
 		write(1, "Error\nCould not init sprite array\n", 34);
-		mlx_destroy_image(vars->mlxvars.mlx, vars->img.img);
-		return (0);
+		exit_programme(vars);
 	}
 	if (!init_all_textures(vars))
 	{
 		write(1, "Error\nInvalid texture file\n", 27);
-		mlx_destroy_image(vars->mlxvars.mlx, vars->img.img);
-		free(vars->sprite);
-		free(vars->wall.dist);
-		return (0);
+		exit_programme(vars);
 	}
-	return (1);
 }
 
 void	bmp_check(t_vars *vars)

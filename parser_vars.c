@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:42 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/06 13:26:39 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/09 10:40:47 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,6 @@ void	initialize_vars(t_vars *vars)
 	vars->player.y = -1;
 	vars->player.angle = -1;
 	vars->map.map = NULL;
+	vars->sprite = NULL;
+	vars->wall.dist = NULL;
 }

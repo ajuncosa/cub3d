@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/06 13:59:36 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/09 10:28:34 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ typedef struct		s_vars
 void				error_parsing_exit(t_vars *vars, int fd);
 void				exit_programme(t_vars *vars);
 void				args_error_management(t_vars *vars, int argc, char **argv);
-int					init_player_keys_tex_sprite(t_vars *vars);
+void				init_player_keys_tex_sprite(t_vars *vars);
 void				bmp_check(t_vars *vars);
 void				read_file(t_vars *vars, const char *file_name);
 int					empty_end_of_line(char *str);

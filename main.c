@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 12:42:59 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/06 14:04:53 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/09 10:28:42 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ int		main(int argc, char **argv)
 		vars.window.width, vars.window.height);
 	vars.img.addr = mlx_get_data_addr(vars.img.img, &vars.img.bits_per_pixel,
 		&vars.img.line_length, &vars.img.endian);
-	if (!init_player_keys_tex_sprite(&vars))
-		return (1);
+	init_player_keys_tex_sprite(&vars);
 	vars.save_arg = 0;
 	if (argc == 3 && !ft_strncmp(argv[2], "--save", 7))
 		bmp_check(&vars);
