@@ -49,9 +49,13 @@ void	left_traslation(t_vars *vars)
 	new_y = vars->player.y + vars->player.sin;
 	check_x = (int)(new_x + vars->player.cos * vars->player.radius);
 	check_y = (int)(new_y + vars->player.sin * vars->player.radius);
-	if (vars->map.map[check_y][(int)vars->player.x] == '9')
+	if (vars->map.map[check_y][(int)vars->player.x] == '9'
+		|| vars->map.map[check_y][(int)vars->player.x] == '3'
+		|| vars->map.map[check_y][(int)vars->player.x] == '4')
 		vars->player.y = new_y;
-	if (vars->map.map[(int)vars->player.y][check_x] == '9')
+	if (vars->map.map[(int)vars->player.y][check_x] == '9'
+		|| vars->map.map[(int)vars->player.y][check_x] == '3'
+		|| vars->map.map[(int)vars->player.y][check_x] == '4')
 		vars->player.x = new_x;
 }
 
@@ -70,9 +74,13 @@ void	right_traslation(t_vars *vars)
 	new_y = vars->player.y + vars->player.sin;
 	check_x = (int)(new_x + vars->player.cos * vars->player.radius);
 	check_y = (int)(new_y + vars->player.sin * vars->player.radius);
-	if (vars->map.map[check_y][(int)vars->player.x] == '9')
+	if (vars->map.map[check_y][(int)vars->player.x] == '9'
+		|| vars->map.map[check_y][(int)vars->player.x] == '3'
+		|| vars->map.map[check_y][(int)vars->player.x] == '4')
 		vars->player.y = new_y;
-	if (vars->map.map[(int)vars->player.y][check_x] == '9')
+	if (vars->map.map[(int)vars->player.y][check_x] == '9'
+		|| vars->map.map[(int)vars->player.y][check_x] == '3'
+		|| vars->map.map[(int)vars->player.y][check_x] == '4')
 		vars->player.x = new_x;
 }
 
@@ -91,9 +99,13 @@ void	forward_traslation(t_vars *vars)
 	new_y = vars->player.y + vars->player.sin;
 	check_x = (int)(new_x + vars->player.cos * vars->player.radius);
 	check_y = (int)(new_y + vars->player.sin * vars->player.radius);
-	if (vars->map.map[check_y][(int)vars->player.x] == '9')
+	if (vars->map.map[check_y][(int)vars->player.x] == '9'
+		|| vars->map.map[check_y][(int)vars->player.x] == '3'
+		|| vars->map.map[check_y][(int)vars->player.x] == '4')
 		vars->player.y = new_y;
-	if (vars->map.map[(int)vars->player.y][check_x] == '9')
+	if (vars->map.map[(int)vars->player.y][check_x] == '9'
+		|| vars->map.map[(int)vars->player.y][check_x] == '3'
+		|| vars->map.map[(int)vars->player.y][check_x] == '4')
 		vars->player.x = new_x;
 }
 
@@ -112,8 +124,12 @@ void	backward_traslation(t_vars *vars)
 	new_y = vars->player.y - vars->player.sin;
 	check_x = (int)(new_x - vars->player.cos * vars->player.radius);
 	check_y = (int)(new_y - vars->player.sin * vars->player.radius);
-	if (vars->map.map[check_y][(int)vars->player.x] == '9')
+	if (vars->map.map[check_y][(int)vars->player.x] == '9'
+		|| vars->map.map[check_y][(int)vars->player.x] == '3'
+		|| vars->map.map[check_y][(int)vars->player.x] == '4')
 		vars->player.y = new_y;
-	if (vars->map.map[(int)vars->player.y][check_x] == '9')
+	if (vars->map.map[(int)vars->player.y][check_x] == '9'
+		|| vars->map.map[(int)vars->player.y][check_x] == '3'
+		|| vars->map.map[(int)vars->player.y][check_x] == '4')
 		vars->player.x = new_x;
 }

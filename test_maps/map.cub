@@ -6,7 +6,7 @@ EA ./textures/greystone_1.xpm
 
 
     S ./textures/sprite3.xpm
-SB ./textures/pillar.xpm
+SB ./textures/thornbush2.xpm
 SC ./textures/greenlight_1.xpm
 
 F 190,150,0
