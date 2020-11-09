@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:34 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/05 13:31:45 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/09 13:18:03 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,12 @@ int		is_null_texture(t_vars *vars, int type)
 		return (vars->textures.file_east != NULL ? 0 : 1);
 	else if (type == 4)
 		return (vars->textures.file_west != NULL ? 0 : 1);
+	else if (type == 5)
+		return (vars->textures.file_sprite1 != NULL ? 0 : 1);
+	else if (type == 6)
+		return (vars->textures.file_sprite2 != NULL ? 0 : 1);
 	else
-		return (vars->textures.file_sprite != NULL ? 0 : 1);
+		return (vars->textures.file_sprite3 != NULL ? 0 : 1);
 }
 
 int		save_texture_dir(t_vars *vars, int type, char *str)
@@ -43,8 +47,12 @@ int		save_texture_dir(t_vars *vars, int type, char *str)
 		vars->textures.file_east = ft_strdup(str);
 	else if (type == 4)
 		vars->textures.file_west = ft_strdup(str);
+	else if (type == 5)
+		vars->textures.file_sprite1 = ft_strdup(str);
+	else if (type == 6)
+		vars->textures.file_sprite2 = ft_strdup(str);
 	else
-		vars->textures.file_sprite = ft_strdup(str);
+		vars->textures.file_sprite3 = ft_strdup(str);
 	check = ft_strrchr(str, '.');
 	if (check == 0 || ft_strncmp(check, ".xpm", 5))
 	{

@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 13:21:34 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/09 10:48:47 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/09 14:40:07 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	fill_array(t_vars *vars, int i, int j, int *count)
 	{
 		vars->sprite[*count].map_x = j + 0.5;
 		vars->sprite[*count].map_y = i + 0.5;
-		//vars->sprite[*count].id = map[i][j];
+		vars->sprite[*count].id = vars->map.map[i][j];
 		*count += 1;
 	}
 }

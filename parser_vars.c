@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:42 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/09 10:40:47 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/09 12:27:03 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		check_variables(t_vars *vars)
 		|| vars->textures.file_north == NULL
 		|| vars->textures.file_south == NULL
 		|| vars->textures.file_east == NULL || vars->textures.file_west == NULL
-		|| vars->textures.file_sprite == NULL || vars->color.f[0] == -1
+		|| vars->textures.file_sprite1 == NULL || vars->color.f[0] == -1
 		|| vars->color.f[1] == -1 || vars->color.f[2] == -1
 		|| vars->color.c[0] == -1 || vars->color.c[1] == -1
 		|| vars->color.c[2] == -1)
@@ -37,7 +37,9 @@ void	initialize_vars(t_vars *vars)
 	vars->textures.file_south = NULL;
 	vars->textures.file_east = NULL;
 	vars->textures.file_west = NULL;
-	vars->textures.file_sprite = NULL;
+	vars->textures.file_sprite1 = NULL;
+	vars->textures.file_sprite2 = NULL;
+	vars->textures.file_sprite3 = NULL;
 	vars->color.f[0] = -1;
 	vars->color.f[1] = -1;
 	vars->color.f[2] = -1;

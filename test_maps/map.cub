@@ -6,14 +6,18 @@ EA ./textures/greystone_1.xpm
 
 
     S ./textures/sprite3.xpm
+SB ./textures/pillar.xpm
+SC ./textures/greenlight_1.xpm
+
 F 190,150,0
 C 230,215,200
 
+
 1111111111
 1001000011
-1020001001
-1100010001
-1000010001
+1023001001
+1100410001
+1000410001
 10N0010001
 1001111001
 1000010001

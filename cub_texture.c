@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 11:14:41 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/30 12:07:15 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/09 14:43:09 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,24 @@ int			init_all_textures(t_vars *vars)
 	i = 0;
 	while (i < vars->sprite_count)
 	{
-		if (!fill_in_tex_variables(vars, &vars->sprite[i].vars,
-				vars->textures.file_sprite))
+		if (vars->sprite[i].id == '2')
+		{
+			if (!fill_in_tex_variables(vars, &vars->sprite[i].vars,
+				vars->textures.file_sprite1))
 			return (0);
+		}
+		else if (vars->sprite[i].id == '3')
+		{
+			if (!fill_in_tex_variables(vars, &vars->sprite[i].vars,
+				vars->textures.file_sprite2))
+			return (0);
+		}
+		else if (vars->sprite[i].id == '4')
+		{
+			if (!fill_in_tex_variables(vars, &vars->sprite[i].vars,
+				vars->textures.file_sprite3))
+			return (0);
+		}
 		i++;
 	}
 	return (1);

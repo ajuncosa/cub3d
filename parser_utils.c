@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:38 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/23 12:44:54 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/09 14:20:10 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,14 @@ void	flood_fill(t_vars *vars, int x, int y, int prev_color)
 {
 	if (x < 0 || x >= vars->map.width || y < 0 || y >= vars->map.height)
 		return ;
-	if (vars->map.map[y][x] != prev_color && vars->map.map[y][x] != '2')
+	if (vars->map.map[y][x] != prev_color && vars->map.map[y][x] != '2' && vars->map.map[y][x] != '3' && vars->map.map[y][x] != '4')
 		return ;
 	if (vars->map.map[y][x] == '2')
 		vars->map.map[y][x] = '8';
+	else if (vars->map.map[y][x] == '3')
+		vars->map.map[y][x] = '7';
+	else if (vars->map.map[y][x] == '4')
+		vars->map.map[y][x] = '6';
 	else
 		vars->map.map[y][x] = '9';
 	flood_fill(vars, x + 1, y, prev_color);
@@ -55,6 +59,10 @@ void	sprites_back_to_original_nbr(t_vars *vars)
 		{
 			if (vars->map.map[i][j] == '8')
 				vars->map.map[i][j] = '2';
+			else if (vars->map.map[i][j] == '7')
+				vars->map.map[i][j] = '3';
+			else if (vars->map.map[i][j] == '6')
+				vars->map.map[i][j] = '4';
 			j++;
 		}
 		i++;

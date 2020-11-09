@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/09 10:28:34 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/09 14:39:11 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,15 @@ typedef struct		s_textures
 	char			*file_south;
 	char			*file_west;
 	char			*file_east;
-	char			*file_sprite;
+	char			*file_sprite1;
+	char			*file_sprite2;
+	char			*file_sprite3;
 }					t_textures;
 
 typedef struct		s_sprite
 {
 	t_texvars		vars;
-	//int				id; // qué textura de sprite tiene según el nº en el mapa
+	char			id;
 	float			map_x;
 	float			map_y;
 	float			dist;

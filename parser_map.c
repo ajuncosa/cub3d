@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:14 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/06 13:25:07 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/09 14:10:45 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		fill_map(t_vars *vars, char *line, int i)
 	j = 0;
 	while (line[j] != '\0')
 	{
-		if (!ft_strchr(" 0123456789NESW", line[j]))
+		if (!ft_strchr(" 01234NESW", line[j]))
 		{
 			write(1, "Error\nInvalid char in map\n", 26);
 			return (0);

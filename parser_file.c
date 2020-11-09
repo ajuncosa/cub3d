@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:10 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/06 13:07:32 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/09 14:19:00 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ int		detect_textures_type(t_vars *vars, char *str)
 		return (parse_texture_line(vars, 3, &str[i]));
 	else if (str[i] == 'W' && str[i + 1] == 'E')
 		return (parse_texture_line(vars, 4, &str[i]));
+	else if (str[i] == 'S' && str[i + 1] == 'B')
+		return (parse_texture_line(vars, 6, &str[i]));
+	else if (str[i] == 'S' && str[i + 1] == 'C')
+		return (parse_texture_line(vars, 7, &str[i]));
 	else if (str[i] == 'S')
 		return (parse_texture_line(vars, 5, &str[i]));
 	write(1, "Error\nInvalid type identifier\n", 30);
@@ -53,7 +57,7 @@ int		detect_line_type(t_vars *vars, char *str, int i)
 		return (parse_color_line(vars, 1, &str[i]));
 	else if (str[i] == 'F')
 		return (parse_color_line(vars, 2, &str[i]));
-	else if (ft_strchr("012", str[i]) || ft_isspace(str[i]))
+	else if (ft_strchr("01234", str[i]) || ft_isspace(str[i]))
 		return (count_map_size(vars, str));
 	write(1, "Error\nInvalid type identifier\n", 30);
 	return (0);
@@ -92,8 +96,11 @@ int		check_map(t_vars *vars)
 	while (++i < vars->map.width)
 	{
 		if (vars->map.map[0][i] == '9' || vars->map.map[0][i] == '8'
+			|| vars->map.map[0][i] == '7' || vars->map.map[0][i] == '6'
 			|| vars->map.map[vars->map.height - 1][i] == '9'
-			|| vars->map.map[vars->map.height - 1][i] == '8')
+			|| vars->map.map[vars->map.height - 1][i] == '8'
+			|| vars->map.map[vars->map.height - 1][i] == '7'
+			|| vars->map.map[vars->map.height - 1][i] == '6')
 		{
 			write(1, "Error\nInvalid map: not surrounded by walls\n", 43);
 			return (0);
@@ -103,8 +110,11 @@ int		check_map(t_vars *vars)
 	while (++i < vars->map.height)
 	{
 		if (vars->map.map[i][0] == '9' || vars->map.map[i][0] == '8'
+			|| vars->map.map[i][0] == '7' || vars->map.map[i][0] == '6'
 			|| vars->map.map[i][vars->map.width - 1] == '9'
-			|| vars->map.map[i][vars->map.width - 1] == '8')
+			|| vars->map.map[i][vars->map.width - 1] == '8'
+			|| vars->map.map[i][vars->map.width - 1] == '7'
+			|| vars->map.map[i][vars->map.width - 1] == '6')
 		{
 			write(1, "Error\nInvalid map: not surrounded by walls\n", 43);
 			return (0);
