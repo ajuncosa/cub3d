@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 11:40:50 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/09 14:33:32 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/10 11:23:03 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int		raycasting(t_vars *vars)
 		vars->ray.count++;
 	}
 	sprites_info_and_draw(vars);
+	draw_life_bar(vars, &vars->hearts);
 	if (!vars->save_arg)
 		mlx_put_image_to_window(vars->mlxvars.mlx, vars->mlxvars.mlx_win,
 			vars->img.img, 0, 0);

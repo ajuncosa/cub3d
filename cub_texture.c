@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 11:14:41 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/09 14:43:09 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/10 13:53:36 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ int			init_all_textures(t_vars *vars)
 		}
 		i++;
 	}
+	vars->hearts.vars.img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx, "textures/heart.xpm", &vars->hearts.vars.width, &vars->hearts.vars.height);
+	vars->hearts.vars.img.addr = mlx_get_data_addr(vars->hearts.vars.img.img, &vars->hearts.vars.img.bits_per_pixel, &vars->hearts.vars.img.line_length, &vars->hearts.vars.img.endian);
+	vars->hearts.gameover.img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx, "textures/game_over.xpm", &vars->hearts.gameover.width, &vars->hearts.gameover.height);
+	vars->hearts.gameover.img.addr = mlx_get_data_addr(vars->hearts.gameover.img.img, &vars->hearts.gameover.img.bits_per_pixel, &vars->hearts.gameover.img.line_length, &vars->hearts.gameover.img.endian);
+	
 	return (1);
 }
 

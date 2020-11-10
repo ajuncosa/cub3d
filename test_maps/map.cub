@@ -1,27 +1,27 @@
-R 640 480 
-NO ./textures/redbrick.xpm
-SO ./textures/brick_texture.xpm
+    NO      ./textures/redbrick.xpm
+R   640 480 
+
+SO          ./textures/brick_texture.xpm
 WE ./textures/wood_1.xpm
 EA ./textures/greystone_1.xpm
-
+SB       ./textures/thornbush2.xpm
 
     S ./textures/sprite3.xpm
-SB ./textures/thornbush2.xpm
+
 SC ./textures/greenlight_1.xpm
 
 F 190,150,0
 C 230,215,200
 
-
-1111111111
-1001000011
+ 1111111111
+1001000011000      11
 1023001001
 1100410001
 1000410001
-10N0010001
-1001111001
-1000010001
-1000010001
-1111111111
+10N001000111111111111
+100011100000000000001
+100301000111111110001
+1000010001      10001
+1111111111      11111
 
 

@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/09 14:39:11 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/10 13:56:29 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,23 @@ typedef struct		s_bmp
 	unsigned char	info_header[40];
 }					t_bmp;
 
+typedef struct		s_heart
+{
+	t_texvars		vars;
+	t_texvars		gameover;
+	int				n;
+	float			draw_height;
+	float			draw_width;
+	float			x_inc;
+	float			y_inc;
+	float			go_x_inc;
+	float			go_y_inc;
+	float			go_draw_height;
+	float			go_draw_width;
+	int				on_trap;
+	
+}					t_heart;
+
 typedef struct		s_vars
 {
 	t_mlxvars		mlxvars;
@@ -187,6 +204,7 @@ typedef struct		s_vars
 	int				in_map;
 	int				save_arg;
 	t_bmp			bmp;
+	t_heart			hearts;
 }					t_vars;
 
 void				error_parsing_exit(t_vars *vars, int fd);
@@ -220,8 +238,7 @@ void				backward_traslation(t_vars *vars);
 int					raycasting(t_vars *vars);
 void				dda_line_algorithm(t_vars *vars,
 						t_linecoords coords, int colour);
-void				draw_square(t_vars *vars, t_sprite *sprite,
-						t_linecoords coords, int colour);
+void				draw_square(t_vars *vars, t_linecoords coords, int colour);
 t_linecoords		coords_init(int x0, int y0, int x1, int y1);
 int					init_all_textures(t_vars *vars);
 void				paint_texture(t_vars *vars, t_texvars texture, int x);
@@ -232,5 +249,6 @@ void				sort_sprite_array(t_vars *vars);
 void				paint_sprite(t_vars *vars, t_sprite *sprite);
 unsigned long		create_rgb(int r, int g, int b);
 int					create_bmp(t_vars *vars);
+void				draw_life_bar(t_vars *vars, t_heart *hearts);
 
 #endif

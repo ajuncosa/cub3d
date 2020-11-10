@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 13:21:34 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/09 14:40:07 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/10 13:40:25 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	player_initialise(t_vars *vars)
 	vars->player.speed = 0.1;
 	vars->player.rotation = 3;
 	vars->player.radius = 5;
+	vars->hearts.n = 3;
+	vars->hearts.on_trap = 0;
 }
 
 void	count_sprites(t_vars *vars)

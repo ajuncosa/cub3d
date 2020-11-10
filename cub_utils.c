@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 12:08:00 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/16 13:09:12 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/10 10:53:49 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ void			dda_line_algorithm(t_vars *vars, t_linecoords coords,
 	}
 }
 
-void			draw_square(t_vars *vars, t_sprite *sprite,
-					t_linecoords coords, int colour)
+void			draw_square(t_vars *vars, t_linecoords coords, int colour)
 {
 	int	x0;
 	int	x1;
@@ -74,8 +73,7 @@ void			draw_square(t_vars *vars, t_sprite *sprite,
 	while (x0 <= x1)
 	{
 		coords = coords_init(x0, y0, x0, y1);
-		if (vars->wall.dist[x0] > sprite->dist)
-			dda_line_algorithm(vars, coords, colour);
+		dda_line_algorithm(vars, coords, colour);
 		x0++;
 	}
 }
