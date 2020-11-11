@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 09:32:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/10 13:56:29 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/11 11:20:57 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,6 @@ typedef struct		s_heart
 	float			go_draw_height;
 	float			go_draw_width;
 	int				on_trap;
-	
 }					t_heart;
 
 typedef struct		s_vars
@@ -241,6 +240,8 @@ void				dda_line_algorithm(t_vars *vars,
 void				draw_square(t_vars *vars, t_linecoords coords, int colour);
 t_linecoords		coords_init(int x0, int y0, int x1, int y1);
 int					init_all_textures(t_vars *vars);
+int					fill_in_tex_variables(t_vars *vars,
+						t_texvars *texture, char *file);
 void				paint_texture(t_vars *vars, t_texvars texture, int x);
 t_texvars			init_texture(t_vars *vars);
 int					init_sprite_array(t_vars *vars);
@@ -249,6 +250,6 @@ void				sort_sprite_array(t_vars *vars);
 void				paint_sprite(t_vars *vars, t_sprite *sprite);
 unsigned long		create_rgb(int r, int g, int b);
 int					create_bmp(t_vars *vars);
-void				draw_life_bar(t_vars *vars, t_heart *hearts);
+void				life_bar(t_vars *vars, t_heart *hearts);
 
 #endif

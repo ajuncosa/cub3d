@@ -6,13 +6,13 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 14:01:13 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/09/30 13:45:15 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/11 11:24:47 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		ft_strchr_edit(const char *s, int c)
+int	ft_strchr_edit(const char *s, int c)
 {
 	int		i;
 

@@ -6,28 +6,43 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 11:14:41 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/10 13:53:36 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/11 10:41:55 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int			fill_in_tex_variables(t_vars *vars, t_texvars *texture, char *file)
+int			init_sprites_tex(t_vars *vars)
 {
-	if (!(texture->img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx, file,
-			&texture->width, &texture->height)))
-		return (0);
-	if (!(texture->img.addr = mlx_get_data_addr(texture->img.img,
-			&texture->img.bits_per_pixel, &texture->img.line_length,
-			&texture->img.endian)))
-		return (0);
+	int	i;
+
+	i = -1;
+	while (++i < vars->sprite_count)
+	{
+		if (vars->sprite[i].id == '2')
+		{
+			if (!fill_in_tex_variables(vars, &vars->sprite[i].vars,
+				vars->textures.file_sprite1))
+				return (0);
+		}
+		else if (vars->sprite[i].id == '3')
+		{
+			if (!fill_in_tex_variables(vars, &vars->sprite[i].vars,
+				vars->textures.file_sprite2))
+				return (0);
+		}
+		else if (vars->sprite[i].id == '4')
+		{
+			if (!fill_in_tex_variables(vars, &vars->sprite[i].vars,
+				vars->textures.file_sprite3))
+				return (0);
+		}
+	}
 	return (1);
 }
 
 int			init_all_textures(t_vars *vars)
 {
-	int	i;
-
 	if (!fill_in_tex_variables(vars, &vars->textures.north,
 			vars->textures.file_north))
 		return (0);
@@ -40,34 +55,14 @@ int			init_all_textures(t_vars *vars)
 	if (!fill_in_tex_variables(vars, &vars->textures.west,
 			vars->textures.file_west))
 		return (0);
-	i = 0;
-	while (i < vars->sprite_count)
-	{
-		if (vars->sprite[i].id == '2')
-		{
-			if (!fill_in_tex_variables(vars, &vars->sprite[i].vars,
-				vars->textures.file_sprite1))
-			return (0);
-		}
-		else if (vars->sprite[i].id == '3')
-		{
-			if (!fill_in_tex_variables(vars, &vars->sprite[i].vars,
-				vars->textures.file_sprite2))
-			return (0);
-		}
-		else if (vars->sprite[i].id == '4')
-		{
-			if (!fill_in_tex_variables(vars, &vars->sprite[i].vars,
-				vars->textures.file_sprite3))
-			return (0);
-		}
-		i++;
-	}
-	vars->hearts.vars.img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx, "textures/heart.xpm", &vars->hearts.vars.width, &vars->hearts.vars.height);
-	vars->hearts.vars.img.addr = mlx_get_data_addr(vars->hearts.vars.img.img, &vars->hearts.vars.img.bits_per_pixel, &vars->hearts.vars.img.line_length, &vars->hearts.vars.img.endian);
-	vars->hearts.gameover.img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx, "textures/game_over.xpm", &vars->hearts.gameover.width, &vars->hearts.gameover.height);
-	vars->hearts.gameover.img.addr = mlx_get_data_addr(vars->hearts.gameover.img.img, &vars->hearts.gameover.img.bits_per_pixel, &vars->hearts.gameover.img.line_length, &vars->hearts.gameover.img.endian);
-	
+	if (!(init_sprites_tex(vars)))
+		return (0);
+	if (!(fill_in_tex_variables(vars,
+		&vars->hearts.vars, "textures/heart.xpm")))
+		return (0);
+	if (!(fill_in_tex_variables(vars,
+		&vars->hearts.gameover, "textures/game_over.xpm")))
+		return (0);
 	return (1);
 }
 

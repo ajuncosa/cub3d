@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/28 13:29:56 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/10 13:47:40 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/10 14:15:39 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	left_traslation(t_vars *vars)
 		vars->player.y = new_y;
 	if (ft_strchr("934", vars->map.map[(int)vars->player.y][check_x]))
 		vars->player.x = new_x;
-	if (vars->map.map[(int)vars->player.y][(int)vars->player.x] == '3' && vars->hearts.on_trap == 0 && vars->hearts.n > 0)
+	if (vars->map.map[(int)vars->player.y][(int)vars->player.x] == '3'
+		&& vars->hearts.on_trap == 0 && vars->hearts.n > 0)
 	{
 		vars->hearts.on_trap = 1;
 		vars->hearts.n--;
@@ -81,7 +82,8 @@ void	right_traslation(t_vars *vars)
 		vars->player.y = new_y;
 	if (ft_strchr("934", vars->map.map[(int)vars->player.y][check_x]))
 		vars->player.x = new_x;
-	if (vars->map.map[(int)vars->player.y][(int)vars->player.x] == '3' && vars->hearts.on_trap == 0 && vars->hearts.n > 0)
+	if (vars->map.map[(int)vars->player.y][(int)vars->player.x] == '3'
+		&& vars->hearts.on_trap == 0 && vars->hearts.n > 0)
 	{
 		vars->hearts.on_trap = 1;
 		vars->hearts.n--;
@@ -109,7 +111,8 @@ void	forward_traslation(t_vars *vars)
 		vars->player.y = new_y;
 	if (ft_strchr("934", vars->map.map[(int)vars->player.y][check_x]))
 		vars->player.x = new_x;
-	if (vars->map.map[(int)vars->player.y][(int)vars->player.x] == '3' && vars->hearts.on_trap == 0 && vars->hearts.n > 0)
+	if (vars->map.map[(int)vars->player.y][(int)vars->player.x] == '3'
+		&& vars->hearts.on_trap == 0 && vars->hearts.n > 0)
 	{
 		vars->hearts.on_trap = 1;
 		vars->hearts.n--;
@@ -137,7 +140,8 @@ void	backward_traslation(t_vars *vars)
 		vars->player.y = new_y;
 	if (ft_strchr("934", vars->map.map[(int)vars->player.y][check_x]))
 		vars->player.x = new_x;
-	if (vars->map.map[(int)vars->player.y][(int)vars->player.x] == '3' && vars->hearts.on_trap == 0 && vars->hearts.n > 0)
+	if (vars->map.map[(int)vars->player.y][(int)vars->player.x] == '3'
+		&& vars->hearts.on_trap == 0 && vars->hearts.n > 0)
 	{
 		vars->hearts.on_trap = 1;
 		vars->hearts.n--;

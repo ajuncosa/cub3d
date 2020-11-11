@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/03 11:40:53 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/10 13:11:32 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/11 10:49:58 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	calculate_sprite_info(t_vars *vars, t_sprite *sprite)
 	sprite->screen_y = vars->window.height / 2;
 	sprite->draw_width = (sprite->vars.width *
 		sprite->draw_height / sprite->vars.height);
+	sprite->y_inc = (sprite->draw_height * 2) / sprite->vars.height;
+	sprite->x_inc = (sprite->draw_width * 2) / sprite->vars.width;
 }
 
 void	sort_sprite_array(t_vars *vars)
@@ -58,7 +60,7 @@ void	sort_sprite_array(t_vars *vars)
 	}
 }
 
-void			draw_square_sprite(t_vars *vars, t_sprite *sprite,
+void	square_sprite(t_vars *vars, t_sprite *sprite,
 					t_linecoords coords, int colour)
 {
 	int	x0;
@@ -72,7 +74,6 @@ void			draw_square_sprite(t_vars *vars, t_sprite *sprite,
 	x1 = coords.x1;
 	y0 = coords.y0;
 	y1 = coords.y1;
-	//printf("%d, %d, %d, %d\n", x0, x1, y0, y1);
 	while (x0 <= x1)
 	{
 		coords = coords_init(x0, y0, x0, y1);
@@ -90,24 +91,23 @@ void	paint_sprite(t_vars *vars, t_sprite *sprite)
 	t_linecoords	coords;
 	int				i;
 
-	sprite->y_inc = (sprite->draw_height * 2) / sprite->vars.height;
-	sprite->x_inc = (sprite->draw_width * 2) / sprite->vars.width;
 	x = sprite->screen_x - sprite->draw_width;
 	sprite->vars.position_x = 0;
-	if (x > -1000 && x < vars->window.width)
-		while (sprite->vars.position_x < sprite->vars.width)
+	if (x < -1000 || x > vars->window.width)
+		return ;
+	while (sprite->vars.position_x < sprite->vars.width)
+	{
+		y = sprite->screen_y - sprite->draw_height;
+		i = -1;
+		while (++i < sprite->vars.height)
 		{
-			y = sprite->screen_y - sprite->draw_height;
-			i = -1;
-			while (++i < sprite->vars.height)
-			{
-				coords = coords_init(x, y, x + sprite->x_inc, y + sprite->y_inc);
-				col = ((unsigned int *)sprite->vars.img.addr)
-						[i * sprite->vars.width + sprite->vars.position_x];
-				(col != 0x000000) ? draw_square_sprite(vars, sprite, coords, col) : 0;
-				y += sprite->y_inc;
-			}
-			sprite->vars.position_x++;
-			x += sprite->x_inc;
+			coords = coords_init(x, y, x + sprite->x_inc, y + sprite->y_inc);
+			col = ((unsigned int *)sprite->vars.img.addr)
+					[i * sprite->vars.width + sprite->vars.position_x];
+			(col != 0x000000) ? square_sprite(vars, sprite, coords, col) : 0;
+			y += sprite->y_inc;
 		}
+		sprite->vars.position_x++;
+		x += sprite->x_inc;
+	}
 }

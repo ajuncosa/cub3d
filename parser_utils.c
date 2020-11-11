@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:38 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/09 14:20:10 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/11 11:19:35 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	flood_fill(t_vars *vars, int x, int y, int prev_color)
 {
 	if (x < 0 || x >= vars->map.width || y < 0 || y >= vars->map.height)
 		return ;
-	if (vars->map.map[y][x] != prev_color && vars->map.map[y][x] != '2' && vars->map.map[y][x] != '3' && vars->map.map[y][x] != '4')
+	if (vars->map.map[y][x] != prev_color
+		&& !ft_strchr("234", vars->map.map[y][x]))
 		return ;
 	if (vars->map.map[y][x] == '2')
 		vars->map.map[y][x] = '8';

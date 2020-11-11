@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:10 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/09 14:19:00 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/11 11:16:09 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,8 @@ int		check_map(t_vars *vars)
 	i = -1;
 	while (++i < vars->map.width)
 	{
-		if (vars->map.map[0][i] == '9' || vars->map.map[0][i] == '8'
-			|| vars->map.map[0][i] == '7' || vars->map.map[0][i] == '6'
-			|| vars->map.map[vars->map.height - 1][i] == '9'
-			|| vars->map.map[vars->map.height - 1][i] == '8'
-			|| vars->map.map[vars->map.height - 1][i] == '7'
-			|| vars->map.map[vars->map.height - 1][i] == '6')
+		if (ft_strchr("9876", vars->map.map[0][i])
+			|| ft_strchr("9876", vars->map.map[vars->map.height - 1][i]))
 		{
 			write(1, "Error\nInvalid map: not surrounded by walls\n", 43);
 			return (0);
@@ -109,12 +105,8 @@ int		check_map(t_vars *vars)
 	i = -1;
 	while (++i < vars->map.height)
 	{
-		if (vars->map.map[i][0] == '9' || vars->map.map[i][0] == '8'
-			|| vars->map.map[i][0] == '7' || vars->map.map[i][0] == '6'
-			|| vars->map.map[i][vars->map.width - 1] == '9'
-			|| vars->map.map[i][vars->map.width - 1] == '8'
-			|| vars->map.map[i][vars->map.width - 1] == '7'
-			|| vars->map.map[i][vars->map.width - 1] == '6')
+		if (ft_strchr("9876", vars->map.map[i][0])
+			|| ft_strchr("9876", vars->map.map[i][vars->map.width - 1]))
 		{
 			write(1, "Error\nInvalid map: not surrounded by walls\n", 43);
 			return (0);

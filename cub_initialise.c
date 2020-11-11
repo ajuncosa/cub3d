@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 13:21:34 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/10 13:40:25 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/11 10:50:40 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,18 @@ void	player_initialise(t_vars *vars)
 	vars->player.radius = 5;
 	vars->hearts.n = 3;
 	vars->hearts.on_trap = 0;
+}
+
+int		fill_in_tex_variables(t_vars *vars, t_texvars *texture, char *file)
+{
+	if (!(texture->img.img = mlx_xpm_file_to_image(vars->mlxvars.mlx, file,
+			&texture->width, &texture->height)))
+		return (0);
+	if (!(texture->img.addr = mlx_get_data_addr(texture->img.img,
+			&texture->img.bits_per_pixel, &texture->img.line_length,
+			&texture->img.endian)))
+		return (0);
+	return (1);
 }
 
 void	count_sprites(t_vars *vars)

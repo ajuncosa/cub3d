@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 10:01:06 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/06 13:36:17 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/10 14:25:00 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int		handle_keypress(int keycode, t_vars *vars)
 		vars->keys.fw_traslation = 1;
 	else if (keycode == 1)
 		vars->keys.bw_traslation = 1;
+	else if (keycode == 15 && vars->hearts.n == 0)
+		vars->hearts.n = 3;
 	return (0);
 }
 
