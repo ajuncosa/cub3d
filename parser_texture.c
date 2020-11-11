@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:34 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/11 11:53:03 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/11 12:15:24 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		save_texture_dir(t_vars *vars, int type, char *str)
 		return (0);
 	}
 	if (type == 1)
-		vars->textures.file_north = ft_strtrim(str, " ");
+		vars->textures.file_north = ft_strtrim(str, " \t\n\v\f\r");
 	else if (type == 2)
 		vars->textures.file_south = ft_strtrim(str, " ");
 	else if (type == 3)
