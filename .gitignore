@@ -1,4 +1,8 @@
 screenshot.bmp
 .DS_Store
+textures/.DS_Store
 .vscode/
 *.o
+*.a
+cub3D
+test.c
