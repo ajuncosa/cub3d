@@ -13,7 +13,7 @@ SANITIZE = -g -fsanitize=address
 ${NAME}:	${OBJS}
 	make -C libft/
 	make -C minilibx/
-	$(CC) $(SANITIZE) -L minilibx/ -lmlx -framework OPENGL -framework Appkit -L libft/ -lft $^ -o ${NAME} 
+	$(CC)  -L minilibx/ -lmlx -framework OPENGL -framework Appkit -L libft/ -lft $^ -o ${NAME} 
 
 all:		${NAME}
 

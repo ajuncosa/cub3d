@@ -6,7 +6,7 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 13:14:32 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/09 14:45:16 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2020/11/11 12:12:37 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ void	exit_programme(t_vars *vars)
 	free(vars->textures.file_west);
 	free(vars->textures.file_north);
 	free(vars->textures.file_south);
+	free(vars->textures.file_sprite1);
+	free(vars->textures.file_sprite2);
+	free(vars->textures.file_sprite3);
 	if (vars->map.map)
 	{
 		while (i < vars->map.height)
@@ -47,6 +50,9 @@ void	error_parsing_exit(t_vars *vars, int fd)
 	free(vars->textures.file_west);
 	free(vars->textures.file_north);
 	free(vars->textures.file_south);
+	free(vars->textures.file_sprite1);
+	free(vars->textures.file_sprite2);
+	free(vars->textures.file_sprite3);
 	if (vars->map.map)
 	{
 		while (i < vars->map.height)
