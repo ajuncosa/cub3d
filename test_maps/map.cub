@@ -1,7 +1,7 @@
     NO      ./textures/redbrick.xpm
 R   640 480 
 
-SO          ./textures/brick_texture.xpm
+SO          ./textures/brick_texture.xpm	
 WE ./textures/wood_1.xpm
 EA ./textures/greystone_1.xpm
 SB       ./textures/thornbush2.xpm
