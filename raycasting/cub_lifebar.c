@@ -6,11 +6,11 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 11:20:13 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/11 11:12:08 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2021/03/26 17:12:22 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	draw_heart(t_vars *vars, t_heart *hearts, float *x)
 {

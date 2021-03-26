@@ -6,11 +6,11 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:05 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/04 13:06:01 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2021/03/26 17:11:23 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int		valid_colors(t_vars *vars, int type)
 {

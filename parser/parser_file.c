@@ -6,11 +6,11 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:10 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/11 11:16:09 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2021/03/26 17:11:36 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int		detect_textures_type(t_vars *vars, char *str)
 {

@@ -6,11 +6,11 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 13:17:06 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/05 13:19:54 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2021/03/26 17:12:15 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	init_bmp_arrays(t_vars *vars, int file_size)
 {

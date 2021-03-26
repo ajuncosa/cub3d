@@ -1,6 +1,6 @@
 GNL		= ./gnl/get_next_line.c
-PARSER	= parser_color.c parser_file.c parser_map.c parser_resolution.c parser_texture.c parser_utils.c parser_vars.c
-SRCS	= ${GNL} ${PARSER} main.c cub_events.c cub_sprites.c cub_raycasting.c cub_movement.c cub_utils.c cub_texture.c cub_initialise.c cub_bmpcreate.c cub_errors.c cub_lifebar.c
+PARSER	= parser/parser_color.c parser/parser_file.c parser/parser_map.c parser/parser_resolution.c parser/parser_texture.c parser/parser_utils.c parser/parser_vars.c
+SRCS	= ${GNL} ${PARSER} main.c raycasting/cub_events.c raycasting/cub_sprites.c raycasting/cub_raycasting.c raycasting/cub_movement.c raycasting/cub_utils.c raycasting/cub_texture.c raycasting/cub_initialise.c raycasting/cub_bmpcreate.c raycasting/cub_errors.c raycasting/cub_lifebar.c
 OBJS	= ${SRCS:.c=.o}
 NAME	= cub3D
 CC		= gcc

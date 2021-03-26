@@ -6,11 +6,11 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:14 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/09 14:10:45 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2021/03/26 17:11:52 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int		count_map_size(t_vars *vars, char *str)
 {

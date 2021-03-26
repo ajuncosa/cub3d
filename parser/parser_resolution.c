@@ -6,11 +6,11 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 11:18:28 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/10/30 13:21:20 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2021/03/26 17:11:56 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int		save_width_and_height(t_vars *vars, char *str, int *i, int type)
 {

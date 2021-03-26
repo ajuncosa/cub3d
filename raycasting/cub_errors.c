@@ -6,11 +6,11 @@
 /*   By: ajuncosa <ajuncosa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 13:14:32 by ajuncosa          #+#    #+#             */
-/*   Updated: 2020/11/11 12:12:37 by ajuncosa         ###   ########.fr       */
+/*   Updated: 2021/03/26 17:12:17 by ajuncosa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	exit_programme(t_vars *vars)
 {
