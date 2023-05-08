@@ -15,6 +15,13 @@ example maps in the `test_maps` directory.
 * `esc` to quit programme.
 
 ## Examples
+<img src="images/example1.png" alt="Example 1" width="400"/>
+
+<img src="images/map.cub.png" alt="Example 2" width="400"/>
+
+<img src="images/map.cub.gif" alt="Example 3" width="400"/>
+
+<img src="images/map1.cub.gif" alt="Example 4" width="400"/>
 
 ## Map specifications:
 Map configuration files have a `.cub` extension.
